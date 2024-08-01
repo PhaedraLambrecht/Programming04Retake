@@ -8,7 +8,7 @@
 #define MIX_CHANNEL_GROUP_MUSIC 0
 #define MIX_CHANNEL_GROUP_EFFECTS 1
 
-
+// TODO: question why it sometimes works and sometimes not
 class dae::SDLSoundSystem::SDLMixerImpl final
 {
 public:
@@ -22,9 +22,10 @@ public:
 	SDLMixerImpl& operator=(SDLMixerImpl&& other) = delete;
 
 
+	void LoadSound(dae::SoundData soundData);
 	void PlaySound(unsigned short id, dae::SoundData::SoundType soundType, float volume);
-	void LoadSound(unsigned short id, const std::string& filepath);
 	bool IsSoundLoaded(unsigned short id);
+	bool IsMusicLoaded(unsigned short id);
 
 	void Init();
 	void Quit();
@@ -33,6 +34,7 @@ public:
 private:
 
 	std::unordered_map<unsigned short, Mix_Chunk*> m_LoadedSounds;
+	std::unordered_map<unsigned short, Mix_Music*> m_Loadedmusic;
 };
 
 dae::SDLSoundSystem::SDLMixerImpl::SDLMixerImpl()
@@ -63,85 +65,101 @@ dae::SDLSoundSystem::SDLMixerImpl::~SDLMixerImpl()
 }
 
 
+void dae::SDLSoundSystem::SDLMixerImpl::LoadSound(dae::SoundData soundData)
+{
+	// Sound is already loaded
+	if (IsSoundLoaded(soundData.id))
+		return;
+
+	Mix_Music* music = Mix_LoadMUS(soundData.filePath.c_str());
+	Mix_Chunk* chunk = Mix_LoadWAV(soundData.filePath.c_str());
+
+	switch (soundData.soundType)
+	{
+	case SoundData::SoundType::Music:
+
+		if (music == nullptr)
+		{
+			throw std::runtime_error(std::string("Failed to load music: ") + Mix_GetError());
+		}
+		m_Loadedmusic[soundData.id] = music;
+		PlaySound(soundData.id, soundData.soundType, soundData.volume);
+		break;
+
+	case SoundData::SoundType::SoundEffect:
+
+		if (chunk == nullptr)
+		{
+			throw std::runtime_error(std::string("Failed to load sound: ") + Mix_GetError());
+		}
+		m_LoadedSounds[soundData.id] = chunk;
+		break;
+
+	}
+}
+
 void dae::SDLSoundSystem::SDLMixerImpl::PlaySound(unsigned short id, SoundData::SoundType soundType, float volume)
 {
-	if (!IsSoundLoaded(id))
-		throw std::runtime_error("Sound with ID " + std::to_string(id) + " is not loaded.");
-
-	Mix_Chunk* chunk = m_LoadedSounds[id];
-
-	int mixVolume = static_cast<int>(volume * MIX_MAX_VOLUME); // Convert float volume to SDL_mixer scale
-	Mix_VolumeChunk(chunk, mixVolume);
-
-
-	//int channel{ -1 };
-	//int loops{ 0 };
-	//// This only cares about effects atm
-	//switch (soundType)
-	//{
-	//case dae::SoundData::SoundType::SoundEffect:
-	//	channel = Mix_GroupAvailable(MIX_CHANNEL_GROUP_EFFECTS);
-	//	loops = 0;
-	//	// if no channel available use channel 1
-	//	if (channel == -1)
-	//	{
-	//		channel = 1;
-	//	}
-	//	break;
-	//case dae::SoundData::SoundType::Music:
-	//	channel = Mix_GroupAvailable(MIX_CHANNEL_GROUP_MUSIC);
-	//	loops = -1; // Loop indefinitely
-	//	// If no channel available, use channel 0 (reserved for background music)
-	//	if (channel == -1) {
-	//		channel = 0;
-	//	}
-	//	break;
-	//}
-
-	//Mix_VolumeChunk(chunk, static_cast<int>(volume * MIX_MAX_VOLUME));
-	//Mix_PlayChannel(channel, chunk, loops);
+	bool soundLoaded = IsSoundLoaded(id);
+	bool musicLoaded = IsMusicLoaded(id);
 	
-	int channel{ 0 };
-	int repeat{ 1 };
+
+	volume = std::clamp(volume, 0.0f, 1.0f);
+	int mixVolume = static_cast<int>(volume * MIX_MAX_VOLUME);// Convert float volume to SDL_mixer scale
+
+
+	Mix_Chunk* chunk{};
+	int channel{ Mix_GroupAvailable(MIX_CHANNEL_GROUP_EFFECTS) };
+	Mix_Music* music{};
+
 	switch (soundType)
 	{
 	case SoundData::SoundType::SoundEffect:
-		channel = Mix_GroupAvailable(MIX_CHANNEL_GROUP_EFFECTS);
-		repeat = 0;
-		// if no channel available use channel 1
+	
+		if (!soundLoaded)
+		{
+			throw std::runtime_error("Sound with ID " + std::to_string(id) + " is not loaded.");
+		}
+
+		chunk = m_LoadedSounds[id];
+		Mix_VolumeChunk(chunk, mixVolume);
+
+		// Play sound effect
 		if (channel == -1)
 		{
-			channel = 1;
+			channel = 1; // Use a default channel if none is available
+		}
+
+		Mix_PlayChannel(channel, chunk, 0); // 0 means play once, use -1 for looping
+		break;
+
+	case SoundData::SoundType::Music:
+	
+		if (!musicLoaded)
+		{
+			throw std::runtime_error("Music with ID " + std::to_string(id) + " is not loaded.");
+		}
+
+		music = m_Loadedmusic[id];
+		Mix_VolumeMusic(mixVolume);
+
+		// Play background music
+		if (Mix_PlayingMusic() == 0) // Only play music if none is currently playing
+		{
+			Mix_PlayMusic(music, -1); // -1 means loop indefinitely
 		}
 		break;
 	}
-
-
-	Mix_PlayChannel(channel, chunk, repeat);
-}
-
-void dae::SDLSoundSystem::SDLMixerImpl::LoadSound(unsigned short id, const std::string& filepath)
-{
-	// Sound is already loaded
-	if (IsSoundLoaded(id)) 
-		return; 
-	
-
-	Mix_Chunk* chunk = Mix_LoadWAV(filepath.c_str());
-	
-	//auto* song = Mix_LoadMUS(filepath.c_str());		<--- For music
-	
-	if (chunk == nullptr)
-	{
-		throw std::runtime_error(std::string("Failed to load sound: ") + Mix_GetError());
-	}
-	m_LoadedSounds[id] = chunk;
-	
 }
 
 bool dae::SDLSoundSystem::SDLMixerImpl::IsSoundLoaded(unsigned short id)
 {
 	return m_LoadedSounds.find(id) != m_LoadedSounds.end();
+}
+
+bool dae::SDLSoundSystem::SDLMixerImpl::IsMusicLoaded(unsigned short id)
+{
+	return m_Loadedmusic.find(id) != m_Loadedmusic.end();
 }
 
 void dae::SDLSoundSystem::SDLMixerImpl::Init()
@@ -228,6 +246,7 @@ void dae::SDLSoundSystem::NotifySound(SoundData soundData)
 	soundData.filePath = m_DataPath + soundData.filePath;
 	m_EventQueue.push(soundData);
 
+
 	m_QueueCondition.notify_all();
 }
 
@@ -246,7 +265,7 @@ void dae::SDLSoundSystem::LoadSound(const SoundData& soundData)
 {
 	if (!IsSoundLoaded(soundData.id))
 	{
-		m_pImpl->LoadSound(soundData.id, soundData.filePath);
+		m_pImpl->LoadSound(soundData);
 	}
 }
 
@@ -257,36 +276,6 @@ bool dae::SDLSoundSystem::IsSoundLoaded(unsigned short id)
 
 void dae::SDLSoundSystem::SoundThread()
 {
-	//while (m_ThreadRunning)
-	//{
-	//	std::unique_lock<std::mutex> lock(m_QueueMutex);
-	//	m_QueueCondition.wait(lock, [&] {
-	//
-	//		if (!m_ThreadRunning)
-	//			return true;
-	//
-	//		return !m_EventQueue.empty();
-	//		});
-	//
-	//	if (m_EventQueue.empty())
-	//		return;
-	//
-	//	SoundData data = m_EventQueue.front();
-	//	m_EventQueue.pop();
-	//	lock.unlock();
-	//
-	//
-	//	if (!data.loadFile)
-	//	{
-	//		LoadSound(data);
-	//	}
-	//	else
-	//	{
-	//		PlaySound(data);
-	//	}
-	//
-	//}
-
 	while (m_ThreadRunning)
 	{
 		std::unique_lock<std::mutex> lock(m_QueueMutex);
