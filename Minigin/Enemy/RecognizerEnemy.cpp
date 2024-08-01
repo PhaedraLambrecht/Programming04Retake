@@ -1,0 +1,227 @@
+#include "Enemy/RecognizerEnemy.h"
+#include "GameObject.h"
+#include "GameTime.h"
+#include "Events/EventManager.h"
+#include "Commands/AddPointsCommand.h"
+#include <iostream>
+#include <algorithm>
+
+
+dae::RecognizerEnemy::RecognizerEnemy(GameObject* gameObject)
+	: BaseEnemyComponent(gameObject)
+	, m_Health{3}
+	, m_EnemySpeed{ 50.f }
+	, m_ChangeDirectionInterval{ 5.f }
+	, m_TimeSinceLastChange{ 0.f }
+{
+	std::unique_ptr<Event> event = std::make_unique<Event>();
+	event->eventType = "EnemySpawned";
+
+	EventManager::GetInstance().QueueEvent(std::move(event));
+}
+
+dae::RecognizerEnemy::~RecognizerEnemy()
+{
+	std::cout << "RecognizerEnemy \n";
+}
+
+void dae::RecognizerEnemy::Initialize(float x, float y, float w, float h, std::shared_ptr<GameObject> playerTank)
+{
+	m_PositionSize.position = glm::vec2(x, y);
+	m_PositionSize.width = w;
+	m_PositionSize.height = h;
+
+	m_pPlayer = playerTank.get();
+
+	ChangeDirection();
+}
+
+
+
+void dae::RecognizerEnemy::Update()
+{
+	glm::vec2 playerPos = m_pPlayer->GetComponent<TransformComponent>()->GetWorldPosition();
+	glm::vec2 enemyPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+
+	float deltaTime = GameTime::GetInstance().GetDeltaTime();
+
+
+	m_TimeSinceLastChange += deltaTime;
+	if (m_TimeSinceLastChange >= m_ChangeDirectionInterval)
+	{
+		ChangeDirection();
+		m_TimeSinceLastChange = 0.0f;
+	}
+
+	// Normalize the direction vector
+	glm::vec2 direction = glm::normalize(playerPos - enemyPos);
+	glm::vec2 movement = direction * m_EnemySpeed * deltaTime;
+	move(deltaTime, (int)movement.x, (int)movement.y);
+
+	// Handle blocked movements
+	HandleBlockedMovement(deltaTime);
+
+
+}
+
+void dae::RecognizerEnemy::move(float deltaTime, int x, int y)
+{
+	auto transform = GetOwner()->GetComponent<TransformComponent>();
+	glm::vec2 newPos = transform->GetWorldPosition() + glm::vec2(x, y) * (deltaTime * m_EnemySpeed);
+
+	newPos.x = std::clamp( newPos.x, 0.0f, (float)m_windowWidth - (m_PositionSize.width * 5) );
+	newPos.y = std::clamp( newPos.y, 0.0f, (float)m_windowHeight - (m_PositionSize.height * 5) );
+	transform->SetLocalPosition(newPos.x, newPos.y);
+}
+
+void dae::RecognizerEnemy::HandleBlockedMovement(float deltaTime)
+{
+	if (m_MovementFlags.left && !m_MovementFlags.right)
+		move(deltaTime, -1, 0);
+	else if (m_MovementFlags.right && !m_MovementFlags.left)
+		move(deltaTime, 1, 0);
+	else if (m_MovementFlags.up && !m_MovementFlags.down)
+		move(deltaTime, 0, -1);
+	else if (m_MovementFlags.down && !m_MovementFlags.up)
+		move(deltaTime, 0, 1);
+}
+
+void dae::RecognizerEnemy::ChangeDirection()
+{
+	int random = rand() % 4;
+
+	// Reset all movement flags
+	m_MovementFlags.left = false;
+	m_MovementFlags.right = false;
+	m_MovementFlags.up = false;
+	m_MovementFlags.down = false;
+
+	switch (random)
+	{
+	case 0:
+		m_MovementFlags.left = true;
+		break;
+	case 1:
+		m_MovementFlags.right = true;
+		break;
+	case 2:
+		m_MovementFlags.up = true;
+		break;
+	case 3:
+		m_MovementFlags.down = true;
+		break;
+	}
+}
+
+bool dae::RecognizerEnemy::DoDamage()
+{
+	--m_Health;
+	if (m_Health > 0)
+	{
+		return false;
+	}
+
+
+	AddPointsAndNotifyDeath();
+	return true;
+}
+
+void dae::RecognizerEnemy::AddPointsAndNotifyDeath()
+{
+	dae::AddPointsCommand addPointsCommand(m_pPlayer);
+	addPointsCommand.Execute();
+
+
+	Event event;
+	event.eventType = "EnemyDeath";
+
+	GetOwner()->MarkForDestruction();
+}
+
+
+void dae::RecognizerEnemy::OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject)
+{
+	if (hitObject.ownerType != "PlayerAttack")
+		return;
+
+	DoDamage();
+
+
+
+	glm::vec2 enemyPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+	glm::vec2 collsionBounds = collisionOwner.owningObject->GetComponent<CollisionComponent>()->GetBounds();
+	glm::vec2 collisionPos = collisionOwner.owningObject->GetComponent<TransformComponent>()->GetWorldPosition();
+
+
+	if (IsBlockingLeft(enemyPos, collisionPos, collsionBounds))
+	{
+		m_MovementFlags.left = true;
+	}
+	if (IsBlockingRight(enemyPos, collisionPos, collsionBounds))
+	{
+		m_MovementFlags.right = true;
+	}
+	if (IsBlockingDown(enemyPos, collisionPos, collsionBounds))
+	{
+		m_MovementFlags.down = true;
+	}
+
+	if (IsBlockingUp(enemyPos, collisionPos, collsionBounds))
+	{
+		m_MovementFlags.up = true;
+	}
+}
+
+bool dae::RecognizerEnemy::IsBlockingLeft(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const
+{
+	return collisionPos.x + collisionBounds.y > enemyPos.x && // right edge of collision
+		collisionPos.x < enemyPos.x && // left edge of collision
+		collisionPos.y < enemyPos.y + m_PositionSize.height && // bottom edge of collision
+		collisionPos.y + collisionBounds.x > enemyPos.y; // top edge of collision
+
+}
+
+bool dae::RecognizerEnemy::IsBlockingRight(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const
+{
+	return collisionPos.x < enemyPos.x + m_PositionSize.width && // left edge of collision
+		collisionPos.x + collisionBounds.y > enemyPos.x + m_PositionSize.width && // right edge of collision
+		collisionPos.y < enemyPos.y + m_PositionSize.height && // bottom edge of collision
+		collisionPos.y + collisionBounds.x > enemyPos.y; // top edge of collision
+}
+
+bool dae::RecognizerEnemy::IsBlockingDown(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const
+{
+	return collisionPos.y + collisionBounds.x > enemyPos.y && // top edge of collision
+		collisionPos.y < enemyPos.y && // bottom edge of collision
+		collisionPos.x < enemyPos.x + m_PositionSize.width && // left edge of collision
+		collisionPos.x + collisionBounds.y > enemyPos.x; // right edge of collision
+}
+
+bool dae::RecognizerEnemy::IsBlockingUp(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const
+{
+	return collisionPos.y < enemyPos.y + m_PositionSize.height && // bottom edge of collision
+		collisionPos.y + collisionBounds.y > enemyPos.y + m_PositionSize.height && // top edge of collision
+		collisionPos.x < enemyPos.x + m_PositionSize.width && // left edge of collision
+		collisionPos.x + collisionBounds.x > enemyPos.x; // right edge of collision
+}
+
+
+
+
+void dae::RecognizerEnemy::Attack()
+{
+	std::cout << "attack\n";
+}
+
+void dae::RecognizerEnemy::OnBDeath(const Event* e)
+{
+	if (strcmp(e->eventType, "EnemyDeath") != 0)
+		return;
+}
+
+void dae::RecognizerEnemy::SetWindowDimensions(unsigned int width, unsigned int height)
+{
+	m_windowWidth = width;
+	m_windowHeight = height;
+}
+

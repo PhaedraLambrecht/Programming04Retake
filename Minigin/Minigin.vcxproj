@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{41B0EC47-D48C-4B0F-951B-D98595FFAE0A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Minigin</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\sdl.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\sdl.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui-1.89.4;$(SolutionDir)\Minigin;$(SolutionDir)3rdParty\imgui-1.89.4\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>opengl32.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui-1.89.4;$(SolutionDir)\Minigin;$(SolutionDir)3rdParty\imgui-1.89.4\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>opengl32.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui-1.89.4;$(SolutionDir)\Minigin;$(SolutionDir)3rdParty\imgui-1.89.4\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>opengl32.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui-1.89.4;$(SolutionDir)\Minigin;$(SolutionDir)3rdParty\imgui-1.89.4\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>opengl32.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui_internal.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui_plot.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_rectpack.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_textedit.h" />
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h" />
+    <ClInclude Include="Base\Font.h" />
+    <ClInclude Include="Base\Renderer.h" />
+    <ClInclude Include="Base\Texture2D.h" />
+    <ClInclude Include="Base\Transform.h" />
+    <ClInclude Include="Commands\AddPointsCommand.h" />
+    <ClInclude Include="Commands\Command.h" />
+    <ClInclude Include="Commands\DamageCommand.h" />
+    <ClInclude Include="Commands\MoveCommand.h" />
+    <ClInclude Include="Commands\SchootCommand.h" />
+    <ClInclude Include="Componennts\AddPointsComponnent.h" />
+    <ClInclude Include="Componennts\AttackComponent.h" />
+    <ClInclude Include="Componennts\BaseComponent.h" />
+    <ClInclude Include="Componennts\BulletMovementComponent.h" />
+    <ClInclude Include="Componennts\CollisionComponent.h" />
+    <ClInclude Include="Componennts\FPSComponent.h" />
+    <ClInclude Include="Componennts\HealthComponent.h" />
+    <ClInclude Include="Componennts\ImageComponent.h" />
+    <ClInclude Include="Componennts\ImageRenderComponent.h" />
+    <ClInclude Include="Componennts\LivesComponent.h" />
+    <ClInclude Include="Componennts\RotatorComponent.h" />
+    <ClInclude Include="Componennts\SchootComponent.h" />
+    <ClInclude Include="Componennts\ScoreComponent.h" />
+    <ClInclude Include="Componennts\TextComponent.h" />
+    <ClInclude Include="Componennts\TextRenderComponent.h" />
+    <ClInclude Include="Componennts\TransformComponent.h" />
+    <ClInclude Include="Enemy\BaseEnemyComponent.h" />
+    <ClInclude Include="Enemy\EnemyController.h" />
+    <ClInclude Include="Enemy\RecognizerEnemy.h" />
+    <ClInclude Include="Events\Event.h" />
+    <ClInclude Include="Events\EventManager.h" />
+    <ClInclude Include="GameEvents.h" />
+    <ClInclude Include="GameLoader.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameTime.h" />
+    <ClInclude Include="Input\Controler.h" />
+    <ClInclude Include="Input\Controller.h" />
+    <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Minigin.h" />
+    <ClInclude Include="Resources\resource.h" />
+    <ClInclude Include="Resources\ResourceManager.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Sound\NullSoundSystem.h" />
+    <ClInclude Include="Sound\SDLSoundSystem.h" />
+    <ClInclude Include="Sound\SoundManager.h" />
+    <ClInclude Include="Sound\SoundSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp" />
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_demo.cpp" />
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_draw.cpp" />
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_plot.cpp" />
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_tables.cpp" />
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_widgets.cpp" />
+    <ClCompile Include="Base\Font.cpp" />
+    <ClCompile Include="Base\Renderer.cpp" />
+    <ClCompile Include="Base\Texture2D.cpp" />
+    <ClCompile Include="Base\Transform.cpp" />
+    <ClCompile Include="Commands\AddPointsCommand.cpp" />
+    <ClCompile Include="Commands\Command.cpp" />
+    <ClCompile Include="Commands\DamageCommand.cpp" />
+    <ClCompile Include="Commands\MoveCommand.cpp" />
+    <ClCompile Include="Commands\SchootCommand.cpp" />
+    <ClCompile Include="Componennts\AddPointsComponnent.cpp" />
+    <ClCompile Include="Componennts\AttackComponent.cpp" />
+    <ClCompile Include="Componennts\BaseComponent.cpp" />
+    <ClCompile Include="Componennts\BulletMovementComponent.cpp" />
+    <ClCompile Include="Componennts\CollisionComponent.cpp" />
+    <ClCompile Include="Componennts\FPSComponent.cpp" />
+    <ClCompile Include="Componennts\HealthComponent.cpp" />
+    <ClCompile Include="Componennts\ImageComponent.cpp" />
+    <ClCompile Include="Componennts\ImageRenderComponent.cpp" />
+    <ClCompile Include="Componennts\LivesComponent.cpp" />
+    <ClCompile Include="Componennts\RotatorComponent.cpp" />
+    <ClCompile Include="Componennts\SchootComponent.cpp" />
+    <ClCompile Include="Componennts\ScoreComponent.cpp" />
+    <ClCompile Include="Componennts\TextComponent.cpp" />
+    <ClCompile Include="Componennts\TextRenderComponent.cpp" />
+    <ClCompile Include="Componennts\TransformComponent.cpp" />
+    <ClCompile Include="Enemy\BaseEnemyComponent.cpp" />
+    <ClCompile Include="Enemy\EnemyController.cpp" />
+    <ClCompile Include="Enemy\RecognizerEnemy.cpp" />
+    <ClCompile Include="Events\Event.cpp" />
+    <ClCompile Include="Events\EventManager.cpp" />
+    <ClCompile Include="GameLoader.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Input\Controler.cpp" />
+    <ClCompile Include="Input\Controller.cpp" />
+    <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="Minigin.cpp" />
+    <ClCompile Include="Resources\ResourceManager.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Sound\NullSoundSystem.cpp" />
+    <ClCompile Include="Sound\SDLSoundSystem.cpp" />
+    <ClCompile Include="Sound\SoundManager.cpp" />
+    <ClCompile Include="Sound\SoundSystem.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

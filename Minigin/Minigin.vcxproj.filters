@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{d77566bc-c7a8-4e6b-80ea-4c931763035c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\Source Files">
+      <UniqueIdentifier>{c40a50bb-e0bd-4a9c-9875-4b0b06a7c7d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\Header Files">
+      <UniqueIdentifier>{ab558e10-b17f-46bb-9b84-18f7dae1d3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\Backend Files">
+      <UniqueIdentifier>{8f8df8b8-d196-4886-a140-4ef96d50ab91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\Backend Files\Header Files">
+      <UniqueIdentifier>{bca2c9d5-2554-40b5-bca7-a058c355f583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\Backend Files\Source Files">
+      <UniqueIdentifier>{a9e8b790-116b-4c39-8cbc-4d2c2ca4a695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{bf506099-a2b2-4490-b249-49fb3782d09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Componennts">
+      <UniqueIdentifier>{15d31349-1ac6-454e-84b7-5a2e173eb3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{0e6589af-406f-41fd-be58-7fed5ddb1d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{8081f976-f74b-4673-8e90-d9b0227256a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{dfc812dd-4ec7-4951-bef7-6466b102936e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{0d0f9e6e-074a-497b-bace-fa8127038006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{325a40c9-79fa-433a-ab3a-c309e1604f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{51e1147c-aabb-42f0-ba84-7f98c9387a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{4d54c7fc-454f-41c6-8348-443fad319686}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
+      <Filter>imgui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui.h">
+      <Filter>imgui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui_internal.h">
+      <Filter>imgui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui_plot.h">
+      <Filter>imgui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_rectpack.h">
+      <Filter>imgui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_textedit.h">
+      <Filter>imgui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h">
+      <Filter>imgui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.h">
+      <Filter>imgui\Backend Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.h">
+      <Filter>imgui\Backend Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameTime.h" />
+    <ClInclude Include="Minigin.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Sound\SoundSystem.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SDLSoundSystem.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\NullSoundSystem.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Controler.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Controller.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventManager.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\AddPointsComponnent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\AttackComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\BaseComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\CollisionComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\FPSComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\HealthComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\ImageComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\ImageRenderComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\LivesComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\RotatorComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\ScoreComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\TextComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\TextRenderComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\TransformComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands\AddPointsCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands\Command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands\DamageCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands\MoveCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Font.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Renderer.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Texture2D.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Transform.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvents.h" />
+    <ClInclude Include="GameLoader.h" />
+    <ClInclude Include="Enemy\BaseEnemyComponent.h" />
+    <ClInclude Include="Enemy\EnemyController.h" />
+    <ClInclude Include="Enemy\RecognizerEnemy.h" />
+    <ClInclude Include="Componennts\SchootComponent.h" />
+    <ClInclude Include="Commands\SchootCommand.h" />
+    <ClInclude Include="Componennts\BulletMovementComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
+      <Filter>imgui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_demo.cpp">
+      <Filter>imgui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_draw.cpp">
+      <Filter>imgui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_plot.cpp">
+      <Filter>imgui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_tables.cpp">
+      <Filter>imgui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_widgets.cpp">
+      <Filter>imgui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.cpp">
+      <Filter>imgui\Backend Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.cpp">
+      <Filter>imgui\Backend Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Minigin.cpp" />
+    <ClCompile Include="Sound\SoundManager.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundSystem.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\NullSoundSystem.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Controler.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Controller.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\Event.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\EventManager.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\AddPointsComponnent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\AttackComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\BaseComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\CollisionComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\FPSComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\HealthComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\ImageComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\ImageRenderComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\LivesComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\RotatorComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\ScoreComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\TextComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\TextRenderComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\TransformComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\AddPointsCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\Command.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\DamageCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\MoveCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Font.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Renderer.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Texture2D.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Transform.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLoader.cpp" />
+    <ClCompile Include="Sound\SDLSoundSystem.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\BaseEnemyComponent.cpp" />
+    <ClCompile Include="Enemy\EnemyController.cpp" />
+    <ClCompile Include="Enemy\RecognizerEnemy.cpp" />
+    <ClCompile Include="Componennts\SchootComponent.cpp" />
+    <ClCompile Include="Commands\SchootCommand.cpp" />
+    <ClCompile Include="Componennts\BulletMovementComponent.cpp" />
+  </ItemGroup>
+</Project>
