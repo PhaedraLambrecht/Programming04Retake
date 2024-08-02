@@ -52,6 +52,8 @@ namespace dae
 			return glm::vec2(m_width, m_height);
 		}
 
+		void Render() const override;
+
 
 	private:
 

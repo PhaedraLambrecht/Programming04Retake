@@ -4,6 +4,8 @@
 
 namespace dae
 {
+	class BlockStates;
+
 	class IceBlockComponent final : public BaseComponent
 	{
 	public:
@@ -23,9 +25,7 @@ namespace dae
 	private:
 
 		glm::vec2 m_Direction;
-	//	std::unique_ptr<BlockStates> m_pBlockState;
-		
-
+		std::unique_ptr<BlockStates> m_pBlockState;
 	};
 }
 

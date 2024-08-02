@@ -113,6 +113,30 @@ void dae::Renderer::RenderRect(float x, float y, float width, float height, SDL_
 	SDL_RenderFillRect(GetSDLRenderer(), &dstRect);
 }
 
+void dae::Renderer::RenderRectEdges(float x, float y, float width, float height, SDL_Color color) const
+{
+	SDL_SetRenderDrawColor(GetSDLRenderer(), color.r, color.g, color.b, color.a);
+
+	// Calculate corner positions
+	glm::vec2 topLeft{ x, y };
+	glm::vec2 topRight{ x + width, y };
+	glm::vec2 bottomLeft{ x, y + height };
+	glm::vec2 bottomRight{ x + width, y + height };
+
+
+	// Render top edge
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topLeft.x), static_cast<int>(topLeft.y), static_cast<int>(topRight.x), static_cast<int>(topRight.y));
+
+	// Render bottom edge
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(bottomLeft.x), static_cast<int>(bottomLeft.y), static_cast<int>(bottomRight.x), static_cast<int>(bottomRight.y));
+
+	// Render left edge
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topLeft.x), static_cast<int>(topLeft.y), static_cast<int>(bottomLeft.x), static_cast<int>(bottomLeft.y));
+
+	// Render right edge
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topRight.x), static_cast<int>(topRight.y), static_cast<int>(bottomRight.x), static_cast<int>(bottomRight.y));
+}
+
 SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }
 
 SDL_Window* dae::Renderer::GetWindow() const
