@@ -19,10 +19,16 @@ dae::HealthComponent::~HealthComponent()
 void dae::HealthComponent::Damaged(int damage)
 {
 	m_Health -= damage;
+	std::cout << m_Health << std::endl;
+
+	std::unique_ptr<PlayerEvent> event = std::make_unique<PlayerEvent>("Damage", m_PlayerIndex);
+	EventManager::GetInstance().QueueEvent<PlayerEvent>(std::move(event));
 
 	if (m_Health <= 0)
 	{
+		std::cout << m_Health << std::endl;
 		Death();
+		
 	}
 }
 
@@ -40,6 +46,7 @@ void dae::HealthComponent::SetPlayerIndex(unsigned playerIndex)
 {
 	m_PlayerIndex = playerIndex;
 }
+
 
 void dae::HealthComponent::Death()
 {

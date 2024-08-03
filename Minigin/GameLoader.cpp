@@ -64,7 +64,7 @@
 
 namespace dae
 {
-	std::shared_ptr<GameObject> GameLoader::AddPlayer(Scene& scene, int playerIndex, InputManager& , const bool , const std::string texture, glm::vec2 location)
+	std::shared_ptr<GameObject> GameLoader::AddPlayer(Scene& scene, int playerIndex, InputManager& , const bool , const std::string texture)
 	{
 		const auto playerObject = std::make_shared<GameObject>();
 		scene.Add(playerObject);
@@ -74,7 +74,7 @@ namespace dae
 		// Add the transform/rotatorComponent component
 		playerObject->AddComponent<RotatorComponent>();
 
-		playerObject->GetComponent<TransformComponent>()->SetLocalPosition(location.x, location.y);
+		playerObject->GetComponent<TransformComponent>()->SetLocalPosition(200.0f, 200.0f);
 
 
 		// Add the image component
@@ -88,7 +88,7 @@ namespace dae
 		playerObject->AddComponent<HealthComponent>();
 
 		playerObject->GetComponent<HealthComponent>()->SetPlayerIndex(playerIndex);
-		playerObject->GetComponent<HealthComponent>()->SetHealth(3);
+		playerObject->GetComponent<HealthComponent>()->SetHealth(4);
 
 
 		// Add the points component
@@ -150,7 +150,7 @@ namespace dae
 		const auto baseEnemy = enemyObject->GetComponent<BaseEnemyComponent>();
 
 		enemyObject->GetComponent<RecognizerEnemy>()->Initialize(enemyObject->GetComponent<TransformComponent>()->GetWorldPosition().x, enemyObject->GetComponent<TransformComponent>()->GetWorldPosition().y, 10, 10, player);
-		enemyObject->GetComponent<dae::RecognizerEnemy>()->SetWindowDimensions(g_WindowWidth, g_WindowHeight);
+		//enemyObject->GetComponent<dae::RecognizerEnemy>()->SetWindowDimensions(g_WindowWidth, g_WindowHeight);
 		
 
 		// Add enemy controller

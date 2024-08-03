@@ -34,8 +34,6 @@ dae::SchootComponent::SchootComponent(GameObject* Owner)
 	glm::vec2 playerSpriteDimension = GetOwner()->GetComponent<dae::ImageComponent>()->GetTextureDimensions();
 	glm::vec2 bulletSpriteDimensions = static_cast<glm::vec2>(m_AttackTexture->GetSize());
 
-	m_BulletStartOffset = { playerSpriteDimension.x / 2.0f + bulletSpriteDimensions.x / 2.0f, playerSpriteDimension.y };
-
 	m_pSoundsystem = SoundManager::GetInstance().GetSoundSystem();
 
 
@@ -60,7 +58,7 @@ void dae::SchootComponent::Attack()
 	if (m_FiredBullets.size() >= 1)
 		return;
 
-	const glm::vec2 ownPos = m_pPlayerTransform->GetWorldPosition();
+	const glm::vec2 ownPos = m_pPlayerTransform->GetWorldPosition() + GetOwner()->GetComponent<ImageComponent>()->GetTextureDimensions() / 2.f;
 	auto bullet = std::make_shared<GameObject>();
 
 
@@ -74,7 +72,7 @@ void dae::SchootComponent::Attack()
 	auto collision = bullet->AddComponent<dae::CollisionComponent>();
 	collision->SetCollisionData({ "PlayerAttack", bullet.get() });
 
-	float collisionWidht{ 11 }, collisionHeight{ 10 };
+	float collisionWidht{ bullet->GetComponent<dae::ImageComponent>()->GetTextureDimensions().x }, collisionHeight{ bullet->GetComponent<dae::ImageComponent>()->GetTextureDimensions().y };
 	collision->SetBounds(collisionWidht, collisionHeight);
 
 

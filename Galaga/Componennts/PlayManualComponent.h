@@ -8,12 +8,6 @@
 
 namespace dae
 {
-	struct PlayerManual
-	{
-		std::string controls;
-		std::string description;
-	};
-
 	class PlayManualComponent final : public BaseComponent
 	{
 	public:
@@ -30,7 +24,8 @@ namespace dae
 
 
 		void RenderUI() override;
-		void AddExplanation(PlayerManual playermanual);
+		// todo: make this accept a multi map  to make life easier
+		void AddExplanation(std::string controls, std::string description);
 
 
 	private:
@@ -40,8 +35,8 @@ namespace dae
 		bool m_IstextUpdated;
 		std::string m_Text;
 
-		PlayerManual m_constolsExplanation;
-		std::vector<PlayerManual> m_InsertionOrder;
+		std::map<std::string, std::string> m_constolsExplanation;
+		std::vector<std::string> insertionOrder;
 	};
 }
 

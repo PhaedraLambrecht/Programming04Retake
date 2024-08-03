@@ -59,7 +59,7 @@ dae::Minigin::Minigin(const std::string& dataPath, int windowWidth, int windowHe
 	}
 
 	m_window = SDL_CreateWindow(
-		"Programming 4 assignment",
+		"Programming 4 retake",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		windowWidth,

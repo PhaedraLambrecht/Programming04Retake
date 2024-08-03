@@ -3,15 +3,18 @@
 #include "GameTime.h"
 #include "Events/EventManager.h"
 #include "Commands/AddPointsCommand.h"
+#include "Componennts/ImageComponent.h"
+#include "Componennts/HealthComponent.h"
 #include <iostream>
 #include <algorithm>
 
+#include "Commands/DamageCommand.h"
 
 dae::RecognizerEnemy::RecognizerEnemy(GameObject* gameObject)
 	: BaseEnemyComponent(gameObject)
 	, m_Health{3}
-	, m_EnemySpeed{ 50.f }
-	, m_ChangeDirectionInterval{ 5.f }
+	, m_EnemySpeed{ 25.f }
+	, m_ChangeDirectionInterval{ 2.f }
 	, m_TimeSinceLastChange{ 0.f }
 {
 	std::unique_ptr<Event> event = std::make_unique<Event>();
@@ -40,12 +43,33 @@ void dae::RecognizerEnemy::Initialize(float x, float y, float w, float h, std::s
 
 void dae::RecognizerEnemy::Update()
 {
+	if (m_pPlayer == nullptr)
+	{
+		return;
+	}
+
 	glm::vec2 playerPos = m_pPlayer->GetComponent<TransformComponent>()->GetWorldPosition();
 	glm::vec2 enemyPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+	glm::vec2 playerSize = m_pPlayer->GetComponent<ImageComponent>()->GetTextureDimensions();
+	glm::vec2 enemySize = GetOwner()->GetComponent<ImageComponent>()->GetTextureDimensions();
+
+	// Detect overlap
+	if (enemyPos.x < playerPos.x + playerSize.x &&
+		enemyPos.x + enemySize.x > playerPos.x &&
+		enemyPos.y < playerPos.y + playerSize.y &&
+		enemyPos.y + enemySize.y > playerPos.y)
+	{
+		if (m_AttackCooldown <= 0.0f)
+		{
+			dae::DamageCommand damageCommand(m_pPlayer, 1);
+			damageCommand.Execute();
+			m_AttackCooldown = m_DamageInterval; // Reset cooldown timer to 10 seconds
+		}
+	}
+	m_AttackCooldown -= GameTime::GetInstance().GetDeltaTime();
+
 
 	float deltaTime = GameTime::GetInstance().GetDeltaTime();
-
-
 	m_TimeSinceLastChange += deltaTime;
 	if (m_TimeSinceLastChange >= m_ChangeDirectionInterval)
 	{
@@ -69,8 +93,8 @@ void dae::RecognizerEnemy::move(float deltaTime, int x, int y)
 	auto transform = GetOwner()->GetComponent<TransformComponent>();
 	glm::vec2 newPos = transform->GetWorldPosition() + glm::vec2(x, y) * (deltaTime * m_EnemySpeed);
 
-	newPos.x = std::clamp( newPos.x, 0.0f, (float)m_windowWidth - (m_PositionSize.width * 5) );
-	newPos.y = std::clamp( newPos.y, 0.0f, (float)m_windowHeight - (m_PositionSize.height * 5) );
+	newPos.x = std::clamp( newPos.x, m_xPos, m_windowWidth - (GetOwner()->GetComponent<dae::ImageComponent>()->GetTextureDimensions().x * 2) );
+	newPos.y = std::clamp( newPos.y, m_yPos, m_windowHeight - (GetOwner()->GetComponent<dae::ImageComponent>()->GetTextureDimensions().y * 10) );
 	transform->SetLocalPosition(newPos.x, newPos.y);
 }
 
@@ -207,20 +231,16 @@ bool dae::RecognizerEnemy::IsBlockingUp(const glm::vec2& enemyPos, const glm::ve
 
 
 
-
-void dae::RecognizerEnemy::Attack()
-{
-	std::cout << "attack\n";
-}
-
 void dae::RecognizerEnemy::OnBDeath(const Event* e)
 {
 	if (strcmp(e->eventType, "EnemyDeath") != 0)
 		return;
 }
 
-void dae::RecognizerEnemy::SetWindowDimensions(unsigned int width, unsigned int height)
+void dae::RecognizerEnemy::SetWindowDimensions(float xPos, float yPos,  float width, float height)
 {
+	m_xPos = xPos;
+	m_yPos = yPos;
 	m_windowWidth = width;
 	m_windowHeight = height;
 }

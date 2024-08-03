@@ -73,40 +73,39 @@ void dae::CollisionComponent::SetBounds(float width, float height)
 	m_height = height;
 }
 
-
-bool dae::CollisionComponent::CheckOverlapp(CollisionComponent* pOther) const
-{
-	if (!m_pTransform || !pOther->m_pTransform)
-		return false;
-
-	// Get world positions and dimensions
-	const glm::vec2 worldPos = m_pTransform->GetWorldPosition();
-	const glm::vec2 otherWorldPos = pOther->m_pTransform->GetWorldPosition();
-	const glm::vec2 size(m_width, m_height);
-	const glm::vec2 otherSize(pOther->m_width, pOther->m_height);
-
-	// Calculate bounding box corners
-	const glm::vec2 bottomRight = worldPos + size;
-	const glm::vec2 otherBottomRight = otherWorldPos + otherSize;
-
-	// Check for edge collisions
-	bool leftEdgeTouch = (worldPos.x == otherBottomRight.x);
-	bool rightEdgeTouch = (bottomRight.x == otherWorldPos.x);
-	bool topEdgeTouch = (worldPos.y == otherBottomRight.y);
-	bool bottomEdgeTouch = (bottomRight.y == otherWorldPos.y);
-
-	// Check if any of the edges are touching exactly
-	bool edgeTouchX = leftEdgeTouch || rightEdgeTouch;
-	bool edgeTouchY = topEdgeTouch || bottomEdgeTouch;
-
-	// Return true if there's any edge touch
-	return (edgeTouchX || edgeTouchY);
-}
-
 void dae::CollisionComponent::Render() const
 {
 	TransformComponent* pTransform = GetOwner()->GetComponent<TransformComponent>();
 
 
 	Renderer::GetInstance().RenderRectEdges(pTransform->GetWorldPosition().x, pTransform->GetWorldPosition().y, m_width, m_height, { 255, 0, 0, 255 });
+}
+
+
+bool dae::CollisionComponent::CheckOverlapp(CollisionComponent* pOther) const
+{
+	if (!m_pTransform || !pOther->m_pTransform)
+		return false;
+
+
+	const glm::vec2 worldPos = m_pTransform->GetWorldPosition();
+	const  glm::vec2 otherWorldPos = pOther->m_pTransform->GetWorldPosition();
+
+
+	// Get world positions and dimensions
+	const glm::vec2& pos = m_pTransform->GetWorldPosition();
+	const glm::vec2& otherPos = pOther->m_pTransform->GetWorldPosition();
+	const glm::vec2 size(m_width, m_height);
+	const glm::vec2 otherSize(pOther->m_width, pOther->m_height);
+
+	// Calculate bounding box corners
+	const glm::vec2& bottomRight = pos + size;
+	const glm::vec2& otherBottomRight = otherPos + otherSize;
+
+	// Check for overlap in both X and Y axes
+	bool overlapX = pos.x < otherBottomRight.x && bottomRight.x > otherPos.x;
+	bool overlapY = pos.y < otherBottomRight.y && bottomRight.y > otherPos.y;
+
+	// Return true if overlaps in both axes
+	return overlapX && overlapY;
 }

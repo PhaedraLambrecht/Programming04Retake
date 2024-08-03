@@ -18,6 +18,7 @@ namespace dae
 		{
 			eventType = type;
 		};
+
 		unsigned int playerIndex{};
 	};
 

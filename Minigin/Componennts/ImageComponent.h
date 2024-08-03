@@ -25,7 +25,8 @@ namespace dae
 
 
 
-		void SetTexture(const std::string& fileName);	
+		void SetTexture(const std::string& fileName);
+	
 		glm::vec2 GetTextureDimensions() const;
 		std::shared_ptr<Texture2D> GetTexture() const;
 

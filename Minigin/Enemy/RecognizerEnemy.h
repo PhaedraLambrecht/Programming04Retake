@@ -21,10 +21,9 @@ namespace dae
 		void Update() override;
 		bool DoDamage() override;
 		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject) override;
-		void Attack() override;
 
 		void OnBDeath(const Event* e);
-		void SetWindowDimensions(unsigned int width, unsigned int height);
+		void SetWindowDimensions(float xPos, float yPos, float width, float height);
 
 
 	private:
@@ -52,7 +51,11 @@ namespace dae
 		float m_ChangeDirectionInterval;
 		float m_TimeSinceLastChange;
 
-		unsigned int m_windowWidth, m_windowHeight;
+		float m_AttackCooldown;
+		const float m_DamageInterval{ 5.0f };
+
+		float m_windowWidth, m_windowHeight;
+		float m_xPos, m_yPos;
 
 
 

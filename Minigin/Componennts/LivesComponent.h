@@ -33,6 +33,7 @@ namespace dae
 
 		void UpdateText();
 		void Death(const Event* e);
+		void LoseLife(const Event* e);
 
 
 		unsigned m_PlayerIndex;

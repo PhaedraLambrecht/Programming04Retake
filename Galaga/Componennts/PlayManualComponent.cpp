@@ -26,20 +26,20 @@ void dae::PlayManualComponent::RenderUI()
 	ImGui::End();
 }
 
-void dae::PlayManualComponent::AddExplanation(PlayerManual playermanual)
+void dae::PlayManualComponent::AddExplanation(std::string controls, std::string description)
 {
-	m_constolsExplanation.controls =  playermanual.controls;
-	m_constolsExplanation.description = playermanual.description;
-	m_InsertionOrder.push_back(playermanual);
+	m_constolsExplanation[controls] =  description;
+	insertionOrder.push_back(controls);
 	m_IstextUpdated = false;
 }
 
 
 void dae::PlayManualComponent::SetText()
 {
-	for (const PlayerManual& keybind : m_InsertionOrder)
+	for (const std::string& key : insertionOrder)
 	{
-		m_Text += keybind.controls + ": " + keybind.description + '\n';
+		const std::string& value = m_constolsExplanation[key];
+		m_Text += key + ": " + value + '\n';
 	}
 	m_IstextUpdated = true;
 }

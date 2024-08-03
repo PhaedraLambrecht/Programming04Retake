@@ -8,7 +8,7 @@
 #define MIX_CHANNEL_GROUP_MUSIC 0
 #define MIX_CHANNEL_GROUP_EFFECTS 1
 
-// TODO: question why it sometimes works and sometimes not
+
 class dae::SDLSoundSystem::SDLMixerImpl final
 {
 public:
@@ -44,7 +44,7 @@ dae::SDLSoundSystem::SDLMixerImpl::SDLMixerImpl()
 		throw std::runtime_error("Failed to initialize SDL audio: " + std::string(SDL_GetError()));
 	}
 
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096) < 0) 
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096) < 0)
 	{
 		throw std::runtime_error("Failed to open audio: " + std::string(Mix_GetError()));
 	}
@@ -55,7 +55,7 @@ dae::SDLSoundSystem::SDLMixerImpl::SDLMixerImpl()
 
 dae::SDLSoundSystem::SDLMixerImpl::~SDLMixerImpl()
 {
-	for (auto& sound : m_LoadedSounds) 
+	for (auto& sound : m_LoadedSounds)
 	{
 		Mix_FreeChunk(sound.second);
 	}
@@ -102,7 +102,7 @@ void dae::SDLSoundSystem::SDLMixerImpl::PlaySound(unsigned short id, SoundData::
 {
 	bool soundLoaded = IsSoundLoaded(id);
 	bool musicLoaded = IsMusicLoaded(id);
-	
+
 
 	volume = std::clamp(volume, 0.0f, 1.0f);
 	int mixVolume = static_cast<int>(volume * MIX_MAX_VOLUME);// Convert float volume to SDL_mixer scale
@@ -115,7 +115,7 @@ void dae::SDLSoundSystem::SDLMixerImpl::PlaySound(unsigned short id, SoundData::
 	switch (soundType)
 	{
 	case SoundData::SoundType::SoundEffect:
-	
+
 		if (!soundLoaded)
 		{
 			throw std::runtime_error("Sound with ID " + std::to_string(id) + " is not loaded.");
@@ -134,7 +134,7 @@ void dae::SDLSoundSystem::SDLMixerImpl::PlaySound(unsigned short id, SoundData::
 		break;
 
 	case SoundData::SoundType::Music:
-	
+
 		if (!musicLoaded)
 		{
 			throw std::runtime_error("Music with ID " + std::to_string(id) + " is not loaded.");
