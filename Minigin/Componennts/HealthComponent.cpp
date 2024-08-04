@@ -7,7 +7,7 @@ dae::HealthComponent::HealthComponent(GameObject* owner)
 	:BaseComponent(owner)
 	,m_PlayerIndex{0}
 {
-	 SetHealth(1);
+	 SetHealth(0);
 }
 
 dae::HealthComponent::~HealthComponent()
@@ -42,6 +42,7 @@ int dae::HealthComponent::GeTHealth() const
 	return m_Health;
 }
 
+
 void dae::HealthComponent::SetPlayerIndex(unsigned playerIndex)
 {
 	m_PlayerIndex = playerIndex;
@@ -52,4 +53,6 @@ void dae::HealthComponent::Death()
 {
 	std::unique_ptr<PlayerEvent> event = std::make_unique<PlayerEvent>("Death", m_PlayerIndex);
 	EventManager::GetInstance().QueueEvent<PlayerEvent>(std::move(event));
+
+	SetHealth(4);
 }

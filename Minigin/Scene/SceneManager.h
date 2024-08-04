@@ -29,6 +29,7 @@ namespace dae
 
 
 		void SwitchScene(const std::string& name);
+		std::vector<std::shared_ptr<Scene>> m_Scenes;
 
 
 	private:
@@ -38,7 +39,6 @@ namespace dae
 
 
 		std::shared_ptr<Scene> m_ActiveScene;
-		std::vector<std::shared_ptr<Scene>> m_Scenes;
 	};
 }
 #endif // ENGINE2D_SCENEMANAGER_H

@@ -8,7 +8,6 @@ namespace dae
 	public:
 
 		explicit BaseCommand() = default;
-	//	virtual ~BaseCommand() = default;
 		virtual ~BaseCommand();
 
 		BaseCommand(const BaseCommand& other) = delete;

@@ -192,6 +192,7 @@
     <ClInclude Include="Componennts\SchootComponent.h" />
     <ClInclude Include="Commands\SchootCommand.h" />
     <ClInclude Include="Componennts\BulletMovementComponent.h" />
+    <ClInclude Include="SkipLevelCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
@@ -330,5 +331,6 @@
     <ClCompile Include="Componennts\SchootComponent.cpp" />
     <ClCompile Include="Commands\SchootCommand.cpp" />
     <ClCompile Include="Componennts\BulletMovementComponent.cpp" />
+    <ClCompile Include="SkipLevelCommand.cpp" />
   </ItemGroup>
 </Project>

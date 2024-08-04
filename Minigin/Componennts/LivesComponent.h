@@ -28,7 +28,6 @@ namespace dae
 		void SetPlayerIndex(unsigned playerIndex);
 		void SetLives(GameObject* Player);
 
-
 	private:
 
 		void UpdateText();

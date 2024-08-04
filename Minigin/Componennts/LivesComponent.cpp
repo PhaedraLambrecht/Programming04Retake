@@ -36,6 +36,7 @@ dae::LivesComponent::LivesComponent(GameObject* owner)
 	PlayerEvent eventDeath{ "Death", m_PlayerIndex };
 
 	EventManager::GetInstance().RegisterObserver(eventDeath, boundDeath);
+	
 	// Define a lambda function to bind the LoseLife member function to an event observer
 	auto boundLoseLife = [this](const Event* event)
 		{
@@ -73,17 +74,18 @@ void dae::LivesComponent::UpdateText()
 
 void dae::LivesComponent::Death(const Event* e)
 {
+	if (!(strcmp(e->eventType, "Death") == 0))
+		return;
+
 	if (m_LivesLeft <= 0)
 	{
 		std::cout << "Dead\n";
 
-		// TODO: Remove this
-		SceneManager::GetInstance().SwitchScene("level2");
+		//TODO: Implement a gameOver scene and then switch back to the main menu
+		SceneManager::GetInstance().SwitchScene(SceneManager::GetInstance().GetActiveScene().GetName());
+
 		return;
 	}
-
-	if (!(strcmp(e->eventType, "Death") == 0))
-		return;
 }
 
 void dae::LivesComponent::LoseLife(const Event* e)

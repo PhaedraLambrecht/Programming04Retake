@@ -183,7 +183,8 @@ void dae::SDLSoundSystem::SDLMixerImpl::Init()
 		linked.major, linked.minor, linked.patch);
 
 
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 5, 0) < 0) {
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 5, 0) < 0) 
+	{
 		throw std::runtime_error("Failed to open audio: " + std::string(Mix_GetError()));
 	}
 
