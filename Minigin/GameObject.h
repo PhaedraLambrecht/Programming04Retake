@@ -48,7 +48,7 @@ namespace dae
 		bool IsReadyForDestruction();
 		int GetDrawDepth();
 		void MarkForDestruction();
-		
+
 
 	private:
 

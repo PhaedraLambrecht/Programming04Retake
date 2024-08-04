@@ -165,8 +165,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="BlockComponent.cpp" />
     <ClCompile Include="Commands\StartButtonCommand.cpp" />
     <ClCompile Include="Componennts\PlayManualComponent.cpp" />
+    <ClCompile Include="EggBlockComponent.cpp" />
     <ClCompile Include="LoadLevelFromFile.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -180,8 +182,10 @@
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h" />
+    <ClInclude Include="BlockComponent.h" />
     <ClInclude Include="Commands\StartButtonCommand.h" />
     <ClInclude Include="Componennts\PlayManualComponent.h" />
+    <ClInclude Include="EggBlockComponent.h" />
     <ClInclude Include="LoadLevelFromFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

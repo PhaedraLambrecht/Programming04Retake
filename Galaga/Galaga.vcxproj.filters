@@ -28,6 +28,8 @@
     <ClCompile Include="Commands\StartButtonCommand.cpp" />
     <ClCompile Include="Componennts\PlayManualComponent.cpp" />
     <ClCompile Include="LoadLevelFromFile.cpp" />
+    <ClCompile Include="BlockComponent.cpp" />
+    <ClCompile Include="EggBlockComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -60,5 +62,7 @@
     <ClInclude Include="Commands\StartButtonCommand.h" />
     <ClInclude Include="Componennts\PlayManualComponent.h" />
     <ClInclude Include="LoadLevelFromFile.h" />
+    <ClInclude Include="BlockComponent.h" />
+    <ClInclude Include="EggBlockComponent.h" />
   </ItemGroup>
 </Project>
