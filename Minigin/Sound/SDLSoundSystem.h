@@ -26,8 +26,14 @@ namespace dae
 		void Quit() override;
 		virtual void NotifySound(SoundData soundData);
 
+		void SetMasterVolume(float volume) override;
+		float GetMasterVolume() const override;
+
 
 	private:
+
+
+		float m_MasterVolume{ 1.0f };// 0.0f - 1.0f
 
 		std::string m_DataPath;
 

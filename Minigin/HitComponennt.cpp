@@ -1,10 +1,10 @@
-#include "SchootComponent.h"
+#include "HitComponennt.h"
 #include "GameObject.h"
 #include "Base/Texture2D.h"
 #include "Componennts/TransformComponent.h"
 #include "Resources/ResourceManager.h"
 #include "Componennts/ImageComponent.h"
-#include "BulletMovementComponent.h"
+#include "Componennts/BulletMovementComponent.h"
 #include "Componennts/ImageRenderComponent.h"
 #include "Sound/SoundManager.h"
 #include "Sound/SoundSystem.h"
@@ -13,12 +13,11 @@
 #include "Events/EventManager.h"
 #include <iostream>
 
-
-dae::SchootComponent::SchootComponent(GameObject* Owner)
+dae::HitComponennt::HitComponennt(GameObject* Owner)
 	:BaseComponent(Owner)
 	, m_pScene{}
 	, m_FiredBullets{}
-	, m_HasDestroyedBullet{false}
+	, m_HasDestroyedBullet{ false }
 	, m_playerIndex{ 0 }
 	, m_SceneName{ "Demo" }
 {
@@ -37,12 +36,12 @@ dae::SchootComponent::SchootComponent(GameObject* Owner)
 	m_pSoundsystem = SoundManager::GetInstance().GetSoundSystem();
 }
 
-dae::SchootComponent::~SchootComponent()
+dae::HitComponennt::~HitComponennt()
 {
-	std::cout << "SchootComponent\n";
+	std::cout << "HitComponennt\n";
 }
 
-void dae::SchootComponent::Attack()
+void dae::HitComponennt::Attack()
 {
 	if (!m_pScene)
 	{
@@ -59,18 +58,18 @@ void dae::SchootComponent::Attack()
 	bullet->GetComponent<TransformComponent>()->SetLocalPosition(ownPos.x, ownPos.y);
 	bullet->AddComponent<ImageComponent>()->SetTexture("Bullet.png");
 	bullet->AddComponent<BulletMovementComponent>();
-	bullet->AddComponent<dae::ImageRenderComponent>();
+	bullet->GetComponent<BulletMovementComponent>()->SetMaxDistance(0.5f);
 
 
 
 	auto collision = bullet->AddComponent<dae::CollisionComponent>();
-	collision->SetCollisionData({ "PlayerAttack", bullet.get() });
+	collision->SetCollisionData({ "DiamondAttack", bullet.get() });
 
 	float collisionWidht{ bullet->GetComponent<dae::ImageComponent>()->GetTextureDimensions().x }, collisionHeight{ bullet->GetComponent<dae::ImageComponent>()->GetTextureDimensions().y };
 	collision->SetBounds(collisionWidht, collisionHeight);
 
 
-	auto boundHitCallback = std::bind(&SchootComponent::BulletHitCallback, this, std::placeholders::_1, std::placeholders::_2);
+	auto boundHitCallback = std::bind(&HitComponennt::BulletHitCallback, this, std::placeholders::_1, std::placeholders::_2);
 	collision->SetCallback(boundHitCallback);
 
 	collision->SetScene(m_pScene);
@@ -91,8 +90,8 @@ void dae::SchootComponent::Attack()
 	m_pSoundsystem->NotifySound(SoundData{ 1, 0.1f, SoundData::SoundType::SoundEffect });
 }
 
-void dae::SchootComponent::Update()
-{ 
+void dae::HitComponennt::Update()
+{
 	// std::remove_if to moves all elements in the vector that meet a certain condition 
 	// to the end of the vector
 	if (m_HasDestroyedBullet)
@@ -123,28 +122,27 @@ void dae::SchootComponent::Update()
 	}
 }
 
-void dae::SchootComponent::SetScene(Scene* scene)
+void dae::HitComponennt::SetScene(Scene* scene)
 {
 	m_pScene = scene;
 }
 
-void dae::SchootComponent::SetPlayerIndex(int index)
+void dae::HitComponennt::SetPlayerIndex(int index)
 {
 	m_playerIndex = index;
 }
 
-void dae::SchootComponent::BulletHitCallback(const dae::CollisionData& collisionOwner, const dae::CollisionData& hitObject)
+void dae::HitComponennt::BulletHitCallback(const dae::CollisionData& collisionOwner, const dae::CollisionData& hitObject)
 {
-	if (!(strcmp(hitObject.ownerType.c_str(), "Enemy") == 0))
+	if (!(strcmp(hitObject.ownerType.c_str(), "diamondBlock") == 0))
 		return;
 
 
 	std::unique_ptr<SceneEvent> hitEvent = std::make_unique<SceneEvent>();
-	hitEvent->eventType = "EnemyHit";
+	hitEvent->eventType = "BlockHit";
 	hitEvent->sceneName = m_SceneName;
 	EventManager::GetInstance().QueueEvent(std::move(hitEvent));
 
 
 	collisionOwner.owningObject->MarkForDestruction();
 }
-

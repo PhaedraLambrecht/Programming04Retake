@@ -19,17 +19,32 @@
     <Filter Include="imgui\Backend Files\Source Files">
       <UniqueIdentifier>{7e4ce3e2-7c2b-408d-a35b-b2f43925523e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Componnents">
+      <UniqueIdentifier>{94dc03cb-499d-43d6-86c9-9157129b40c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commnads">
+      <UniqueIdentifier>{639f69e5-865d-4904-909a-64d2d6bc9e4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.cpp">
       <Filter>imgui\Backend Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Commands\StartButtonCommand.cpp" />
-    <ClCompile Include="Componennts\PlayManualComponent.cpp" />
     <ClCompile Include="LoadLevelFromFile.cpp" />
-    <ClCompile Include="BlockComponent.cpp" />
-    <ClCompile Include="EggBlockComponent.cpp" />
+    <ClCompile Include="BlockComponent.cpp">
+      <Filter>Componnents</Filter>
+    </ClCompile>
+    <ClCompile Include="EggBlockComponent.cpp">
+      <Filter>Componnents</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\PlayManualComponent.cpp">
+      <Filter>Componnents</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\StartButtonCommand.cpp">
+      <Filter>Commnads</Filter>
+    </ClCompile>
+    <ClCompile Include="DiamondBlockComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -59,10 +74,19 @@
     <ClInclude Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.h">
       <Filter>imgui\Backend Files\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Commands\StartButtonCommand.h" />
-    <ClInclude Include="Componennts\PlayManualComponent.h" />
     <ClInclude Include="LoadLevelFromFile.h" />
-    <ClInclude Include="BlockComponent.h" />
-    <ClInclude Include="EggBlockComponent.h" />
+    <ClInclude Include="BlockComponent.h">
+      <Filter>Componnents</Filter>
+    </ClInclude>
+    <ClInclude Include="EggBlockComponent.h">
+      <Filter>Componnents</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\PlayManualComponent.h">
+      <Filter>Componnents</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands\StartButtonCommand.h">
+      <Filter>Commnads</Filter>
+    </ClInclude>
+    <ClInclude Include="DiamondBlockComponent.h" />
   </ItemGroup>
 </Project>

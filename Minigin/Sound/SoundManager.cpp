@@ -41,4 +41,14 @@ void dae::SoundManager::SetSoundSystem(std::unique_ptr<SoundSystem> soundSystem)
 dae::SoundSystem* dae::SoundManager::GetSoundSystem()
 {
 	return m_SoundSystem.get();
-};
+}
+
+void dae::SoundManager::SetMasterVolume(float volume)
+{
+	m_SoundSystem->SetMasterVolume(volume);
+}
+
+float dae::SoundManager::GetMasterVolume() const
+{
+	return m_SoundSystem->GetMasterVolume();
+}

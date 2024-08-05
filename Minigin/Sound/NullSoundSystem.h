@@ -24,6 +24,9 @@ namespace dae
 		virtual void NotifySound(SoundData) {};
 
 
+
+		void SetMasterVolume(float /*volume*/) override {};
+		float GetMasterVolume() const override { return 0.0f; };
 	};
 }
 

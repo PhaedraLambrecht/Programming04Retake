@@ -22,7 +22,7 @@ namespace dae
 		bool DoDamage() override;
 		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject) override;
 
-		void OnBDeath(const Event* e);
+		void OnDeath(const Event* e);
 		void SetWindowDimensions(float xPos, float yPos, float width, float height);
 
 
@@ -34,7 +34,6 @@ namespace dae
 			float width;
 			float height;
 		} m_PositionSize;
-
 		struct MovementFlags
 		{
 			bool left;
@@ -66,7 +65,6 @@ namespace dae
 
 		void move(float deltaTime, int x, int y);
 		void HandleBlockedMovement(float deltaTime);
-		void ResetMovementBlocks();
 
 		bool IsBlockingLeft(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
 		bool IsBlockingRight(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;

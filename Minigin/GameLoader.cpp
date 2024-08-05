@@ -32,6 +32,7 @@
 
 // Schoot component
 #include "Componennts/SchootComponent.h"
+#include "HitComponennt.h"
 
 // Collision component
 #include "Componennts/CollisionComponent.h"
@@ -99,8 +100,10 @@ namespace dae
 
 		// Add schoot component
 		playerObject->AddComponent<SchootComponent>();
-
 		playerObject->GetComponent<SchootComponent>()->SetScene(&scene);
+
+		playerObject->AddComponent<HitComponennt>();
+		playerObject->GetComponent<HitComponennt>()->SetScene(&scene);
 
 
 		// Add collision component

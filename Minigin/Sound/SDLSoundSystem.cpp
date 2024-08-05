@@ -30,9 +30,13 @@ public:
 	void Init();
 	void Quit();
 
+	void SetMasterVolume(float volume);
+	float GetMasterVolume() const;
+
 
 private:
 
+	float m_MasterVolume{ 0.5f };// 0.0f - 1.0f
 	std::unordered_map<unsigned short, Mix_Chunk*> m_LoadedSounds;
 	std::unordered_map<unsigned short, Mix_Music*> m_Loadedmusic;
 };
@@ -98,14 +102,14 @@ void dae::SDLSoundSystem::SDLMixerImpl::LoadSound(dae::SoundData soundData)
 	}
 }
 
-void dae::SDLSoundSystem::SDLMixerImpl::PlaySound(unsigned short id, SoundData::SoundType soundType, float volume)
+void dae::SDLSoundSystem::SDLMixerImpl::PlaySound(unsigned short id, SoundData::SoundType soundType, float /*volume*/)
 {
 	bool soundLoaded = IsSoundLoaded(id);
 	bool musicLoaded = IsMusicLoaded(id);
 
 
-	volume = std::clamp(volume, 0.0f, 1.0f);
-	int mixVolume = static_cast<int>(volume * MIX_MAX_VOLUME);// Convert float volume to SDL_mixer scale
+	
+	int mixVolume = static_cast<int>(m_MasterVolume * MIX_MAX_VOLUME);// Convert float volume to SDL_mixer scale
 
 
 	Mix_Chunk* chunk{};
@@ -205,6 +209,18 @@ void dae::SDLSoundSystem::SDLMixerImpl::Quit()
 	SDL_Quit();
 }
 
+void dae::SDLSoundSystem::SDLMixerImpl::SetMasterVolume(float volume)
+{
+	m_MasterVolume = std::clamp(volume, 0.0f, 1.0f);
+
+	Mix_Volume(-1, static_cast<int>(m_MasterVolume * MIX_MAX_VOLUME));
+	Mix_VolumeMusic(static_cast<int>(m_MasterVolume * MIX_MAX_VOLUME));
+}
+
+float dae::SDLSoundSystem::SDLMixerImpl::GetMasterVolume() const
+{
+	return m_MasterVolume;
+}
 
 
 
@@ -249,6 +265,16 @@ void dae::SDLSoundSystem::NotifySound(SoundData soundData)
 
 
 	m_QueueCondition.notify_all();
+}
+
+void dae::SDLSoundSystem::SetMasterVolume(float volume)
+{
+	m_pImpl->SetMasterVolume(volume);
+}
+
+float dae::SDLSoundSystem::GetMasterVolume() const
+{
+	return m_pImpl->GetMasterVolume();
 }
 
 void dae::SDLSoundSystem::PlaySound(const SoundData& soundData)

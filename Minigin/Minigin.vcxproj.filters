@@ -186,13 +186,32 @@
     </ClInclude>
     <ClInclude Include="GameEvents.h" />
     <ClInclude Include="GameLoader.h" />
-    <ClInclude Include="Enemy\BaseEnemyComponent.h" />
-    <ClInclude Include="Enemy\EnemyController.h" />
-    <ClInclude Include="Enemy\RecognizerEnemy.h" />
-    <ClInclude Include="Componennts\SchootComponent.h" />
-    <ClInclude Include="Commands\SchootCommand.h" />
-    <ClInclude Include="Componennts\BulletMovementComponent.h" />
-    <ClInclude Include="SkipLevelCommand.h" />
+    <ClInclude Include="VolumeCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands\SchootCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\BaseEnemyComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\BulletMovementComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="Componennts\SchootComponent.h">
+      <Filter>Componennts</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipLevelCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\RecognizerEnemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyController.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="HitComponennt.h" />
+    <ClInclude Include="HitCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
@@ -325,12 +344,31 @@
     <ClCompile Include="Sound\SDLSoundSystem.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\BaseEnemyComponent.cpp" />
-    <ClCompile Include="Enemy\EnemyController.cpp" />
-    <ClCompile Include="Enemy\RecognizerEnemy.cpp" />
-    <ClCompile Include="Componennts\SchootComponent.cpp" />
-    <ClCompile Include="Commands\SchootCommand.cpp" />
-    <ClCompile Include="Componennts\BulletMovementComponent.cpp" />
-    <ClCompile Include="SkipLevelCommand.cpp" />
+    <ClCompile Include="VolumeCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\SchootCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\BaseEnemyComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\BulletMovementComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="Componennts\SchootComponent.cpp">
+      <Filter>Componennts</Filter>
+    </ClCompile>
+    <ClCompile Include="SkipLevelCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\RecognizerEnemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyController.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HitComponennt.cpp" />
+    <ClCompile Include="HitCommand.cpp" />
   </ItemGroup>
 </Project>

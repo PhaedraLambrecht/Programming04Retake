@@ -253,6 +253,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="GameLoader.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="HitCommand.h" />
+    <ClInclude Include="HitComponennt.h" />
     <ClInclude Include="Input\Controler.h" />
     <ClInclude Include="Input\Controller.h" />
     <ClInclude Include="Input\InputManager.h" />
@@ -267,6 +269,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="Sound\SDLSoundSystem.h" />
     <ClInclude Include="Sound\SoundManager.h" />
     <ClInclude Include="Sound\SoundSystem.h" />
+    <ClInclude Include="VolumeCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.cpp" />
@@ -310,6 +313,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="GameLoader.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="HitCommand.cpp" />
+    <ClCompile Include="HitComponennt.cpp" />
     <ClCompile Include="Input\Controler.cpp" />
     <ClCompile Include="Input\Controller.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
@@ -322,6 +327,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Sound\SDLSoundSystem.cpp" />
     <ClCompile Include="Sound\SoundManager.cpp" />
     <ClCompile Include="Sound\SoundSystem.cpp" />
+    <ClCompile Include="VolumeCommand.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

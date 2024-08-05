@@ -15,10 +15,10 @@
 
 dae::EggBlockComponent::EggBlockComponent(GameObject* owner)
 	:BlockComponent(owner)
-	, m_HatchingTime{ 3.0f }
 	, m_CurrentTime{ 0.0f }
 	, m_HasHatched{ false }
 {
+	m_HatchingTime = float(rand() % 10 + 4);
 }
 
 void dae::EggBlockComponent::Update()

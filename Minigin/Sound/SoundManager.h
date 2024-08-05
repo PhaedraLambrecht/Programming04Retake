@@ -20,6 +20,8 @@ namespace dae
 		void SetSoundSystem(std::unique_ptr<SoundSystem> soundSystem);
 		SoundSystem* GetSoundSystem();
 
+		void SetMasterVolume(float volume);
+		float GetMasterVolume() const;
 
 	private:
 

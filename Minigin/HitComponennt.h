@@ -1,11 +1,9 @@
-#ifndef ENGINE2D_SHOOTCOMPONENT_H
-#define ENGINE2D_SHOOTCOMPONENT_H
+#pragma once
 #include "Componennts/BaseComponent.h"
 #include "Scene/Scene.h"
 #include "glm/glm.hpp"
 #include "Componennts/CollisionComponent.h"
 #include <vector>
-
 
 namespace dae
 {
@@ -14,18 +12,18 @@ namespace dae
 	class Scene;
 	class TransformComponent;
 
-	class SchootComponent final : public BaseComponent
+	class HitComponennt final : public BaseComponent
 	{
 	public:
 
-		SchootComponent(GameObject* Owner);
-		~SchootComponent() override;
+		HitComponennt(GameObject* Owner);
+		~HitComponennt() override;
 
 		// Copy and move
-		SchootComponent(const SchootComponent& other) = delete;
-		SchootComponent(SchootComponent&& other) = delete;
-		SchootComponent& operator=(const SchootComponent& other) = delete;
-		SchootComponent& operator=(SchootComponent&& other) = delete;
+		HitComponennt(const HitComponennt& other) = delete;
+		HitComponennt(HitComponennt&& other) = delete;
+		HitComponennt& operator=(const HitComponennt& other) = delete;
+		HitComponennt& operator=(HitComponennt&& other) = delete;
 
 
 		void Attack();
@@ -55,5 +53,3 @@ namespace dae
 		void BulletHitCallback(const dae::CollisionData& collisionOwner, const dae::CollisionData& hitObject);
 	};
 }
-
-#endif // ENGINE2D_SHOOTCOMPONENT_H

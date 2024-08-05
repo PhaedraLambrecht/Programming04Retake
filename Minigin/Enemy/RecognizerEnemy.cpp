@@ -231,7 +231,7 @@ bool dae::RecognizerEnemy::IsBlockingUp(const glm::vec2& enemyPos, const glm::ve
 
 
 
-void dae::RecognizerEnemy::OnBDeath(const Event* e)
+void dae::RecognizerEnemy::OnDeath(const Event* e)
 {
 	if (strcmp(e->eventType, "EnemyDeath") != 0)
 		return;

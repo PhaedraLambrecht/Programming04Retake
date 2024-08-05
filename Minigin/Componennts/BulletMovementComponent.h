@@ -20,7 +20,7 @@ namespace dae
 		BulletMovementComponent& operator=(BulletMovementComponent&& other) = delete;
 
 		void Update() override;
-
+		void SetMaxDistance(float distance);
 
 	private:
 

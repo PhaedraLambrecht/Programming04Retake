@@ -40,6 +40,9 @@ namespace dae
 		virtual void Init(const std::string& m_DataPath) = 0;
 		virtual void Quit() = 0;
 		virtual void NotifySound(SoundData soundData) = 0;
+
+		virtual void SetMasterVolume(float volume) = 0;
+		virtual float GetMasterVolume() const = 0;
 	};
 }
 

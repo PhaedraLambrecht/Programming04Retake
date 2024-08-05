@@ -38,3 +38,8 @@ void dae::BulletMovementComponent::Update()
 	}
 
 }
+
+void dae::BulletMovementComponent::SetMaxDistance(float distance)
+{
+	m_MaxDistance = distance;
+}

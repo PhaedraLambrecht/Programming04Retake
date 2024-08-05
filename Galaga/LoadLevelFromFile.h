@@ -32,7 +32,6 @@ namespace dae
 		// Helper functions for processing
 		void ClearLevel();
 		std::vector<int> ParseLine(const std::string& line) const;
-		bool ValidateValue(int value) const;
 	};
 }
 
