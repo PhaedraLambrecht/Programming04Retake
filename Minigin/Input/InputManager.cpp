@@ -66,6 +66,7 @@ bool dae::InputManager::ReadKeyBoardInput()
 
 void dae::InputManager::HandleConrollerInputs()
 {
+
 	for (auto& controller : m_Controllers)
 	{
 		controller->Update();
@@ -100,6 +101,7 @@ void dae::InputManager::HandleConrollerInputs()
 			
 			if (m_Controllers[index]->IsButtonPressed(static_cast<unsigned int>(button) ))
 				command->Execute();
+		
 			
 			break;
 		}

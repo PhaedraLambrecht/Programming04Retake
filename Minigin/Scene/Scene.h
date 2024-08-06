@@ -40,6 +40,12 @@ namespace dae
 		bool IsActive();
 		void SetActive(bool isActive);
 
+		void AddEnemy(std::shared_ptr<GameObject> enemy);
+		void AddPlayer(GameObject* player);
+		GameObject* GetPlayer();
+		bool m_NoEnemies = false;
+		bool m_EnemyLoaded = false;
+
 
 	private: 
 	
@@ -62,6 +68,9 @@ namespace dae
 		bool m_WasObjectDestroyed;
 
 		const std::string m_DestructionEventString;
+
+		std::vector<std::shared_ptr<GameObject>> m_pEnemies;
+		GameObject* m_pPlayer;
 	};
 
 }

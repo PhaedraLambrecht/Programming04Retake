@@ -30,7 +30,7 @@
 // Points componnent
 #include "Componennts/AddPointsComponnent.h"
 
-// Schoot component
+// Schoot/ Hit component
 #include "Componennts/SchootComponent.h"
 #include "HitComponennt.h"
 
@@ -52,6 +52,7 @@
 #include "Commands/SchootCommand.h"
 #include "Commands/AddPointsCommand.h"
 #include "Commands/DamageCommand.h"
+#include "HitCommand.h"
 
 // Enemy components
 #include "Enemy/BaseEnemyComponent.h"
@@ -75,7 +76,7 @@ namespace dae
 		// Add the transform/rotatorComponent component
 		playerObject->AddComponent<RotatorComponent>();
 
-		playerObject->GetComponent<TransformComponent>()->SetLocalPosition(200.0f, 200.0f);
+	//	playerObject->GetComponent<TransformComponent>()->SetLocalPosition(200.0f, 200.0f);
 
 
 		// Add the image component
@@ -117,7 +118,6 @@ namespace dae
 
 		// Add UI
 		AddUI(scene, playerIndex, playerObject.get());
-
 
 		return playerObject;
 	}
@@ -176,10 +176,10 @@ namespace dae
 	}
 
 
-	// I have no clue why this does not work =) (it works in main though)
-	void GameLoader::AddControleler(Scene& scene, int playerIndex, InputManager& inputManager, GameObject* player)
+	
+	void GameLoader::AddControleler(Scene& scene, GameObject* player, unsigned controller)
 	{
-		unsigned controller = inputManager.AddController();
+		auto& inputManager = InputManager::GetInstance();
 		
 		MoveCommand * command{ nullptr };
 		constexpr float originalSpeed{ 100.0f };
@@ -189,93 +189,45 @@ namespace dae
 
 
 		// Movement
-		// move up
-		command = inputManager.AddControllerCommand<MoveCommand>
-		(
-			std::make_unique<MoveCommand>
-			(
-				player, 
-				playerMoveDirectiony, 
-				-originalSpeed
-			),
-			ControllerInput{ controller, ControlerButton::DPAD_UP, ButtonState::Pressed, scene.GetName()}
+		command = inputManager.AddControllerCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectiony, -originalSpeed),
+			dae::ControllerInput{ controller, dae::ControlerButton::DPAD_UP, dae::ButtonState::Pressed, scene.GetName() }
 		);
 
-		// move down
-		command = inputManager.AddControllerCommand<MoveCommand>
-			(
-				std::make_unique<MoveCommand>
-				(
-					player,
-					playerMoveDirectiony,
-					originalSpeed
-				),
-				ControllerInput{ controller, ControlerButton::DPAD_DOWN, ButtonState::Pressed, scene.GetName() }
+		command = inputManager.AddControllerCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectiony, originalSpeed),
+			dae::ControllerInput{ controller, dae::ControlerButton::DPAD_DOWN,dae::ButtonState::Pressed, scene.GetName() }
 		);
 
-
-		// Move left
-		command = inputManager.AddControllerCommand<MoveCommand>
-			(
-				std::make_unique<MoveCommand>
-				(
-					player,
-					playerMoveDirectionx,
-					-originalSpeed
-				),
-				ControllerInput{ controller, ControlerButton::DPAD_LEFT, ButtonState::Pressed, scene.GetName() }
+		command = inputManager.AddControllerCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectionx, -originalSpeed),
+			dae::ControllerInput{ controller, dae::ControlerButton::DPAD_LEFT, dae::ButtonState::Pressed, scene.GetName() }
 		);
 
-		// Move right
-		command = inputManager.AddControllerCommand<MoveCommand>
-			(
-				std::make_unique<MoveCommand>
-				(
-					player,
-					playerMoveDirectionx,
-					originalSpeed
-				),
-				ControllerInput{ controller, ControlerButton::DPAD_RIGHT, ButtonState::Pressed, scene.GetName() }
+		command = inputManager.AddControllerCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectionx, originalSpeed),
+			dae::ControllerInput{ controller, dae::ControlerButton::DPAD_RIGHT, dae::ButtonState::Pressed, scene.GetName() }
 		);
 
 
 
-		// Schoot
-		inputManager.AddControllerCommand<SchootCommand>
-		(
-			std::make_unique<dae::SchootCommand>
-			(
-				player, 
-				playerIndex
-			),
-			dae::ControllerInput{ static_cast<unsigned int>(playerIndex), dae::ControlerButton::X, dae::ButtonState::Up, scene.GetName()}
-		);
+		// Schooting
+		inputManager.AddControllerCommand<dae::SchootCommand>(
+			std::make_unique<dae::SchootCommand>(player, 1),
+			dae::ControllerInput{ controller, dae::ControlerButton::X, dae::ButtonState::Up, scene.GetName() });
 
-		// Points
-		//inputManager.AddControllerCommand<AddPointsCommand>
-		//(
-		//	std::make_unique<AddPointsCommand>
-		//	(
-		//		player,
-		//		playerIndex
-		//	),
-		//	ControllerInput{ static_cast<unsigned int>(playerIndex), ControlerButton::X, ButtonState::Up, scene.GetName() }
-		//);
+		// Hit
+		inputManager.AddControllerCommand<dae::HitCommand>(
+			std::make_unique<dae::HitCommand>(player, 0),
+			dae::ControllerInput{ controller, dae::ControlerButton::B, dae::ButtonState::Up, scene.GetName() });
 
-		// Health
-		inputManager.AddControllerCommand<DamageCommand>
-			(
-				std::make_unique<DamageCommand>
-				(
-					player,
-					playerIndex
-				),
-				ControllerInput{ static_cast<unsigned int>(playerIndex), ControlerButton::X, ButtonState::Up, scene.GetName() }
-		);
+
 	}
 
-	void GameLoader::AddKeyboard(Scene& scene, int playerIndex, InputManager& inputManager, GameObject* player)
+	void GameLoader::AddKeyboard(Scene& scene, GameObject* player)
 	{
+		auto& inputManager = InputManager::GetInstance();
+
 		MoveCommand* command{ nullptr };
 		constexpr float originalSpeed{ 100.0f };
 		constexpr glm::vec2 playerMoveDirectionx{ 1,0 };
@@ -284,89 +236,39 @@ namespace dae
 
 
 		// Movement
-		// move up
-		command = inputManager.AddKeyboardCommand<MoveCommand>
-			(
-				std::make_unique<MoveCommand>
-				(
-					player,
-					playerMoveDirectiony,
-					-originalSpeed
-				),
-				KeyboardInput{ SDL_SCANCODE_W, ButtonState::Up, scene.GetName() }
+		command = inputManager.AddKeyboardCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectiony, -originalSpeed),
+			dae::KeyboardInput{ SDL_SCANCODE_W, dae::ButtonState::Pressed, scene.GetName() }
 		);
 
-		// move down
-		command = inputManager.AddKeyboardCommand<MoveCommand>
-			(
-				std::make_unique<MoveCommand>
-				(
-					player,
-					playerMoveDirectiony,
-					originalSpeed
-				),
-				KeyboardInput{ SDL_SCANCODE_S, ButtonState::Up, scene.GetName() }
+		command = inputManager.AddKeyboardCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectiony, originalSpeed),
+			dae::KeyboardInput{ SDL_SCANCODE_S, dae::ButtonState::Pressed, scene.GetName() }
 		);
 
 
-		// Move left
-		command = inputManager.AddKeyboardCommand<MoveCommand>
-			(
-				std::make_unique<MoveCommand>
-				(
-					player,
-					playerMoveDirectionx,
-					-originalSpeed
-				),
-				KeyboardInput{ SDL_SCANCODE_A, ButtonState::Up, scene.GetName() }
+		command = inputManager.AddKeyboardCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectionx, -originalSpeed),
+			dae::KeyboardInput{ SDL_SCANCODE_A, dae::ButtonState::Pressed, scene.GetName() }
 		);
 
-		// Move right
-		command = inputManager.AddKeyboardCommand<MoveCommand>
-			(
-				std::make_unique<MoveCommand>
-				(
-					player,
-					playerMoveDirectionx,
-					originalSpeed
-				),
-				KeyboardInput{ SDL_SCANCODE_D, ButtonState::Up, scene.GetName() }
+		command = inputManager.AddKeyboardCommand<dae::MoveCommand>(
+			std::make_unique<dae::MoveCommand>(player, playerMoveDirectionx, originalSpeed),
+			dae::KeyboardInput{ SDL_SCANCODE_D, dae::ButtonState::Pressed, scene.GetName() }
 		);
 
 
 
-		// Schoot
-		inputManager.AddKeyboardCommand<SchootCommand>
-			(
-				std::make_unique<dae::SchootCommand>
-				(
-					player,
-					playerIndex
-				),
-				KeyboardInput{ SDL_SCANCODE_X, ButtonState::Up, scene.GetName() }
-		);
+		// Schooting
+		inputManager.AddKeyboardCommand<dae::SchootCommand>(
+			std::make_unique<dae::SchootCommand>(player, 0),
+			dae::KeyboardInput{ SDL_SCANCODE_X, dae::ButtonState::Up, scene.GetName() });
 
-		// Points
-		//inputManager.AddKeyboardCommand<AddPointsCommand>
-		//	(
-		//		std::make_unique<AddPointsCommand>
-		//		(
-		//			player,
-		//			playerIndex
-		//		),
-		//		KeyboardInput{ SDL_SCANCODE_Q, ButtonState::Up, scene.GetName() }
-		//);
+		// Hit
+		inputManager.AddKeyboardCommand<dae::HitCommand>(
+			std::make_unique<dae::HitCommand>(player, 0),
+			dae::KeyboardInput{ SDL_SCANCODE_Z, dae::ButtonState::Up, scene.GetName() });
 
-		// Health
-		inputManager.AddKeyboardCommand<DamageCommand>
-			(
-				std::make_unique<DamageCommand>
-				(
-					player,
-					playerIndex
-				),
-				KeyboardInput{ SDL_SCANCODE_E, ButtonState::Up, scene.GetName() }
-		);
 	}
 
 	void GameLoader::AddUI(Scene& scene, int playerIndex, GameObject* player)

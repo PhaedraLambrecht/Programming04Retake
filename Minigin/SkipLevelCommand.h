@@ -10,7 +10,7 @@ namespace dae
 	public:
 
 		explicit SkipLevelCommand(GameObject* player);
-		~SkipLevelCommand() override = default;
+		~SkipLevelCommand() override;
 
 		SkipLevelCommand(const SkipLevelCommand& other) = delete;
 		SkipLevelCommand(SkipLevelCommand&& other) = delete;
@@ -23,7 +23,6 @@ namespace dae
 
 		GameObject* m_pPlayer;
 
-		void ResetLiveCount();
 		void SwitchtoNextScene();
 	};
 }

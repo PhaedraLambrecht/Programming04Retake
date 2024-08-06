@@ -7,7 +7,12 @@
 
 
 dae::SkipLevelCommand::SkipLevelCommand(GameObject* player)
-	: m_pPlayer(player)
+	: BaseCommand()
+	, m_pPlayer(player)
+{
+}
+
+dae::SkipLevelCommand::~SkipLevelCommand()
 {
 }
 
@@ -17,7 +22,8 @@ void dae::SkipLevelCommand::Execute()
 }
 
 void dae::SkipLevelCommand::SwitchtoNextScene()
-{    // Get the active scene's name
+{   
+    // Get the active scene's name
     const std::string activeSceneName = dae::SceneManager::GetInstance().GetActiveScene().GetName();
 
     // Find the current scene in the list of scenes

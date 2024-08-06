@@ -2,10 +2,17 @@
 #include "Scene.h"
 #include <algorithm>
 
+#include "SkipLevelCommand.h"
 
 void dae::SceneManager::Update()
 {
 	m_ActiveScene->Update();
+
+	if (m_ActiveScene->m_NoEnemies && m_ActiveScene->m_EnemyLoaded)
+	{
+		SkipLevelCommand skipLevelCommand = SkipLevelCommand(m_ActiveScene->GetPlayer());
+		skipLevelCommand.Execute();
+	}
 }
 
 void dae::SceneManager::FixedUpdate(const float fixedTimeStep)

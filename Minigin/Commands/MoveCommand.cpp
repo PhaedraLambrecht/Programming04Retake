@@ -28,6 +28,7 @@ dae::MoveCommand::~MoveCommand()
 
 void dae::MoveCommand::Execute()
 {
+
 	glm::vec2 position{ m_pTransform->GetLocalPosition() + m_Direction * m_MoveSpeed * GameTime::GetInstance().GetDeltaTime() };
 
 	if (m_Direction.x > 0)

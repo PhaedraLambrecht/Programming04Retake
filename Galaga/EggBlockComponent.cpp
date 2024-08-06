@@ -30,6 +30,7 @@ void dae::EggBlockComponent::Update()
 		m_HasHatched = true;
 		const auto enemy = CreateEnemyObject(GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition(), m_Player, m_Background);
 		SceneManager::GetInstance().GetActiveScene().Add(enemy);
+		SceneManager::GetInstance().GetActiveScene().AddEnemy(enemy);
 
 
 		GetOwner()->MarkForDestruction();

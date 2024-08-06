@@ -25,14 +25,14 @@ namespace dae
 		std::shared_ptr<GameObject> AddEnemy(Scene& scene, const std::string texture, std::shared_ptr<GameObject> player);
 	
 
+		void AddControleler(Scene& scene, GameObject* player, unsigned controller);
+		void AddKeyboard(Scene& scene, GameObject* player);
 	
+
 	private:
 
-		void AddControleler(Scene& scene, int playerIndex, InputManager& inputManager, GameObject* player);
-		void AddKeyboard(Scene& scene, int playerIndex, InputManager& inputManager, GameObject* player);
 
 		void AddUI(Scene& scene, int playerIndex, GameObject* player);
-
 
 		float getRandomFloat(float min, float max);
 	};

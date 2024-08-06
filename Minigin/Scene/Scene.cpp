@@ -68,7 +68,6 @@ void Scene::Update()
 		if (objectCollision->IsActive())
 			objectCollision->IsOverlappingOtherCollision(m_ObjectCollisions);
 	}
-
 }
 
 void dae::Scene::FixedUpdate(const float fixedTimeStep)
@@ -114,6 +113,22 @@ void dae::Scene::SetActive(bool isActive)
 	m_IsActive = isActive;
 }
 
+void dae::Scene::AddEnemy(std::shared_ptr<GameObject> enemy)
+{
+	m_pEnemies.emplace_back(std::move(enemy));
+	m_EnemyLoaded = true;
+}
+
+void dae::Scene::AddPlayer(GameObject* player)
+{
+	m_pPlayer = player;
+}
+
+GameObject* dae::Scene::GetPlayer()
+{
+	return m_pPlayer;
+}
+
 const std::string& dae::Scene::GetName() const
 {
 	return m_Name;
@@ -155,6 +170,26 @@ void dae::Scene::RemoveDestroyedObjects()
 			})
 			, m_Objects.end()
 	);
+
+
+	m_pEnemies.erase
+	(
+		std::remove_if
+		(
+			m_pEnemies.begin(),
+			m_pEnemies.end(),
+			[&](std::shared_ptr<GameObject>& object)
+			{
+				return object->IsReadyForDestruction();
+			})
+		, m_pEnemies.end()
+	);
+
+
+	if (m_pEnemies.empty() && m_EnemyLoaded) 
+	{
+		m_NoEnemies = true;
+	}
 
 	m_WasObjectDestroyed = false;
 }

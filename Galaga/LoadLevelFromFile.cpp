@@ -48,7 +48,7 @@ std::vector<int> dae::LoadLevelFromFile::ParseLine(const std::string& line) cons
 
 	while (iss >> value)
 	{
-		if ( !(value < 0 || value > 5) )
+		if ( !(value < 0 || value > 6) )
 		{
 			row.push_back(value);
 		}
