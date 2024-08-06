@@ -60,8 +60,8 @@ namespace dae
 		GameObject* m_pParent;
 	
 
-		bool m_IsMarkedForDestruction{ false };
-		int m_DepthValue{ 0 };
+		bool m_isMarkedForDestruction{ false };
+		int m_depthValue{ 0 };
 
 
 		void AddChild(GameObject* pChild);

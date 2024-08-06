@@ -33,16 +33,16 @@ namespace dae
 	private:
 
 
-		float m_MasterVolume{ 1.0f };// 0.0f - 1.0f
+		float m_masterVolume{ 1.0f };// 0.0f - 1.0f
 
-		std::string m_DataPath;
+		std::string m_dataPath;
 
-		std::queue<SoundData> m_EventQueue;
-		std::mutex m_QueueMutex;
-		std::condition_variable m_QueueCondition;
-		std::atomic<bool> m_ThreadRunning{ false };
+		std::queue<SoundData> m_eventQueue;
+		std::mutex m_queueMutex;
+		std::condition_variable m_queueCondition;
+		std::atomic<bool> m_threadRunning{ false };
 
-		std::jthread m_SoundThread;
+		std::jthread m_soundThread;
 		void SoundThread();
 
 

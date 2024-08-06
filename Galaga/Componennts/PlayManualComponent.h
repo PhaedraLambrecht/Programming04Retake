@@ -13,7 +13,7 @@ namespace dae
 	public:
 
 		PlayManualComponent(GameObject* owner);
-		~PlayManualComponent() override;
+		~PlayManualComponent() override = default;
 
 		PlayManualComponent(const PlayManualComponent& other) = delete;
 		PlayManualComponent(PlayManualComponent&& other) = delete;
@@ -24,7 +24,6 @@ namespace dae
 
 
 		void RenderUI() override;
-		// todo: make this accept a multi map  to make life easier
 		void AddExplanation(std::string controls, std::string description);
 
 
@@ -32,11 +31,11 @@ namespace dae
 
 		void SetText();
 
-		bool m_IstextUpdated;
-		std::string m_Text;
+		bool m_isTextUpdated;
+		std::string m_manualText;
 
-		std::map<std::string, std::string> m_constolsExplanation;
-		std::vector<std::string> insertionOrder;
+		std::map<std::string, std::string> m_explanation;
+		std::vector<std::string> m_explanationOrder;
 	};
 }
 

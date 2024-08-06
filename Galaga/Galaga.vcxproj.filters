@@ -44,7 +44,10 @@
     <ClCompile Include="Commands\StartButtonCommand.cpp">
       <Filter>Commnads</Filter>
     </ClCompile>
-    <ClCompile Include="DiamondBlockComponent.cpp" />
+    <ClCompile Include="DiamondBlockComponent.cpp">
+      <Filter>Componnents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Minigin\HitComponennt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="Commands\StartButtonCommand.h">
       <Filter>Commnads</Filter>
     </ClInclude>
-    <ClInclude Include="DiamondBlockComponent.h" />
+    <ClInclude Include="DiamondBlockComponent.h">
+      <Filter>Componnents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Minigin\HitCommand.h" />
   </ItemGroup>
 </Project>

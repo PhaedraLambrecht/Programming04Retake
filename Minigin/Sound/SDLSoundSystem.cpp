@@ -238,18 +238,18 @@ dae::SDLSoundSystem::~SDLSoundSystem()
 void dae::SDLSoundSystem::Init(const std::string& dataPath)
 {
 	m_pImpl = std::make_unique<SDLMixerImpl>();
-	m_DataPath = dataPath;
+	m_dataPath = dataPath;
 	m_pImpl->Init();
 
 
-	m_ThreadRunning = true;
-	m_SoundThread = std::jthread(&SDLSoundSystem::SoundThread, this);
+	m_threadRunning = true;
+	m_soundThread = std::jthread(&SDLSoundSystem::SoundThread, this);
 }
 
 void dae::SDLSoundSystem::Quit()
 {
-	m_ThreadRunning = false;
-	m_QueueCondition.notify_all();
+	m_threadRunning = false;
+	m_queueCondition.notify_all();
 
 	if (m_pImpl)
 	{
@@ -259,12 +259,12 @@ void dae::SDLSoundSystem::Quit()
 
 void dae::SDLSoundSystem::NotifySound(SoundData soundData)
 {
-	std::lock_guard<std::mutex> lock(m_QueueMutex);
-	soundData.filePath = m_DataPath + soundData.filePath;
-	m_EventQueue.push(soundData);
+	std::lock_guard<std::mutex> lock(m_queueMutex);
+	soundData.filePath = m_dataPath + soundData.filePath;
+	m_eventQueue.push(soundData);
 
 
-	m_QueueCondition.notify_all();
+	m_queueCondition.notify_all();
 }
 
 void dae::SDLSoundSystem::SetMasterVolume(float volume)
@@ -303,25 +303,25 @@ bool dae::SDLSoundSystem::IsSoundLoaded(unsigned short id)
 
 void dae::SDLSoundSystem::SoundThread()
 {
-	while (m_ThreadRunning)
+	while (m_threadRunning)
 	{
-		std::unique_lock<std::mutex> lock(m_QueueMutex);
-		m_QueueCondition.wait(lock, [&] {
+		std::unique_lock<std::mutex> lock(m_queueMutex);
+		m_queueCondition.wait(lock, [&] {
 
-			if (!m_ThreadRunning)
+			if (!m_threadRunning)
 				return true;
 
-			return !m_EventQueue.empty();
+			return !m_eventQueue.empty();
 			});
 
 
-		if (m_EventQueue.empty())
+		if (m_eventQueue.empty())
 			return;
 
-		SoundData data = m_EventQueue.front();
+		SoundData data = m_eventQueue.front();
 
 
-		m_EventQueue.pop();
+		m_eventQueue.pop();
 		lock.unlock();
 
 		if (data.loadFile)

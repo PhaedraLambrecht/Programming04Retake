@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE2D_BLOCKCOMPONENT_H
+#define ENGINE2D_BLOCKCOMPONENT_H
 #include "Componennts/BaseComponent.h"
 
 namespace dae
@@ -22,3 +23,4 @@ namespace dae
 	};
 }
 
+#endif // !ENGINE2D_BLOCKCOMPONENT_H

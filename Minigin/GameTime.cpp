@@ -4,32 +4,32 @@
 namespace dae
 {
 	GameTime::GameTime()
-		:m_DeltaTime{}
-		, m_FrameRateCap{ 60 }
-		, m_FixedTimeStep{ 0.01f }
-		, m_PreviousTime{ std::chrono::high_resolution_clock::now() }
+		:m_deltaTime{}
+		, m_frameRateCap{ 60 }
+		, m_fixedTimeStep{ 0.01f }
+		, m_previousTime{ std::chrono::high_resolution_clock::now() }
 	{
-		m_MSPerFrame = 1000 / m_FrameRateCap;
+		m_MSPerFrame = 1000 / m_frameRateCap;
 	}
 
 
 	void GameTime::Update()
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
-		m_DeltaTime = std::chrono::duration<float>(currentTime - m_PreviousTime).count();
+		m_deltaTime = std::chrono::duration<float>(currentTime - m_previousTime).count();
 
 
-		m_PreviousTime = currentTime;
+		m_previousTime = currentTime;
 	}
 
 	float GameTime::GetDeltaTime() const
 	{
-		return m_DeltaTime;
+		return m_deltaTime;
 	}
 
 	float GameTime::GetFixedTimeStep() const
 	{
-		return m_FixedTimeStep;
+		return m_fixedTimeStep;
 	}
 
 	int GameTime::GetMSPerFrame() const
@@ -39,6 +39,6 @@ namespace dae
 
 	std::chrono::time_point<std::chrono::steady_clock> GameTime::GetPreviousTime() const
 	{
-		return m_PreviousTime;
+		return m_previousTime;
 	}
 }

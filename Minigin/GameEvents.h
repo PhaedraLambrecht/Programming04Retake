@@ -12,7 +12,7 @@ namespace dae
 	class EnemyControllerComponent;
 	struct ButterflyDestroyedEvent : public  Event
 	{
-		EnemyControllerComponent* Enemy{};
+		EnemyControllerComponent* enemy{};
 	};
 }
 

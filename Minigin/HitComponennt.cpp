@@ -16,30 +16,26 @@
 dae::HitComponennt::HitComponennt(GameObject* Owner)
 	:BaseComponent(Owner)
 	, m_pScene{}
-	, m_FiredBullets{}
-	, m_HasDestroyedBullet{ false }
+	, m_pFiredBullets{}
+	, m_hasDestroyedBullet{ false }
 	, m_playerIndex{ 0 }
-	, m_SceneName{ "Demo" }
+	, m_sceneName{ "Demo" }
 {
-	m_AttackTexture = ResourceManager::GetInstance().LoadTexture("Bullet.png");
+	m_pAttackTexture = ResourceManager::GetInstance().LoadTexture("Bullet.png");
 
 	m_pPlayerTransform = GetOwner()->GetComponent<TransformComponent>();
 	if (!m_pPlayerTransform)
 	{
-		throw std::invalid_argument("TextRendererComponent needs a TransformComponent");
+		throw std::invalid_argument("HitComponennt needs a TransformComponent");
 	}
 
 
 	glm::vec2 playerSpriteDimension = GetOwner()->GetComponent<dae::ImageComponent>()->GetTextureDimensions();
-	glm::vec2 bulletSpriteDimensions = static_cast<glm::vec2>(m_AttackTexture->GetSize());
+	glm::vec2 bulletSpriteDimensions = static_cast<glm::vec2>(m_pAttackTexture->GetSize());
 
 	m_pSoundsystem = SoundManager::GetInstance().GetSoundSystem();
 }
 
-dae::HitComponennt::~HitComponennt()
-{
-	std::cout << "HitComponennt\n";
-}
 
 void dae::HitComponennt::Attack()
 {
@@ -48,14 +44,80 @@ void dae::HitComponennt::Attack()
 		throw std::runtime_error("No scene set for ShootComponent. Use ShootComponent::SetScene to set the scene.");
 	}
 
-	if (m_FiredBullets.size() >= 1)
+	if (m_pFiredBullets.size() >= 1)
+	{
 		return;
+	}
+
 
 	const glm::vec2 ownPos = m_pPlayerTransform->GetWorldPosition() + GetOwner()->GetComponent<ImageComponent>()->GetTextureDimensions() / 2.f;
+	CreateBullet(ownPos);
+
+	std::unique_ptr<SceneEvent> hitEvent = std::make_unique<SceneEvent>();
+	hitEvent->eventType = "BulletFired";
+	hitEvent->sceneName = m_sceneName;
+	EventManager::GetInstance().QueueEvent(std::move(hitEvent));
+
+
+
+	// Play shooting sound
+	m_pSoundsystem->NotifySound(SoundData{ 1, 0.1f, SoundData::SoundType::SoundEffect });
+}
+
+void dae::HitComponennt::Update()
+{
+	// std::remove_if to moves all elements in the vector that meet a certain condition to the end of the vector
+	if (m_hasDestroyedBullet)
+	{
+		m_pFiredBullets.erase
+		(
+			std::remove_if
+			(
+				std::begin(m_pFiredBullets),
+				std::end(m_pFiredBullets),
+				[&](const auto& bullet)
+				{ return bullet->IsReadyForDestruction(); }
+			),
+			std::end(m_pFiredBullets)
+		);
+
+		m_hasDestroyedBullet = false;
+	}
+
+
+	// Check if any bullets are marked for destruction after the erase operation
+	for (auto& bullet : m_pFiredBullets)
+	{
+		if (bullet->IsReadyForDestruction())
+		{
+			m_hasDestroyedBullet = true;
+		}
+	}
+}
+
+void dae::HitComponennt::SetScene(Scene* scene)
+{
+	if (scene != nullptr)
+	{
+		m_pScene = scene;
+	}
+}
+
+void dae::HitComponennt::SetPlayerIndex(int index)
+{
+	if (index > 0 && index < 3)
+	{
+		m_playerIndex = index;
+	}
+
+}
+
+void dae::HitComponennt::CreateBullet(glm::vec2 position)
+{
 	auto bullet = std::make_shared<GameObject>();
 
 
-	bullet->GetComponent<TransformComponent>()->SetLocalPosition(ownPos.x, ownPos.y);
+	bullet->GetComponent<TransformComponent>()->SetLocalPosition(position.x, position.y);
 	bullet->AddComponent<ImageComponent>()->SetTexture("Bullet.png");
 	bullet->AddComponent<BulletMovementComponent>();
 	bullet->GetComponent<BulletMovementComponent>()->SetMaxDistance(0.5f);
@@ -75,61 +137,8 @@ void dae::HitComponennt::Attack()
 	collision->SetScene(m_pScene);
 	m_pScene->Add(bullet);
 	m_pScene->AddCollision(collision);
-	m_FiredBullets.push_back(bullet);
+	m_pFiredBullets.push_back(bullet);
 
-
-
-	std::unique_ptr<SceneEvent> hitEvent = std::make_unique<SceneEvent>();
-	hitEvent->eventType = "BulletFired";
-	hitEvent->sceneName = m_SceneName;
-	EventManager::GetInstance().QueueEvent(std::move(hitEvent));
-
-
-
-	// Play shooting sound
-	m_pSoundsystem->NotifySound(SoundData{ 1, 0.1f, SoundData::SoundType::SoundEffect });
-}
-
-void dae::HitComponennt::Update()
-{
-	// std::remove_if to moves all elements in the vector that meet a certain condition 
-	// to the end of the vector
-	if (m_HasDestroyedBullet)
-	{
-		m_FiredBullets.erase
-		(
-			std::remove_if
-			(
-				std::begin(m_FiredBullets),
-				std::end(m_FiredBullets),
-				[&](const auto& bullet)
-				{ return bullet->IsReadyForDestruction(); }
-			),
-			std::end(m_FiredBullets)
-		);
-
-		m_HasDestroyedBullet = false;
-	}
-
-
-	// Check if any bullets are marked for destruction after the erase operation
-	for (auto& bullet : m_FiredBullets)
-	{
-		if (bullet->IsReadyForDestruction())
-		{
-			m_HasDestroyedBullet = true;
-		}
-	}
-}
-
-void dae::HitComponennt::SetScene(Scene* scene)
-{
-	m_pScene = scene;
-}
-
-void dae::HitComponennt::SetPlayerIndex(int index)
-{
-	m_playerIndex = index;
 }
 
 void dae::HitComponennt::BulletHitCallback(const dae::CollisionData& collisionOwner, const dae::CollisionData& hitObject)
@@ -140,7 +149,7 @@ void dae::HitComponennt::BulletHitCallback(const dae::CollisionData& collisionOw
 
 	std::unique_ptr<SceneEvent> hitEvent = std::make_unique<SceneEvent>();
 	hitEvent->eventType = "BlockHit";
-	hitEvent->sceneName = m_SceneName;
+	hitEvent->sceneName = m_sceneName;
 	EventManager::GetInstance().QueueEvent(std::move(hitEvent));
 
 

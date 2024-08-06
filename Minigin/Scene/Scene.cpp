@@ -7,42 +7,42 @@
 
 using namespace dae;
 
-unsigned int Scene::m_IdCounter = 0;
+unsigned int Scene::m_idCounter = 0;
 
 Scene::Scene(const std::string& name) 
-	:m_Name(name)
-	, m_Objects{}
-	,m_WasGameObjectAdded{false}
-	,m_WasObjectDestroyed{false}
-	, m_DestructionEventString{"GameObject Destroyed"}
-	, m_IsActive{ false }
+	:m_name(name)
+	, m_pObjects{}
+	,m_wasGameObjectAdded{false}
+	,m_wasObjectDestroyed{false}
+	, m_destructionEventString{"GameObject Destroyed"}
+	, m_isActive{ false }
 {
 	Event destroyed;
-	destroyed.eventType = m_DestructionEventString.c_str();
+	destroyed.eventType = m_destructionEventString.c_str();
 	auto boundGameObjectDestroyed = std::bind(&Scene::HandleDestroyedEvent, this, std::placeholders::_1);
 	EventManager::GetInstance().RegisterObserver(destroyed, boundGameObjectDestroyed);
 }
 
 Scene::~Scene()
 {
-	m_Objects.clear();
-	m_ObjectCollisions.clear();
+	m_pObjects.clear();
+	m_pObjectCollisions.clear();
 }
 
 void Scene::Add(std::shared_ptr<GameObject> object)
 {
-	m_Objects.emplace_back(std::move(object));
-	m_WasGameObjectAdded = true;
+	m_pObjects.emplace_back(std::move(object));
+	m_wasGameObjectAdded = true;
 }
 
 void Scene::Remove(std::shared_ptr<GameObject> object)
 {
-	m_Objects.erase(std::remove(m_Objects.begin(), m_Objects.end(), object), m_Objects.end());
+	m_pObjects.erase(std::remove(m_pObjects.begin(), m_pObjects.end(), object), m_pObjects.end());
 }
 
 void Scene::RemoveAll()
 {
-	m_Objects.clear();
+	m_pObjects.clear();
 }
 
 
@@ -51,7 +51,7 @@ void Scene::Update()
 	DepthSortGameObjects();
 
 	//Normal Update
-	for (auto& object : m_Objects)
+	for (auto& object : m_pObjects)
 	{
 		if (!object->IsReadyForDestruction())
 		{
@@ -63,16 +63,16 @@ void Scene::Update()
 
 
 	//Collision Checks
-	for (auto& objectCollision : m_ObjectCollisions)
+	for (auto& objectCollision : m_pObjectCollisions)
 	{
 		if (objectCollision->IsActive())
-			objectCollision->IsOverlappingOtherCollision(m_ObjectCollisions);
+			objectCollision->IsOverlappingOtherCollision(m_pObjectCollisions);
 	}
 }
 
 void dae::Scene::FixedUpdate(const float fixedTimeStep)
 {
-	for (auto& object : m_Objects)
+	for (auto& object : m_pObjects)
 	{
 		if (!object->IsReadyForDestruction())
 		{
@@ -83,7 +83,7 @@ void dae::Scene::FixedUpdate(const float fixedTimeStep)
 
 void Scene::Render() const
 {
-	for (const auto& object : m_Objects)
+	for (const auto& object : m_pObjects)
 	{
 		object->Render();
 	}
@@ -92,25 +92,25 @@ void Scene::Render() const
 
 void dae::Scene::AddCollision(CollisionComponent* collision)
 {
-	m_ObjectCollisions.emplace_back(collision);
+	m_pObjectCollisions.emplace_back(collision);
 }
 
 void dae::Scene::RemoveCollision(CollisionComponent* collision)
 {
-	auto it = std::find(m_ObjectCollisions.begin(), m_ObjectCollisions.end(), collision);
+	auto it = std::find(m_pObjectCollisions.begin(), m_pObjectCollisions.end(), collision);
 
-	if (it != m_ObjectCollisions.end())
-		m_ObjectCollisions.erase(it);
+	if (it != m_pObjectCollisions.end())
+		m_pObjectCollisions.erase(it);
 }
 
 bool dae::Scene::IsActive()
 {
-	return m_IsActive;
+	return m_isActive;
 }
 
 void dae::Scene::SetActive(bool isActive)
 {
-	m_IsActive = isActive;
+	m_isActive = isActive;
 }
 
 void dae::Scene::AddEnemy(std::shared_ptr<GameObject> enemy)
@@ -131,44 +131,44 @@ GameObject* dae::Scene::GetPlayer()
 
 const std::string& dae::Scene::GetName() const
 {
-	return m_Name;
+	return m_name;
 }
 
 
 void dae::Scene::DepthSortGameObjects()
 {
-	if (!m_WasGameObjectAdded)
+	if (!m_wasGameObjectAdded)
 		return;
 
 	// Sort the objects based on their draw depth
 	std::sort
 	(
-		m_Objects.begin(),
-		m_Objects.end(),
+		m_pObjects.begin(),
+		m_pObjects.end(),
 		[](const auto& object1,
 			const auto& object2) {return object1->GetDrawDepth() < object2->GetDrawDepth(); }
 	);
 
 	// Reset the flag indicating a game object was added
-	m_WasGameObjectAdded = false;
+	m_wasGameObjectAdded = false;
 }
 
 void dae::Scene::RemoveDestroyedObjects()
 {
-	if (m_WasObjectDestroyed)
+	if (m_wasObjectDestroyed)
 		return;
 
-	m_Objects.erase
+	m_pObjects.erase
 	(
 		std::remove_if
 		(
-			m_Objects.begin(), 
-			m_Objects.end(),
+			m_pObjects.begin(), 
+			m_pObjects.end(),
 			[&](std::shared_ptr<GameObject>& object)
 			{
 				return object->IsReadyForDestruction();
 			})
-			, m_Objects.end()
+			, m_pObjects.end()
 	);
 
 
@@ -191,14 +191,14 @@ void dae::Scene::RemoveDestroyedObjects()
 		m_NoEnemies = true;
 	}
 
-	m_WasObjectDestroyed = false;
+	m_wasObjectDestroyed = false;
 }
 
 void dae::Scene::HandleDestroyedEvent(const Event* e)
 {
-	if (std::string(e->eventType) == m_DestructionEventString)
+	if (std::string(e->eventType) == m_destructionEventString)
 	{
-		m_WasObjectDestroyed = true;
+		m_wasObjectDestroyed = true;
 	}
 }
 

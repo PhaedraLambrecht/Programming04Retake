@@ -30,11 +30,11 @@ namespace dae
 
 	private:
 
-		float m_DeltaTime;
-		const int m_FrameRateCap;
-		const float m_FixedTimeStep;
+		float m_deltaTime;
+		const int m_frameRateCap;
+		const float m_fixedTimeStep;
 		int m_MSPerFrame;
-		std::chrono::time_point<std::chrono::steady_clock> m_PreviousTime;
+		std::chrono::time_point<std::chrono::steady_clock> m_previousTime;
 
 	};
 }

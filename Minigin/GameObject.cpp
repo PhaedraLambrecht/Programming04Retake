@@ -11,7 +11,7 @@ namespace dae
 	GameObject::GameObject(int depthvalue)
 		:m_pChildren{}
 		,m_pParent{}
-		,m_DepthValue{depthvalue}
+		,m_depthValue{depthvalue}
 	{
 		m_pTransform = AddComponent<TransformComponent>();
 	}
@@ -127,12 +127,12 @@ namespace dae
 
 	bool GameObject::IsReadyForDestruction()
 	{
-		return m_IsMarkedForDestruction;
+		return m_isMarkedForDestruction;
 	}
 
 	int GameObject::GetDrawDepth()
 	{
-		return m_DepthValue;
+		return m_depthValue;
 	}
 
 	void GameObject::MarkForDestruction()
@@ -142,7 +142,7 @@ namespace dae
 
 		EventManager::GetInstance().QueueEvent<dae::Event>(std::move(event));
 
-		m_IsMarkedForDestruction = true;
+		m_isMarkedForDestruction = true;
 	}
 
 	void GameObject::AddChild(GameObject* pChild)

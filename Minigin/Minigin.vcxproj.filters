@@ -211,7 +211,6 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="HitComponennt.h" />
-    <ClInclude Include="HitCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
@@ -368,7 +367,6 @@
     <ClCompile Include="Enemy\EnemyController.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="HitComponennt.cpp" />
     <ClCompile Include="HitCommand.cpp" />
   </ItemGroup>
 </Project>

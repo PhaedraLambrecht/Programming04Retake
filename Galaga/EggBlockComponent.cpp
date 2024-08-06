@@ -15,20 +15,21 @@
 
 dae::EggBlockComponent::EggBlockComponent(GameObject* owner)
 	:BlockComponent(owner)
-	, m_CurrentTime{ 0.0f }
-	, m_HasHatched{ false }
+	, m_currentTime{ 0.0f }
+	, m_hasHatched{ false }
 {
-	m_HatchingTime = float(rand() % 10 + 4);
+	// Random time between 10 and 20 seconds
+	m_hatchingTime = float(rand() % 20 + 10);
 }
 
 void dae::EggBlockComponent::Update()
 {
-    m_CurrentTime += GameTime::GetInstance().GetDeltaTime();
-    if (m_CurrentTime >= m_HatchingTime && !m_HasHatched)
+    m_currentTime += GameTime::GetInstance().GetDeltaTime();
+    if (m_currentTime >= m_hatchingTime && !m_hasHatched)
     {
-		std::cout << "Hatched" << std::endl;
-		m_HasHatched = true;
-		const auto enemy = CreateEnemyObject(GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition(), m_Players, m_Background);
+		m_hasHatched = true;
+
+		const auto enemy = CreateEnemyObject(GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition(), m_pPlayers, m_pBackground);
 		SceneManager::GetInstance().GetActiveScene().Add(enemy);
 		SceneManager::GetInstance().GetActiveScene().AddEnemy(enemy);
 
@@ -39,12 +40,12 @@ void dae::EggBlockComponent::Update()
 
 void dae::EggBlockComponent::SetPlayer(std::vector<dae::GameObject*> players)
 {
-	m_Players = players;
+	m_pPlayers = players;
 }
 
 void dae::EggBlockComponent::SetBackground(GameObject* background)
 {
-	m_Background = background;
+	m_pBackground = background;
 }
 
 std::shared_ptr<dae::GameObject> dae::EggBlockComponent::CreateEnemyObject(const glm::vec2& position, std::vector<dae::GameObject*> players, const dae::GameObject* backGroundImage)

@@ -27,7 +27,7 @@ void dae::SkipLevelCommand::SwitchtoNextScene()
     const std::string activeSceneName = dae::SceneManager::GetInstance().GetActiveScene().GetName();
 
     // Find the current scene in the list of scenes
-    auto& scenes = SceneManager::GetInstance().m_Scenes;
+    auto& scenes = SceneManager::GetInstance().m_pScenes;
     auto it = std::find_if(scenes.begin(), scenes.end(),
         [&activeSceneName](const std::shared_ptr<Scene>& scene)
         {

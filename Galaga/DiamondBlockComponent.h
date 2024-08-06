@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE2D_DIAMONDBLOCKCOMPONENT_H
+#define ENGINE2D_DIAMONDBLOCKCOMPONENT_H
 #include "BlockComponent.h"
 #include "Componennts/CollisionComponent.h"
 #include <vector>
@@ -11,7 +12,7 @@ namespace dae
 	public:
 
 		DiamondBlockComponent(GameObject* owner);
-		virtual ~DiamondBlockComponent() = default;
+		~DiamondBlockComponent() override = default;
 
 		DiamondBlockComponent(const DiamondBlockComponent& other) = delete;
 		DiamondBlockComponent(DiamondBlockComponent&& other) = delete;
@@ -19,10 +20,12 @@ namespace dae
 		DiamondBlockComponent& operator=(DiamondBlockComponent&& other) = delete;
 
 
+
 		void Initialize(std::vector<GameObject*> players);
 		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject);
 		void OnDeath(const Event* e);
 		bool DoDamage();
+
 
 	private:
 
@@ -31,8 +34,9 @@ namespace dae
 
 		std::vector<dae::GameObject*> m_pPlayer;
 
-
-		void AddPointsAndNotifyDeath();
+		void AddPointsToPlayers();
+		void NotifyOnDeath();
 	};
 }
 
+#endif // !ENGINE2D_DIAMONDBLOCKCOMPONENT_H

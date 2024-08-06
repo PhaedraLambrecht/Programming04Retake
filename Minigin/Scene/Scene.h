@@ -51,9 +51,9 @@ namespace dae
 	
 		explicit Scene(const std::string& name);
 
-		std::string m_Name;
-		std::vector < std::shared_ptr<GameObject>> m_Objects;
-		std::vector <CollisionComponent*> m_ObjectCollisions;
+		std::string m_name;
+		std::vector < std::shared_ptr<GameObject>> m_pObjects;
+		std::vector <CollisionComponent*> m_pObjectCollisions;
 
 	
 		void DepthSortGameObjects();
@@ -61,13 +61,13 @@ namespace dae
 
 		void HandleDestroyedEvent(const Event* e);
 
-		bool m_IsActive;
+		bool m_isActive;
 
-		static unsigned int m_IdCounter;
-		bool m_WasGameObjectAdded;
-		bool m_WasObjectDestroyed;
+		static unsigned int m_idCounter;
+		bool m_wasGameObjectAdded;
+		bool m_wasObjectDestroyed;
 
-		const std::string m_DestructionEventString;
+		const std::string m_destructionEventString;
 
 		std::vector<std::shared_ptr<GameObject>> m_pEnemies;
 		GameObject* m_pPlayer;

@@ -1,4 +1,5 @@
-#ifndef ENGINE2D_LOADLEVELFROMFILECOMPONENT_H
+#ifndef ENGINE2D_LOADLEVELFROMFILE_H
+#define ENGINE2D_LOADLEVELFROMFILE_H
 #include <fstream>
 #include <vector>
 
@@ -18,7 +19,7 @@ namespace dae
 
 
 		// Load level data from file
-		void LoadLevel(const std::string& file);
+		void LoadLevel(const std::string& filePath);
 
 		// Retrieve the parsed level data
 		std::vector<std::vector<int>> GetLevel() const;
@@ -35,4 +36,4 @@ namespace dae
 	};
 }
 
-#endif // !ENGINE2D_LOADLEVELFROMFILECOMPONENT_H
+#endif // !ENGINE2D_LOADLEVELFROMFILE_H

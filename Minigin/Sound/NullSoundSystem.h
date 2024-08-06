@@ -8,8 +8,8 @@ namespace dae
 	{
 	public:
 
-		NullSoundSystem();
-		~NullSoundSystem() override;
+		NullSoundSystem() = default;
+		~NullSoundSystem() override = default;
 
 		// Copy and move
 		NullSoundSystem(const NullSoundSystem& other) = delete;

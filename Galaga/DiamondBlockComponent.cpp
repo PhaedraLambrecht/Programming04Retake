@@ -28,29 +28,33 @@ void dae::DiamondBlockComponent::OnDeath(const Event* e)
 {
 	if (strcmp(e->eventType, "DiamondDeath") != 0)
 		return;
+
+	NotifyOnDeath();
 }
 
 bool dae::DiamondBlockComponent::DoDamage()
 {
 	--m_Health;
+
 	if (m_Health > 0)
-	{
 		return false;
-	}
 
-
-	AddPointsAndNotifyDeath();
+	AddPointsToPlayers();
+	NotifyOnDeath();
 	return true;
 }
 
-void dae::DiamondBlockComponent::AddPointsAndNotifyDeath()
+void dae::DiamondBlockComponent::AddPointsToPlayers()
 {
 	for (auto player : m_pPlayer)
 	{
 		dae::AddPointsCommand addPointsCommand(player);
 		addPointsCommand.Execute();
 	}
+}
 
+void dae::DiamondBlockComponent::NotifyOnDeath()
+{
 	Event event;
 	event.eventType = "GainDiamond";
 
