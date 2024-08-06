@@ -122,7 +122,7 @@ namespace dae
 		return playerObject;
 	}
 
-	std::shared_ptr<GameObject> GameLoader::AddEnemy(Scene& scene, const std::string texture, std::shared_ptr<GameObject> player)
+	std::shared_ptr<GameObject> GameLoader::AddEnemy(Scene& scene, const std::string texture, std::vector<dae::GameObject*> players)
 	{
 		const auto enemyObject = std::make_shared<GameObject>();
 		scene.Add(enemyObject);
@@ -152,7 +152,7 @@ namespace dae
 		enemyObject->AddComponent<RecognizerEnemy>();
 		const auto baseEnemy = enemyObject->GetComponent<BaseEnemyComponent>();
 
-		enemyObject->GetComponent<RecognizerEnemy>()->Initialize(enemyObject->GetComponent<TransformComponent>()->GetWorldPosition().x, enemyObject->GetComponent<TransformComponent>()->GetWorldPosition().y, 10, 10, player);
+		enemyObject->GetComponent<RecognizerEnemy>()->Initialize(enemyObject->GetComponent<TransformComponent>()->GetWorldPosition().x, enemyObject->GetComponent<TransformComponent>()->GetWorldPosition().y, 10, 10, players);
 		//enemyObject->GetComponent<dae::RecognizerEnemy>()->SetWindowDimensions(g_WindowWidth, g_WindowHeight);
 		
 

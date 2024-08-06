@@ -17,7 +17,7 @@ namespace dae
 		RecognizerEnemy& operator=(RecognizerEnemy&& other) = delete;
 
 
-		void Initialize(float x, float y, float w, float h, std::shared_ptr<GameObject> playerTank) override;
+		void Initialize(float x, float y, float w, float h, std::vector<GameObject*> pPlayers);
 		void Update() override;
 		bool DoDamage() override;
 		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject) override;
@@ -45,7 +45,7 @@ namespace dae
 		int m_Health;
 		float m_EnemySpeed;
 		std::shared_ptr<ImageComponent> m_enemyHorizontalSprite;
-		GameObject* m_pPlayer;
+		std::vector<GameObject*> m_pPlayer;
 
 		float m_ChangeDirectionInterval;
 		float m_TimeSinceLastChange;

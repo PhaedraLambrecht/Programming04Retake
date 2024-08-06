@@ -28,7 +28,7 @@ void dae::EggBlockComponent::Update()
     {
 		std::cout << "Hatched" << std::endl;
 		m_HasHatched = true;
-		const auto enemy = CreateEnemyObject(GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition(), m_Player, m_Background);
+		const auto enemy = CreateEnemyObject(GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition(), m_Players, m_Background);
 		SceneManager::GetInstance().GetActiveScene().Add(enemy);
 		SceneManager::GetInstance().GetActiveScene().AddEnemy(enemy);
 
@@ -37,9 +37,9 @@ void dae::EggBlockComponent::Update()
     }
 }
 
-void dae::EggBlockComponent::SetPlayer(std::shared_ptr<dae::GameObject> player)
+void dae::EggBlockComponent::SetPlayer(std::vector<dae::GameObject*> players)
 {
-	m_Player = player;
+	m_Players = players;
 }
 
 void dae::EggBlockComponent::SetBackground(GameObject* background)
@@ -47,7 +47,7 @@ void dae::EggBlockComponent::SetBackground(GameObject* background)
 	m_Background = background;
 }
 
-std::shared_ptr<dae::GameObject> dae::EggBlockComponent::CreateEnemyObject(const glm::vec2& position, std::shared_ptr<dae::GameObject> player, const dae::GameObject* backGroundImage)
+std::shared_ptr<dae::GameObject> dae::EggBlockComponent::CreateEnemyObject(const glm::vec2& position, std::vector<dae::GameObject*> players, const dae::GameObject* backGroundImage)
 {
 	const auto enemy = std::make_shared<dae::GameObject>();
 
@@ -65,7 +65,7 @@ std::shared_ptr<dae::GameObject> dae::EggBlockComponent::CreateEnemyObject(const
 
 
 	// Enemy components
-	enemy->AddComponent<dae::RecognizerEnemy>()->Initialize(enemy->GetComponent<dae::TransformComponent>()->GetWorldPosition().x, enemy->GetComponent<dae::TransformComponent>()->GetWorldPosition().y, 10, 10, player);
+	enemy->AddComponent<dae::RecognizerEnemy>()->Initialize(enemy->GetComponent<dae::TransformComponent>()->GetWorldPosition().x, enemy->GetComponent<dae::TransformComponent>()->GetWorldPosition().y, 10, 10, players);
 
 	const auto baseEnemy = enemy->GetComponent<dae::BaseEnemyComponent>();
 	enemy->GetComponent<dae::RecognizerEnemy>()->SetWindowDimensions(backGroundImage->GetComponent<dae::TransformComponent>()->GetWorldPosition().x,

@@ -28,13 +28,13 @@ dae::RecognizerEnemy::~RecognizerEnemy()
 	std::cout << "RecognizerEnemy \n";
 }
 
-void dae::RecognizerEnemy::Initialize(float x, float y, float w, float h, std::shared_ptr<GameObject> playerTank)
+void dae::RecognizerEnemy::Initialize(float x, float y, float w, float h, std::vector<GameObject*> pPlayers)
 {
 	m_PositionSize.position = glm::vec2(x, y);
 	m_PositionSize.width = w;
 	m_PositionSize.height = h;
 
-	m_pPlayer = playerTank.get();
+	m_pPlayer = pPlayers;
 
 	ChangeDirection();
 }
@@ -43,32 +43,41 @@ void dae::RecognizerEnemy::Initialize(float x, float y, float w, float h, std::s
 
 void dae::RecognizerEnemy::Update()
 {
-	if (m_pPlayer == nullptr)
+	if (m_pPlayer.empty())
 	{
 		return;
 	}
 
-	glm::vec2 playerPos = m_pPlayer->GetComponent<TransformComponent>()->GetWorldPosition();
-	glm::vec2 enemyPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
-	glm::vec2 playerSize = m_pPlayer->GetComponent<ImageComponent>()->GetTextureDimensions();
-	glm::vec2 enemySize = GetOwner()->GetComponent<ImageComponent>()->GetTextureDimensions();
-
-	// Detect overlap
-	if (enemyPos.x < playerPos.x + playerSize.x &&
-		enemyPos.x + enemySize.x > playerPos.x &&
-		enemyPos.y < playerPos.y + playerSize.y &&
-		enemyPos.y + enemySize.y > playerPos.y)
+	for (auto& player : m_pPlayer)
 	{
-		if (m_AttackCooldown <= 0.0f)
+
+		glm::vec2 playerPos = player->GetComponent<TransformComponent>()->GetWorldPosition();
+		glm::vec2 enemyPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+		glm::vec2 playerSize = player->GetComponent<ImageComponent>()->GetTextureDimensions();
+		glm::vec2 enemySize = GetOwner()->GetComponent<ImageComponent>()->GetTextureDimensions();
+
+	
+		// Detect overlap
+		if (enemyPos.x < playerPos.x + playerSize.x &&
+			enemyPos.x + enemySize.x > playerPos.x &&
+			enemyPos.y < playerPos.y + playerSize.y &&
+			enemyPos.y + enemySize.y > playerPos.y)
 		{
-			dae::DamageCommand damageCommand(m_pPlayer, 1);
-			damageCommand.Execute();
-			m_AttackCooldown = m_DamageInterval; // Reset cooldown timer to 10 seconds
+			if (m_AttackCooldown <= 0.0f)
+			{
+				dae::DamageCommand damageCommand(player, 1);
+				damageCommand.Execute();
+				m_AttackCooldown = m_DamageInterval; // Reset cooldown timer to 10 seconds
+			}
 		}
+	
+
+	
+	
 	}
+
 	m_AttackCooldown -= GameTime::GetInstance().GetDeltaTime();
-
-
+	
 	float deltaTime = GameTime::GetInstance().GetDeltaTime();
 	m_TimeSinceLastChange += deltaTime;
 	if (m_TimeSinceLastChange >= m_ChangeDirectionInterval)
@@ -78,9 +87,10 @@ void dae::RecognizerEnemy::Update()
 	}
 
 	// Normalize the direction vector
-	glm::vec2 direction = glm::normalize(playerPos - enemyPos);
-	glm::vec2 movement = direction * m_EnemySpeed * deltaTime;
-	move(deltaTime, (int)movement.x, (int)movement.y);
+	//glm::vec2 direction = glm::normalize(playerPos - enemyPos);
+	//glm::vec2 movement = direction * m_EnemySpeed * deltaTime;
+	//move(deltaTime, (int)movement.x, (int)movement.y);
+
 
 	// Handle blocked movements
 	HandleBlockedMovement(deltaTime);
@@ -152,7 +162,7 @@ bool dae::RecognizerEnemy::DoDamage()
 
 void dae::RecognizerEnemy::AddPointsAndNotifyDeath()
 {
-	dae::AddPointsCommand addPointsCommand(m_pPlayer);
+	dae::AddPointsCommand addPointsCommand(m_pPlayer[0]);
 	addPointsCommand.Execute();
 
 

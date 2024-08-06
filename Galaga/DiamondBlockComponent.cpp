@@ -11,9 +11,9 @@ dae::DiamondBlockComponent::DiamondBlockComponent(GameObject* owner)
 
 }
 
-void dae::DiamondBlockComponent::Initialize(std::shared_ptr<GameObject> player)
+void dae::DiamondBlockComponent::Initialize(std::vector<dae::GameObject*> players)
 {
-	m_pPlayer = player.get();
+	m_pPlayer = players;
 }
 
 void dae::DiamondBlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/, const CollisionData& hitObject)
@@ -45,8 +45,11 @@ bool dae::DiamondBlockComponent::DoDamage()
 
 void dae::DiamondBlockComponent::AddPointsAndNotifyDeath()
 {
-	dae::AddPointsCommand addPointsCommand(m_pPlayer);
-	addPointsCommand.Execute();
+	for (auto player : m_pPlayer)
+	{
+		dae::AddPointsCommand addPointsCommand(player);
+		addPointsCommand.Execute();
+	}
 
 	Event event;
 	event.eventType = "GainDiamond";

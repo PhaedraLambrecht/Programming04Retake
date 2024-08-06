@@ -3,6 +3,8 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <memory>
+#include <vector>
+
 
 namespace dae
 {
@@ -22,7 +24,7 @@ namespace dae
 	public:
 
 		std::shared_ptr<GameObject> AddPlayer(Scene& scene, int playerIndex, InputManager& inputManager, const bool IsControllerUsed, const std::string texture);
-		std::shared_ptr<GameObject> AddEnemy(Scene& scene, const std::string texture, std::shared_ptr<GameObject> player);
+		std::shared_ptr<GameObject> AddEnemy(Scene& scene, const std::string texture, std::vector<GameObject*> players);
 	
 
 		void AddControleler(Scene& scene, GameObject* player, unsigned controller);

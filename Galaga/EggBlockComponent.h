@@ -1,6 +1,7 @@
 #pragma once
 #include "BlockComponent.h"
 #include "glm/glm.hpp"
+#include <vector>
 
 namespace dae
 {
@@ -19,18 +20,18 @@ namespace dae
 		EggBlockComponent& operator=(EggBlockComponent&& other) = delete;
 
 		void Update() override;
-		void SetPlayer(std::shared_ptr<dae::GameObject> player);
+		void SetPlayer(std::vector<GameObject*> players);
 		void SetBackground(GameObject* background);
 
 	private:
 
-		std::shared_ptr<dae::GameObject> CreateEnemyObject(const glm::vec2& position, std::shared_ptr<dae::GameObject> player, const dae::GameObject* backGroundImage);
+		std::shared_ptr<dae::GameObject> CreateEnemyObject(const glm::vec2& position, std::vector<GameObject*> players, const dae::GameObject* backGroundImage);
 
 		float m_HatchingTime;
 		float m_CurrentTime;
 		bool m_HasHatched;
 
-		std::shared_ptr<dae::GameObject> m_Player;
+		std::vector<GameObject*> m_Players;
 		GameObject* m_Background;
 	};
 }

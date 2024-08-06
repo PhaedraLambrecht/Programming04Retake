@@ -1,7 +1,7 @@
 #pragma once
 #include "BlockComponent.h"
 #include "Componennts/CollisionComponent.h"
-
+#include <vector>
 
 
 namespace dae
@@ -19,7 +19,7 @@ namespace dae
 		DiamondBlockComponent& operator=(DiamondBlockComponent&& other) = delete;
 
 
-		void Initialize(std::shared_ptr<GameObject> player);
+		void Initialize(std::vector<GameObject*> players);
 		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject);
 		void OnDeath(const Event* e);
 		bool DoDamage();
@@ -28,7 +28,8 @@ namespace dae
 
 
 		int m_Health;
-		GameObject* m_pPlayer;
+
+		std::vector<dae::GameObject*> m_pPlayer;
 
 
 		void AddPointsAndNotifyDeath();
