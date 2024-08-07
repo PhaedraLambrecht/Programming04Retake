@@ -15,7 +15,7 @@ namespace dae
 	public:
 
 		LivesComponent(GameObject* owner);
-		~LivesComponent();
+		~LivesComponent() = default;
 		
 		LivesComponent(const LivesComponent& other) = delete;
 		LivesComponent(LivesComponent&& other) = delete;
@@ -35,8 +35,8 @@ namespace dae
 		void LoseLife(const Event* e);
 
 
-		unsigned m_PlayerIndex;
-		int m_LivesLeft;
+		unsigned m_playerIndex;
+		int m_livesLeft;
 		TextComponent* m_pTextComponent;
 	};
 

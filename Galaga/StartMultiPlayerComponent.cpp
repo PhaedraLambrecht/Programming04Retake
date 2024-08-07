@@ -34,7 +34,7 @@ dae::StartMultiPlayerComponent::StartMultiPlayerComponent()
 		{3,  "snoBee1.png" },
 		{4,  "diamondBlock.png" },
 		{5,  "penguin2Down.png" },
-		{6,  "BlueTank.png" }
+		{6,  "penguinWalkDown.png" }
 	};
 }
 

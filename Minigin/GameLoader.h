@@ -6,13 +6,6 @@
 #include <memory>
 
 
-
-// private:
-//		void AddUI(Scene& scene, int playerIndex, GameObject* player);
-//		float getRandomFloat(float min, float max);
-
-
-
 namespace dae
 {
 	constexpr unsigned g_WindowWidth{ 640 }, g_WindowHeight{ 480 };
@@ -47,6 +40,7 @@ namespace dae
 		// Helper functions
 		void SetUpBaseCollision(GameObject* object, const std::string& tag, Scene& scene);
 		void SetUpTransform(GameObject* object, const glm::vec2& position, const glm::vec2 offset);
+		void SetUpUI(Scene& scene, int playerIndex, GameObject* player, glm::vec2 position);
 
 
 		// Controls
@@ -55,8 +49,5 @@ namespace dae
 		void AddKeyboard(Scene& scene, GameObject* player);
 	};
 }
-
-
-
 
 #endif // ENGINE2D_GAMELOADER_H

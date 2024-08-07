@@ -21,7 +21,7 @@ void dae::DiamondBlockComponent::OnHitCallback(const CollisionData& /*collisionO
 	if (hitObject.ownerType != "DiamondAttack")
 		return;
 
-	DoDamage();
+	DoDamage(hitObject.owningObject);
 }
 
 void dae::DiamondBlockComponent::OnDeath(const Event* e)
@@ -32,25 +32,22 @@ void dae::DiamondBlockComponent::OnDeath(const Event* e)
 	NotifyOnDeath();
 }
 
-bool dae::DiamondBlockComponent::DoDamage()
+bool dae::DiamondBlockComponent::DoDamage(GameObject* player)
 {
 	--m_Health;
 
 	if (m_Health > 0)
 		return false;
 
-	AddPointsToPlayers();
+	AddPointsToPlayers(player);
 	NotifyOnDeath();
 	return true;
 }
 
-void dae::DiamondBlockComponent::AddPointsToPlayers()
+void dae::DiamondBlockComponent::AddPointsToPlayers(GameObject* player)
 {
-	for (auto player : m_pPlayer)
-	{
-		dae::AddPointsCommand addPointsCommand(player);
-		addPointsCommand.Execute();
-	}
+	dae::AddPointsCommand addPointsCommand(player);
+	addPointsCommand.Execute();
 }
 
 void dae::DiamondBlockComponent::NotifyOnDeath()

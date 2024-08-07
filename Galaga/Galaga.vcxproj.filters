@@ -54,7 +54,9 @@
     <ClCompile Include="StartingMultiPlayerCommand.cpp">
       <Filter>Commnads</Filter>
     </ClCompile>
-    <ClCompile Include="StartMultiPlayerComponent.cpp" />
+    <ClCompile Include="StartMultiPlayerComponent.cpp">
+      <Filter>Componnents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -107,6 +109,8 @@
     <ClInclude Include="StartingMultiPlayerCommand.h">
       <Filter>Commnads</Filter>
     </ClInclude>
-    <ClInclude Include="StartMultiPlayerComponent.h" />
+    <ClInclude Include="StartMultiPlayerComponent.h">
+      <Filter>Componnents</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

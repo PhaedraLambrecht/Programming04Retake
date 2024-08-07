@@ -98,6 +98,19 @@ void dae::RecognizerEnemy::Update()
 
 }
 
+bool dae::RecognizerEnemy::DoDamage()
+{
+	--m_Health;
+	if (m_Health > 0)
+	{
+		return false;
+	}
+
+
+	AddPointsAndNotifyDeath();
+	return true;
+}
+
 void dae::RecognizerEnemy::move(float deltaTime, int x, int y)
 {
 	auto transform = GetOwner()->GetComponent<TransformComponent>();
@@ -147,18 +160,6 @@ void dae::RecognizerEnemy::ChangeDirection()
 	}
 }
 
-bool dae::RecognizerEnemy::DoDamage()
-{
-	--m_Health;
-	if (m_Health > 0)
-	{
-		return false;
-	}
-
-
-	AddPointsAndNotifyDeath();
-	return true;
-}
 
 void dae::RecognizerEnemy::AddPointsAndNotifyDeath()
 {

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE2D_STARTSINGLEPLAYERCOMPONENT_H
+#define ENGINE2D_STARTSINGLEPLAYERCOMPONENT_H
 #include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>
@@ -33,4 +34,4 @@ namespace dae
 	};
 }
 
-
+#endif // !ENGINE2D_STARTSINGLEPLAYERCOMPONENT_H

@@ -24,7 +24,7 @@ namespace dae
 		void Initialize(std::vector<GameObject*> players);
 		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject);
 		void OnDeath(const Event* e);
-		bool DoDamage();
+		bool DoDamage(GameObject* player);
 
 
 	private:
@@ -34,7 +34,7 @@ namespace dae
 
 		std::vector<dae::GameObject*> m_pPlayer;
 
-		void AddPointsToPlayers();
+		void AddPointsToPlayers(GameObject* player);
 		void NotifyOnDeath();
 	};
 }

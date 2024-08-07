@@ -27,7 +27,6 @@ namespace dae
 	private:
 
 		AddPointsComponnent* m_pAddPointsComponnent;
-		float m_Damage;
 	};
 }
 

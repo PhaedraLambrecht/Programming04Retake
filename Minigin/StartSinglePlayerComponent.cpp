@@ -35,7 +35,6 @@ dae::StartSinglePlayerComponent::StartSinglePlayerComponent()
 		{3,  "snoBee1.png" },
 		{4,  "diamondBlock.png" },
 		{5,  "penguin2Down.png" },
-		{6,  "BlueTank.png" }
 	};
 }
 

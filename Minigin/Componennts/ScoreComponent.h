@@ -14,7 +14,7 @@ namespace dae
 	public:
 
 		ScoreComponent(GameObject* owner);
-		~ScoreComponent();
+		~ScoreComponent() = default;
 
 
 		ScoreComponent(const ScoreComponent& other) = delete;
@@ -34,9 +34,9 @@ namespace dae
 		void UpdateScore(const Event* e);
 
 
-		const int m_RewardAmount;
-		unsigned int m_PlayerIndex;
-		int m_PointsEarned;
+		const int m_rewardAmount;
+		unsigned int m_playerIndex;
+		int m_pointsEarned;
 
 		TextComponent* m_pTextComponent;
 	};

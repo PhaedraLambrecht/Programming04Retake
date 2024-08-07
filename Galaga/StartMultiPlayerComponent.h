@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE2D_STARTMULTIPLAYERCOMPONENT_H
+#define ENGINE2D_STARTMULTIPLAYERCOMPONENT_H
 #include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>
@@ -34,3 +35,4 @@ namespace dae
 	};
 }
 
+#endif //ENGINE2D_STARTMULTIPLAYERCOMPONENT_H

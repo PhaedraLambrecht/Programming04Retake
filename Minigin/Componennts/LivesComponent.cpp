@@ -11,8 +11,8 @@
 
 dae::LivesComponent::LivesComponent(GameObject* owner)
 	:BaseComponent(owner)
-	,m_PlayerIndex{0}
-	,m_LivesLeft{1}
+	,m_playerIndex{0}
+	,m_livesLeft{1}
 {
 	if (GetOwner()->HasComponent<TextComponent>())
 	{
@@ -33,7 +33,7 @@ dae::LivesComponent::LivesComponent(GameObject* owner)
 			// Call the Death member function of the LivesComponent object with the event argument passed by the event manager
 			this->Death(event);
 		};
-	PlayerEvent eventDeath{ "Death", m_PlayerIndex };
+	PlayerEvent eventDeath{ "Death", m_playerIndex };
 
 	EventManager::GetInstance().RegisterObserver(eventDeath, boundDeath);
 	
@@ -43,30 +43,24 @@ dae::LivesComponent::LivesComponent(GameObject* owner)
 			// Call the Death member function of the LivesComponent object with the event argument passed by the event manager
 			this->LoseLife(event);
 		};
-	PlayerEvent event{ "Damage", m_PlayerIndex };
+	PlayerEvent event{ "Damage", m_playerIndex };
 	EventManager::GetInstance().RegisterObserver(event, boundLoseLife);
 }
 
-dae::LivesComponent::~LivesComponent()
-{
-	std::cout << "LivesComponent\n";
-}
-
-
 void dae::LivesComponent::SetPlayerIndex(unsigned playerIndex)
 {
-	m_PlayerIndex = playerIndex;
+	m_playerIndex = playerIndex;
 }
 
 void dae::LivesComponent::SetLives(GameObject* Player)
 {
-	m_LivesLeft = Player->GetComponent<HealthComponent>()->GeTHealth();
+	m_livesLeft = Player->GetComponent<HealthComponent>()->GeTHealth();
 	UpdateText();
 }
 
 void dae::LivesComponent::UpdateText()
 {
-	std::string text = "Player: " + std::to_string(m_PlayerIndex) + " - Lives: " + std::to_string(m_LivesLeft);
+	std::string text = "Player: " + std::to_string(m_playerIndex) + " - Lives: " + std::to_string(m_livesLeft);
 	m_pTextComponent->SetText(text);
 }
 
@@ -77,7 +71,7 @@ void dae::LivesComponent::Death(const Event* e)
 	if (!(strcmp(e->eventType, "Death") == 0))
 		return;
 
-	if (m_LivesLeft <= 0)
+	if (m_livesLeft <= 0)
 	{
 		std::cout << "Dead\n";
 
@@ -92,9 +86,9 @@ void dae::LivesComponent::LoseLife(const Event* e)
 {
 	if (const PlayerEvent* event = dynamic_cast<const PlayerEvent*>(e))
 	{
-		if (event->playerIndex == m_PlayerIndex)
+		if (event->playerIndex == m_playerIndex)
 		{
-			m_LivesLeft -= 1;
+			m_livesLeft -= 1;
 			UpdateText();
 		}
 	}

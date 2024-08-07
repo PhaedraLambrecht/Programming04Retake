@@ -19,7 +19,7 @@ namespace dae
 	public:
 
 		SchootComponent(GameObject* Owner);
-		~SchootComponent() override;
+		~SchootComponent() override = default;
 
 		// Copy and move
 		SchootComponent(const SchootComponent& other) = delete;

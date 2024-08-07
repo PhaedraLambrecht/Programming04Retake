@@ -12,6 +12,9 @@
 // Input includes
 #include "Input/InputManager.h"
 
+// Resources includes
+#include "Resources/ResourceManager.h"
+
 
 // Image components includes
 #include "Componennts/ImageComponent.h"
@@ -36,10 +39,8 @@
 #include "StartSinglePlayerCommand.h"
 #include "VolumeCommand.h"
 
-// EggWall component includes
+// EggWall & DiamondWall component includes
 #include "EggBlockComponent.h"
-
-// DiamondWall component includes
 #include "DiamondBlockComponent.h"
 
 // Enemy components includes
@@ -47,65 +48,20 @@
 #include "Enemy/RecognizerEnemy.h"
 #include "Enemy/EnemyController.h"
 
-
+// Rotator component includes
 #include "Componennts/RotatorComponent.h"
 
+// Text component includes
+#include "Componennts/TextComponent.h"
+#include "Componennts/TextRenderComponent.h"
+
+// Lives & Score component includes
+#include "Componennts/LivesComponent.h"
+#include "Componennts/ScoreComponent.h"
 
 
 namespace dae
 {	
-	//void GameLoader::AddUI(Scene& scene, int playerIndex, GameObject* player)
-	//{
-	//	const SDL_Color color{ 0, 255, 0 };
-	//	const auto font{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25) };
-	//
-	//
-	//	// Lives display
-	//	{
-	//		const auto livesDisplay = std::make_shared<dae::GameObject>();
-	//		livesDisplay->AddComponent<TextComponent>();
-	//		livesDisplay->AddComponent<TextRenderComponent>();
-	//		livesDisplay->GetComponent<TextComponent>()->SetFont(font);
-	//		livesDisplay->GetComponent<TextComponent>()->SetColor(color);
-	//		livesDisplay->AddComponent<LivesComponent>();
-	//
-	//
-	//		livesDisplay->GetComponent<dae::TransformComponent>()->SetLocalPosition(0.0f, 0.0f);
-	//		livesDisplay->GetComponent<dae::LivesComponent>()->SetPlayerIndex(playerIndex);
-	//		livesDisplay->GetComponent<dae::LivesComponent>()->SetLives(player);
-	//
-	//		scene.Add(livesDisplay);
-	//	}
-	//
-	//
-	//	// Score display
-	//	{
-	//		const auto scoreDisplay = std::make_shared<dae::GameObject>();
-	//		scoreDisplay->AddComponent<TextComponent>();
-	//		scoreDisplay->AddComponent<TextRenderComponent>();
-	//		scoreDisplay->GetComponent<TextComponent>()->SetFont(font);
-	//		scoreDisplay->GetComponent<TextComponent>()->SetColor(color);
-	//		scoreDisplay->AddComponent<ScoreComponent>();
-	//
-	//
-	//		scoreDisplay->GetComponent<TransformComponent>()->SetLocalPosition(0.0f, 40.0f);
-	//		scoreDisplay->GetComponent<ScoreComponent>()->SetPlayerIndex(playerIndex);
-	//
-	//		scene.Add(scoreDisplay);
-	//	}
-	//}
-	
-	//float GameLoader::getRandomFloat(float min, float max)
-	//{
-	//	static std::random_device rd;  // Obtain a random number from hardware
-	//	static std::mt19937 engine(rd()); // Seed the generator
-	//
-	//	std::uniform_real_distribution<float> distribution(min, max);
-	//	return distribution(engine);
-	//}
-
-
-
 	void GameLoader::LoadSound(SoundSystem* soundSystem, const SoundData& soundData)
 	{
 		soundSystem->NotifySound(soundData);
@@ -171,6 +127,9 @@ namespace dae
 			playerObject->GetComponent<HitComponennt>()->SetScene(&scene);
 		}
 	
+		playerObject->AddComponent<AddPointsComponnent>();
+		playerObject->GetComponent<AddPointsComponnent>()->SetPlayerIndex(playerIndex);
+
 
 		// Add collision component
 		SetUpBaseCollision(playerObject.get(), "Player", scene);
@@ -185,7 +144,15 @@ namespace dae
 		SetupPlayerControls(playerObject.get(), scene);
 
 		// Add UI
-	//	AddUI(scene, playerIndex, playerObject.get());
+		if (playerIndex == 0)
+		{
+			SetUpUI(scene, playerIndex, playerObject.get(), { 0, 0 });
+		}
+		else if (playerIndex == 1)
+		{
+			SetUpUI(scene, playerIndex, playerObject.get(), {0, g_WindowHeight - 50.0f });
+		}
+
 	
 		return playerObject;
 	}
@@ -338,6 +305,61 @@ namespace dae
 		);	
 	}
 
+	void GameLoader::SetUpUI(Scene& scene, int playerIndex, GameObject* player, glm::vec2 position)
+	{
+		const SDL_Color color{ 0, 255, 0 };
+		const auto font{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25) };
+		
+		
+		// Lives display
+		{
+			const auto livesDisplay = std::make_shared<dae::GameObject>();
+			livesDisplay->GetComponent<TransformComponent>()->SetLocalPosition(position.x, position.y);
+
+			// Text
+			{
+				livesDisplay->AddComponent<TextComponent>();
+				livesDisplay->AddComponent<TextRenderComponent>();
+				livesDisplay->GetComponent<TextComponent>()->SetFont(font);
+				livesDisplay->GetComponent<TextComponent>()->SetColor(color);
+			}
+
+			// Lives
+			{
+				livesDisplay->AddComponent<LivesComponent>();
+				livesDisplay->GetComponent<dae::LivesComponent>()->SetPlayerIndex(playerIndex);
+				livesDisplay->GetComponent<dae::LivesComponent>()->SetLives(player);
+			}
+	
+			scene.Add(livesDisplay);
+		}
+		
+		
+		// Score display
+		{
+			const auto scoreDisplay = std::make_shared<dae::GameObject>();
+			scoreDisplay->GetComponent<TransformComponent>()->SetLocalPosition(position.x, position.y + 25.0f);
+
+			// Text
+			{
+				scoreDisplay->AddComponent<TextComponent>();
+				scoreDisplay->AddComponent<TextRenderComponent>();
+				scoreDisplay->GetComponent<TextComponent>()->SetFont(font);
+				scoreDisplay->GetComponent<TextComponent>()->SetColor(color);
+			}
+
+			// Score
+			{
+				scoreDisplay->AddComponent<ScoreComponent>();
+				scoreDisplay->GetComponent<ScoreComponent>()->SetPlayerIndex(playerIndex);
+			}
+
+			
+		
+			scene.Add(scoreDisplay);
+		}
+	}
+
 
 	void GameLoader::SetupPlayerControls(GameObject* player, dae::Scene& scene)
 	{
@@ -463,8 +485,5 @@ namespace dae
 		}
 
 	}
-
-
-
 
 }

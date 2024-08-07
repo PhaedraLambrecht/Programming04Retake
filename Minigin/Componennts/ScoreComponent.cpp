@@ -9,9 +9,9 @@
 
 dae::ScoreComponent::ScoreComponent(GameObject* owner)
 	:BaseComponent(owner)
-	, m_RewardAmount{100}
-	,m_PointsEarned{0}
-	,m_PlayerIndex{0}
+	,m_rewardAmount{100}
+	,m_pointsEarned{0}
+	,m_playerIndex{0}
 {
 
 	if (GetOwner()->HasComponent<TextComponent>())
@@ -28,30 +28,27 @@ dae::ScoreComponent::ScoreComponent(GameObject* owner)
 
 
 	// Define a lambda function to bind the EarnPoints member function to an event observer
-	auto boundLoseLife = [this](const Event* event)
+	auto boundsGainScore = [this](const Event* event)
 	{
 		// Call the EarnPoints member function of the ScoreComponent object with the event argument passed by the event manager
 		this->UpdateScore(event);
 	};
 
-	PlayerEvent event{ "EnemyDeath", m_PlayerIndex };
-	EventManager::GetInstance().RegisterObserver(event, boundLoseLife);
-}
+	PlayerEvent event{ "EnemyDeath", m_playerIndex };
+	EventManager::GetInstance().RegisterObserver(event, boundsGainScore);
 
-dae::ScoreComponent::~ScoreComponent()
-{
-	std::cout << "ScoreComponent\n";
+	//PlayerEvent event2{ "DiamondAttack", m_playerIndex };
+	//EventManager::GetInstance().RegisterObserver(event2, boundsGainScore);
 }
-
 
 void dae::ScoreComponent::SetPlayerIndex(unsigned playerIndex)
 {
-	m_PlayerIndex = playerIndex;
+	m_playerIndex = playerIndex;
 }
 
 void dae::ScoreComponent::UpdateText()
 {
-	std::string text = "Player: " + std::to_string(m_PlayerIndex) + " - score: " + std::to_string(m_PointsEarned);
+	std::string text = "Player: " + std::to_string(m_playerIndex) + " - score: " + std::to_string(m_pointsEarned);
 	m_pTextComponent->SetText(text);
 }
 
@@ -60,9 +57,9 @@ void dae::ScoreComponent::UpdateScore(const Event* e)
 	if (strcmp(e->eventType, "EnemyDeath") == 0)
 	{
 		const PlayerEvent* playerEvent = dynamic_cast<const PlayerEvent*>(e);
-		if (playerEvent && playerEvent->playerIndex == m_PlayerIndex)
+		if (playerEvent && playerEvent->playerIndex == m_playerIndex)
 		{
-			m_PointsEarned += m_RewardAmount;
+			m_pointsEarned += m_rewardAmount;
 			UpdateText();
 
 		}

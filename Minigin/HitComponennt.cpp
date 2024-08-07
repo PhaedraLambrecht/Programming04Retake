@@ -13,6 +13,7 @@
 #include "Events/EventManager.h"
 #include <iostream>
 
+
 dae::HitComponennt::HitComponennt(GameObject* Owner)
 	:BaseComponent(Owner)
 	, m_pScene{}
@@ -109,7 +110,6 @@ void dae::HitComponennt::SetPlayerIndex(int index)
 	{
 		m_playerIndex = index;
 	}
-
 }
 
 void dae::HitComponennt::CreateBullet(glm::vec2 position)

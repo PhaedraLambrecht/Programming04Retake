@@ -6,7 +6,6 @@
 
 dae::AddPointsCommand::AddPointsCommand(GameObject* actor)
 	:BaseCommand()
-	,m_Damage{}
 {
 	if (actor->HasComponent<AddPointsComponnent>())
 	{

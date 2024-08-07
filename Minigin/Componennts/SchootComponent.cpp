@@ -37,10 +37,6 @@ dae::SchootComponent::SchootComponent(GameObject* Owner)
 	m_pSoundsystem = SoundManager::GetInstance().GetSoundSystem();
 }
 
-dae::SchootComponent::~SchootComponent()
-{
-	std::cout << "SchootComponent\n";
-}
 
 void dae::SchootComponent::Attack()
 {
@@ -125,12 +121,18 @@ void dae::SchootComponent::Update()
 
 void dae::SchootComponent::SetScene(Scene* scene)
 {
-	m_pScene = scene;
+	if (scene != nullptr)
+	{
+		m_pScene = scene;
+	}
 }
 
 void dae::SchootComponent::SetPlayerIndex(int index)
 {
-	m_playerIndex = index;
+	if (index > 0 && index < 3)
+	{
+		m_playerIndex = index;
+	}
 }
 
 void dae::SchootComponent::BulletHitCallback(const dae::CollisionData& collisionOwner, const dae::CollisionData& hitObject)

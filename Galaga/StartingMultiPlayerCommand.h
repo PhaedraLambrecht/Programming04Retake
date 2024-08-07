@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE2D_STARTINGMULTIPLAYERCOMMAND_H
+#define ENGINE2D_STARTINGMULTIPLAYERCOMMAND_H
 #include "Commands/Command.h"
 
 namespace dae
@@ -21,3 +22,4 @@ namespace dae
 	};
 }
 
+#endif //ENGINE2D_STARTINGMULTIPLAYERCOMMAND_H
