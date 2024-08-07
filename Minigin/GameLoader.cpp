@@ -305,7 +305,7 @@ namespace dae
 		highScoreText->GetComponent<dae::TextComponent>()->SetColor(color);
 
 		highScoreText->AddComponent<dae::HighScoreComponent>();
-		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, "nobody");
+		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, "airhead");
 
 
 		highScoreText->GetComponent<dae::HighScoreComponent>()->LoadHighScores();

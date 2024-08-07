@@ -2,6 +2,7 @@
 #include "Events/EventManager.h"
 #include <iostream>
 
+#include "GameLoader.h"
 
 dae::HealthComponent::HealthComponent(GameObject* owner)
 	:BaseComponent(owner)
@@ -23,6 +24,8 @@ void dae::HealthComponent::Damaged(int damage)
 
 	std::unique_ptr<PlayerEvent> event = std::make_unique<PlayerEvent>("Damage", m_PlayerIndex);
 	EventManager::GetInstance().QueueEvent<PlayerEvent>(std::move(event));
+
+
 
 	if (m_Health <= 0)
 	{
@@ -54,5 +57,7 @@ void dae::HealthComponent::Death()
 	std::unique_ptr<PlayerEvent> event = std::make_unique<PlayerEvent>("Death", m_PlayerIndex);
 	EventManager::GetInstance().QueueEvent<PlayerEvent>(std::move(event));
 
-	SetHealth(4);
+	GameLoader gameLoader{};
+	std::string sceneName = "HighScore";
+	gameLoader.LoadHighScoreScene(sceneName);
 }
