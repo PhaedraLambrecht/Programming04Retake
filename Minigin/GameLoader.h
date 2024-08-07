@@ -2,41 +2,61 @@
 #define ENGINE2D_GAMELOADER_H
 #include <string>
 #include <glm/glm.hpp>
-#include <memory>
 #include <vector>
+#include <memory>
+
+
+
+// private:
+//		void AddUI(Scene& scene, int playerIndex, GameObject* player);
+//		float getRandomFloat(float min, float max);
+
 
 
 namespace dae
 {
 	constexpr unsigned g_WindowWidth{ 640 }, g_WindowHeight{ 480 };
 
-
-
 	class GameObject;
-	class InputManager;
-	class MoveCommand;
+	
+	class SoundSystem;
+	struct SoundData;
 
-	class TransformComponent;
 	class Scene;
 
-	class GameLoader
+
+	class GameLoader final
 	{
 	public:
 
-		std::shared_ptr<GameObject> AddPlayer(Scene& scene, int playerIndex, InputManager& inputManager, const bool IsControllerUsed, const std::string texture);
-		std::shared_ptr<GameObject> AddEnemy(Scene& scene, const std::string texture, std::vector<GameObject*> players);
+		void LoadSound(SoundSystem* soundSystem, const SoundData& soundData);
 	
+		std::shared_ptr<GameObject> LoadLevelBorder(Scene& scene);
+		std::shared_ptr<GameObject> LoadPlayer(Scene& scene, int playerIndex, unsigned int conntroller, const std::string texture, const glm::vec2 position, const glm::vec2 offset);
+		std::shared_ptr<GameObject> LoadEnemy(dae::Scene& scene, const glm::vec2& position, const std::string& texture, std::vector<dae::GameObject*> players, const std::shared_ptr<dae::GameObject>& backGroundImage, const glm::vec2& offset);
 
-		void AddControleler(Scene& scene, GameObject* player, unsigned controller);
-		void AddKeyboard(Scene& scene, GameObject* player);
-	
+
+		void LoadWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset);
+		void LoadEggWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, GameObject* background, std::vector<dae::GameObject*> player);
+		void LoadDiamondWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player);
+
+
 
 	private:
 
+		// Helper functions
+		void SetUpBaseCollision(GameObject* object, const std::string& tag, Scene& scene);
+		void SetUpTransform(GameObject* object, const glm::vec2& position, const glm::vec2 offset);
 
-		void AddUI(Scene& scene, int playerIndex, GameObject* player);
 
-		float getRandomFloat(float min, float max);
+		// Controls
+		void SetupPlayerControls(GameObject* player, dae::Scene& scene);
+		void AddControleler(Scene& scene, GameObject* player, unsigned controller);
+		void AddKeyboard(Scene& scene, GameObject* player);
 	};
 }
+
+
+
+
 #endif // ENGINE2D_GAMELOADER_H

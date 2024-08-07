@@ -143,7 +143,7 @@ void dae::HitComponennt::CreateBullet(glm::vec2 position)
 
 void dae::HitComponennt::BulletHitCallback(const dae::CollisionData& collisionOwner, const dae::CollisionData& hitObject)
 {
-	if (!(strcmp(hitObject.ownerType.c_str(), "diamondBlock") == 0))
+	if (!(strcmp(hitObject.ownerType.c_str(), "DiamondWall") == 0))
 		return;
 
 

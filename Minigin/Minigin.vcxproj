@@ -250,9 +250,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\EventManager.h" />
     <ClInclude Include="GameEvents.h" />
-    <ClInclude Include="GameLoader.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="HitCommand.h" />
     <ClInclude Include="HitComponennt.h" />
     <ClInclude Include="Input\Controler.h" />
     <ClInclude Include="Input\Controller.h" />
@@ -309,10 +309,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Enemy\RecognizerEnemy.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
-    <ClCompile Include="GameLoader.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="HitCommand.cpp" />
+    <ClCompile Include="HitComponennt.cpp" />
     <ClCompile Include="Input\Controler.cpp" />
     <ClCompile Include="Input\Controller.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
