@@ -3,6 +3,10 @@
 #include <algorithm>
 
 #include "SkipLevelCommand.h"
+#include "GameLoader.h"
+
+#include "Componennts/ScoreComponent.h"
+#include "GameObject.h"
 
 void dae::SceneManager::Update()
 {
@@ -10,8 +14,18 @@ void dae::SceneManager::Update()
 
 	if (m_pActiveScene->m_NoEnemies && m_pActiveScene->m_EnemyLoaded)
 	{
-		SkipLevelCommand skipLevelCommand = SkipLevelCommand(m_pActiveScene->GetPlayer());
-		skipLevelCommand.Execute();
+		if (m_pActiveScene == m_pScenes.back())
+		{
+			GameLoader gameLoader{};
+			std::string sceneName = "HighScore";
+			gameLoader.LoadHighScoreScene(sceneName);
+		}
+		else
+		{
+			SkipLevelCommand skipLevelCommand = SkipLevelCommand(m_pActiveScene->GetPlayer());
+			skipLevelCommand.Execute();
+		}
+
 	}
 }
 
@@ -65,10 +79,10 @@ void dae::SceneManager::SwitchScene(const std::string& name)
 	if (it != m_pScenes.end())
 	{
 		if (m_pActiveScene) {
-			m_pActiveScene->SetActive(false); // Optional: deactivate current scene
+			m_pActiveScene->SetActive(false); // deactivate current scene
 		}
 		m_pActiveScene = *it;
-		m_pActiveScene->SetActive(true); // Optional: activate new scene
+		m_pActiveScene->SetActive(true); // activate new scene
 	}
 }
 

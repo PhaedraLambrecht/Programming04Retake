@@ -5,7 +5,8 @@
 #include <SDL_ttf.h>
 #include <stdexcept>
 #include <iostream>
-
+//#include <memory>
+#include <sstream>
 
 namespace dae
 {
@@ -27,6 +28,7 @@ namespace dae
 	void TextComponent::SetText(std::string& text)
 	{
 		m_Text = text;
+
 		SetTexture();
 	}
 
@@ -62,22 +64,60 @@ namespace dae
 			throw std::invalid_argument("Font pointer is null");
 		}
 
-		const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), m_Text.c_str(), m_Color);
-		if (!surf)
+
+		// Split the text into lines
+		std::istringstream iss{ m_Text };
+		std::vector<std::string> lines;
+		std::string line;
+
+
+		// Render each line of text
+		std::vector<SDL_Surface*> surfaces;
+		int width = 0;
+		int height = 0;
+		while (std::getline(iss, line, '\n'))
 		{
-			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+			const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), line.c_str(), m_Color);
+			if (!surf)
+			{
+				throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+			}
+			surfaces.push_back(surf);
+
+			width = std::max(width, surf->w);
+			height += surf->h;
 		}
 
 
-		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
+		// Create final surface and blit individual surfaces onto it
+		SDL_Surface* finalSurface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+		if (!finalSurface)
+		{
+			throw std::runtime_error(std::string("Create final surface failed: ") + SDL_GetError());
+		}
+		int y = 0;
+		for (const auto& surf : surfaces)
+		{
+			SDL_Rect rect{ 0, y, surf->w, surf->h };
+			SDL_BlitSurface(surf, nullptr, finalSurface, &rect);
+			y += surf->h;
+			SDL_FreeSurface(surf);
+		}
+
+
+		// Create texture from final surface
+		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), finalSurface);
 		if (!texture)
 		{
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
+		SDL_FreeSurface(finalSurface);
 
-
-		SDL_FreeSurface(surf);
+		// Assign texture to member variable
 		auto test = std::make_shared<Texture2D>(texture);
 		m_pTexture = test;
+
+
 	}
+
 }

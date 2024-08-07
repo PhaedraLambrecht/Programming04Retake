@@ -31,6 +31,8 @@ namespace dae
 		void SwitchScene(const std::string& name);
 		std::vector<std::shared_ptr<Scene>> m_pScenes;
 
+		int m_Score;
+
 
 	private:
 

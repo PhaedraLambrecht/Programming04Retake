@@ -59,6 +59,9 @@
 #include "Componennts/LivesComponent.h"
 #include "Componennts/ScoreComponent.h"
 
+// HighScore component includes
+#include "HighScoreComponent.h"
+
 
 namespace dae
 {	
@@ -126,9 +129,7 @@ namespace dae
 			playerObject->AddComponent<HitComponennt>();
 			playerObject->GetComponent<HitComponennt>()->SetScene(&scene);
 		}
-	
-		playerObject->AddComponent<AddPointsComponnent>();
-		playerObject->GetComponent<AddPointsComponnent>()->SetPlayerIndex(playerIndex);
+
 
 
 		// Add collision component
@@ -280,6 +281,38 @@ namespace dae
 
 
 		scene.Add(diamondWall);
+	}
+
+	void GameLoader::LoadHighScoreScene(const std::string& sceneName)
+	{
+		const SDL_Color color{ 0, 255, 0 };
+		const auto font{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25) };
+
+
+		auto& scene = dae::SceneManager::GetInstance().CreateScene(sceneName);
+		scene.SetActive(true);
+
+
+		const auto& highScoreText = std::make_shared<dae::GameObject>();
+
+		highScoreText->GetComponent<dae::TransformComponent>()->SetLocalPosition(g_WindowWidth / 2 - 100.f, g_WindowHeight / 2);
+
+		// Text
+		highScoreText->AddComponent<dae::TextComponent>();
+		highScoreText->AddComponent<dae::TextRenderComponent>();
+
+		highScoreText->GetComponent<dae::TextComponent>()->SetFont(font);
+		highScoreText->GetComponent<dae::TextComponent>()->SetColor(color);
+
+		highScoreText->AddComponent<dae::HighScoreComponent>();
+		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, "nobody");
+
+
+		highScoreText->GetComponent<dae::HighScoreComponent>()->LoadHighScores();
+
+
+
+		scene.Add(highScoreText);
 	}
 
 

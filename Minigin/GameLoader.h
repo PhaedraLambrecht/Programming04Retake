@@ -33,6 +33,7 @@ namespace dae
 		void LoadEggWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, GameObject* background, std::vector<dae::GameObject*> player);
 		void LoadDiamondWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player);
 
+		void LoadHighScoreScene(const std::string& sceneName);
 
 
 	private:

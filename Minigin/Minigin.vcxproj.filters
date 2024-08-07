@@ -215,6 +215,7 @@
     <ClInclude Include="HitCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\Galaga\HighScoreComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
@@ -376,5 +377,6 @@
     <ClCompile Include="HitComponennt.cpp">
       <Filter>Componennts</Filter>
     </ClCompile>
+    <ClCompile Include="..\Galaga\HighScoreComponent.cpp" />
   </ItemGroup>
 </Project>

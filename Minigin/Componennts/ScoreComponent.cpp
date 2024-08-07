@@ -9,7 +9,7 @@
 
 dae::ScoreComponent::ScoreComponent(GameObject* owner)
 	:BaseComponent(owner)
-	,m_rewardAmount{100}
+	,m_rewardAmount{50}
 	,m_pointsEarned{0}
 	,m_playerIndex{0}
 {
@@ -48,8 +48,10 @@ void dae::ScoreComponent::SetPlayerIndex(unsigned playerIndex)
 
 void dae::ScoreComponent::UpdateText()
 {
+	SceneManager::GetInstance().m_Score = m_pointsEarned;
 	std::string text = "Player: " + std::to_string(m_playerIndex) + " - score: " + std::to_string(m_pointsEarned);
 	m_pTextComponent->SetText(text);
+
 }
 
 void dae::ScoreComponent::UpdateScore(const Event* e)

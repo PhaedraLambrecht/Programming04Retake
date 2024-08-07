@@ -39,6 +39,7 @@ namespace dae
 
 		void SetTexture();
 
+
 		std::string m_Text;
 		SDL_Color m_Color;
 		std::shared_ptr<Font> m_pFont;
