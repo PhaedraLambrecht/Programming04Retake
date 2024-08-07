@@ -44,9 +44,17 @@
     <ClCompile Include="DiamondBlockComponent.cpp">
       <Filter>Componnents</Filter>
     </ClCompile>
-    <ClCompile Include="..\Minigin\StartSinglePlayerComponent.cpp" />
-    <ClCompile Include="..\Minigin\StartSinglePlayerCommand.cpp" />
     <ClCompile Include="..\Minigin\GameLoader.cpp" />
+    <ClCompile Include="..\Minigin\StartSinglePlayerCommand.cpp">
+      <Filter>Commnads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Minigin\StartSinglePlayerComponent.cpp">
+      <Filter>Componnents</Filter>
+    </ClCompile>
+    <ClCompile Include="StartingMultiPlayerCommand.cpp">
+      <Filter>Commnads</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMultiPlayerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -89,8 +97,16 @@
     <ClInclude Include="DiamondBlockComponent.h">
       <Filter>Componnents</Filter>
     </ClInclude>
-    <ClInclude Include="..\Minigin\StartSinglePlayerComponent.h" />
-    <ClInclude Include="..\Minigin\StartSinglePlayerCommand.h" />
     <ClInclude Include="..\Minigin\GameLoader.h" />
+    <ClInclude Include="..\Minigin\StartSinglePlayerCommand.h">
+      <Filter>Commnads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Minigin\StartSinglePlayerComponent.h">
+      <Filter>Componnents</Filter>
+    </ClInclude>
+    <ClInclude Include="StartingMultiPlayerCommand.h">
+      <Filter>Commnads</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMultiPlayerComponent.h" />
   </ItemGroup>
 </Project>

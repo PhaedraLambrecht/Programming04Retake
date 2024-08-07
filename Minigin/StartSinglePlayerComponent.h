@@ -27,7 +27,7 @@ namespace dae
 		std::unordered_map<int, std::string> m_texturemaps;
 
 
-		void LoadSinglePlayerScene(const std::string& levelName, const glm::vec2 offset, unsigned int cntroller);
+		void LoadSinglePlayerScene(const std::string& levelName, const glm::vec2 offset, unsigned int controller);
 
 
 	};
