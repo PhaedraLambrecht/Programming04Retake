@@ -30,7 +30,6 @@ dae::StartMultiPlayerComponent::StartMultiPlayerComponent()
 	m_texturemaps =
 	{
 		{1, "iceBlock.png" },
-		{2, "eggBlock.png" },
 		{3,  "snoBee1.png" },
 		{4,  "diamondBlock.png" },
 		{5,  "penguin2Down.png" },
@@ -48,7 +47,7 @@ void dae::StartMultiPlayerComponent::LoadLevels()
 
 	LoadMultiPlayerScene("level4", { 250,100 }, controller1, controller2);
 	LoadMultiPlayerScene("level5", { 250,125 }, controller1, controller2);
-//	LoadSinglePlayerScene("level3", { 250,150 }, controller);
+	LoadMultiPlayerScene("level6", { 250,150 }, controller1, controller2);
 
 	dae::SceneManager::GetInstance().SetActiveScene("level4");
 }
@@ -128,7 +127,7 @@ void dae::StartMultiPlayerComponent::LoadMultiPlayerScene(const std::string& lev
 			}
 			if (objectType == 2)
 			{
-				loader.LoadEggWall(scene, { x, i }, m_texturemaps.at(objectType), offset, background.get(), players);
+				loader.LoadEggWall(scene, { x, i }, m_texturemaps.at(objectType - 1), offset, background.get(), players);
 			}
 			if (objectType == 3)
 			{

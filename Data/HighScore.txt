@@ -1,5 +1,5 @@
 2000 nox
 900 playtest
+700 ELO
+700 playtest2
 600 airhead
-450 nobody
-300 nobody

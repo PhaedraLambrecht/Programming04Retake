@@ -28,7 +28,6 @@ namespace dae
 
 	};
 
-
 	class PlayerNameEnterCommand final : public BaseCommand
 	{
 	public:
@@ -47,6 +46,25 @@ namespace dae
 
 		NameComponent* m_pNameComponent;
 
+	};
+
+	class FinalPlayerNmaeCommand final : public BaseCommand
+	{
+	public:
+
+		FinalPlayerNmaeCommand(GameObject* player);
+		~FinalPlayerNmaeCommand() = default;
+
+		FinalPlayerNmaeCommand(const FinalPlayerNmaeCommand& other) = delete;
+		FinalPlayerNmaeCommand(FinalPlayerNmaeCommand&& other) = delete;
+		FinalPlayerNmaeCommand& operator=(const FinalPlayerNmaeCommand& other) = delete;
+		FinalPlayerNmaeCommand& operator=(FinalPlayerNmaeCommand&& other) = delete;
+
+		void Execute() override;
+
+	private:
+
+		NameComponent* m_pNameComponent;
 	};
 
 }

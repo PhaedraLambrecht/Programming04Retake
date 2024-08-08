@@ -10,13 +10,17 @@
 #include "Componennts/CollisionComponent.h"
 #include "Scene/SceneManager.h"
 #include "Scene/Scene.h"
+#include "events/Event.h"
+#include "Commands/AddPointsCommand.h"
 
 #include <iostream>
+
 
 dae::EggBlockComponent::EggBlockComponent(GameObject* owner)
 	:BlockComponent(owner)
 	, m_currentTime{ 0.0f }
 	, m_hasHatched{ false }
+	, m_Health{ 1 }
 {
 	// Random time between 10 and 20 seconds
 	m_hatchingTime = float(rand() % 20 + 10);
@@ -93,4 +97,48 @@ std::shared_ptr<dae::GameObject> dae::EggBlockComponent::CreateEnemyObject(const
 
 
 	return enemy;
+}
+
+void dae::EggBlockComponent::AddPointsToPlayers(GameObject* player)
+{
+	dae::AddPointsCommand addPointsCommand(player);
+	addPointsCommand.Execute();
+}
+
+void dae::EggBlockComponent::NotifyOnDeath()
+{
+	Event event;
+	event.eventType = "GainDiamond";
+
+	GetOwner()->MarkForDestruction();
+}
+
+
+void dae::EggBlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/, const CollisionData& hitObject)
+{
+	if (hitObject.ownerType != "DiamondAttack")
+		return;
+
+	DoDamage(hitObject.owningObject);
+}
+
+void dae::EggBlockComponent::OnDeath(const Event* e)
+{
+	if (strcmp(e->eventType, "DiamondDeath") != 0)
+		return;
+
+	NotifyOnDeath();
+}
+
+bool dae::EggBlockComponent::DoDamage(GameObject* player)
+{
+	std::cout << m_Health << std::endl;
+	--m_Health;
+
+	if (m_Health > 0)
+		return false;
+
+	AddPointsToPlayers(player);
+	NotifyOnDeath();
+	return true;
 }

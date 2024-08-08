@@ -1,6 +1,7 @@
 #ifndef ENGINE2D_EGGBLOCKCOMPONENT_H
 #define ENGINE2D_EGGBLOCKCOMPONENT_H
 #include "BlockComponent.h"
+#include "Componennts/CollisionComponent.h"
 #include "glm/glm.hpp"
 #include <vector>
 
@@ -20,6 +21,12 @@ namespace dae
 		EggBlockComponent& operator=(const EggBlockComponent& other) = delete;
 		EggBlockComponent& operator=(EggBlockComponent&& other) = delete;
 
+
+		void Initialize(std::vector<GameObject*> players);
+		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject);
+		void OnDeath(const Event* e);
+		bool DoDamage(GameObject* player);
+
 		void Update() override;
 		void SetPlayer(std::vector<GameObject*> players);
 		void SetBackground(GameObject* background);
@@ -34,6 +41,11 @@ namespace dae
 
 		std::vector<GameObject*> m_pPlayers;
 		GameObject* m_pBackground;
+
+		int m_Health;
+
+		void AddPointsToPlayers(GameObject* player);
+		void NotifyOnDeath();
 	};
 }
 

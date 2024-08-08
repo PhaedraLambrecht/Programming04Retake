@@ -63,9 +63,6 @@
 #include "HighScoreComponent.h"
 
 
-#include "PlayerNameCommand.h"
-#include "NameComponent.h"
-
 
 namespace dae
 {	
@@ -243,12 +240,20 @@ namespace dae
 		// Transform
 		SetUpTransform(eggWall.get(), position, offset);
 
-		// Collision
-		SetUpBaseCollision(eggWall.get(), "EggWall", scene);
-
 		eggWall->AddComponent<dae::EggBlockComponent>();
 		eggWall->GetComponent<dae::EggBlockComponent>()->SetPlayer(player);
 		eggWall->GetComponent<dae::EggBlockComponent>()->SetBackground(background);
+
+
+
+		// Collision
+		SetUpBaseCollision(eggWall.get(), "EggWall", scene);
+
+		auto boundHitCallback = std::bind(&dae::EggBlockComponent::OnHitCallback, eggWall->GetComponent<dae::EggBlockComponent>(), std::placeholders::_1, std::placeholders::_2);
+		eggWall->GetComponent<dae::CollisionComponent>()->SetCallback(boundHitCallback);
+
+
+
 
 		scene.Add(eggWall);
 	}
@@ -270,16 +275,11 @@ namespace dae
 		// Diamond component
 		{		
 			diamondWall->AddComponent<dae::DiamondBlockComponent>();
-			diamondWall->GetComponent<dae::DiamondBlockComponent>()->Initialize(player);
 		}
 
 
 		// Collision
 		SetUpBaseCollision(diamondWall.get(), "DiamondWall", scene);
-		auto boundHitCallback = std::bind(&dae::DiamondBlockComponent::OnHitCallback, diamondWall->GetComponent<dae::DiamondBlockComponent>(), std::placeholders::_1, std::placeholders::_2);
-		diamondWall->GetComponent<dae::CollisionComponent>()->SetCallback(boundHitCallback);
-
-
 
 	
 
@@ -309,31 +309,8 @@ namespace dae
 		highScoreText->GetComponent<dae::TextComponent>()->SetColor(color);
 
 		highScoreText->AddComponent<dae::HighScoreComponent>();
-		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, "duck");
-
-
+		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, SceneManager::GetInstance().GetSceneByName("StartScreen").m_playerName);
 		highScoreText->GetComponent<dae::HighScoreComponent>()->LoadHighScores();
-
-
-
-		const auto player = std::make_shared<dae::GameObject>();
-		player->AddComponent<dae::NameComponent>();
-		scene.Add(player);
-		auto& inputManager = InputManager::GetInstance();
-		{
-			// Game commnads
-
-			// Skipping level
-			inputManager.AddKeyboardCommand<dae::PlayerNameCommand>(
-				std::make_unique<dae::PlayerNameCommand>(player.get()),
-				dae::KeyboardInput{ SDL_SCANCODE_DOWN, dae::ButtonState::Up, scene.GetName() });
-
-			// Skipping level
-			inputManager.AddKeyboardCommand<dae::PlayerNameEnterCommand>(
-				std::make_unique<dae::PlayerNameEnterCommand>(player.get()),
-				dae::KeyboardInput{ SDL_SCANCODE_UP, dae::ButtonState::Up, scene.GetName() });
-		}
-
 
 
 		scene.Add(highScoreText);
