@@ -28,7 +28,25 @@ void dae::BulletMovementComponent::Update()
 {
 	auto currentPos = m_pTransform->GetWorldPosition();
 	const float distanceThisUpdate{ m_MoveSpeed * GameTime::GetInstance().GetDeltaTime() };
-	currentPos.y -= distanceThisUpdate;
+
+
+	 if (m_Direction == "Left") // Moving down
+	 {
+		 currentPos.x -=  distanceThisUpdate; // Subtract instead of add
+	 }
+	 else if (m_Direction == "Right") // Moving down
+	 {
+		 currentPos.x += distanceThisUpdate; // Add instead of subtract
+	 }
+	 else if (m_Direction == "Down")
+	 {
+		 currentPos.y += distanceThisUpdate; // Add instead of subtract
+	 }
+	 else if (m_Direction == "Up")
+	 {
+		 currentPos.y -= distanceThisUpdate; // Subtract instead of add
+	 }
+
 	m_DistanceTraveled += distanceThisUpdate;
 	m_pTransform->SetLocalPosition(currentPos.x, currentPos.y);
 
@@ -42,4 +60,9 @@ void dae::BulletMovementComponent::Update()
 void dae::BulletMovementComponent::SetMaxDistance(float distance)
 {
 	m_MaxDistance = distance;
+}
+
+void dae::BulletMovementComponent::SetDirection(const std::string& direction)
+{
+	m_Direction = direction;
 }

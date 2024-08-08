@@ -47,6 +47,16 @@ namespace dae
 		m_IsDirty = IsFlagged;
 	}
 
+	void TransformComponent::SetLastMovementDirection(const std::string& direction)
+	{
+		m_LastMovementDirection = direction;
+	}
+
+	const std::string TransformComponent::GetLastMovementDirection() const
+	{
+		return m_LastMovementDirection;
+	}
+
 	void TransformComponent::SetWorldPosition()
 	{
 		const auto pParent{ GetOwner()->GetParent()};

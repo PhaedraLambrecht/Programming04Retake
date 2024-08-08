@@ -55,6 +55,7 @@ void dae::SchootComponent::Attack()
 	bullet->GetComponent<TransformComponent>()->SetLocalPosition(ownPos.x, ownPos.y);
 	bullet->AddComponent<ImageComponent>()->SetTexture("Bullet.png");
 	bullet->AddComponent<BulletMovementComponent>();
+	bullet->GetComponent<BulletMovementComponent>()->SetDirection(m_pPlayerTransform->GetLastMovementDirection());
 	bullet->AddComponent<dae::ImageRenderComponent>();
 
 
@@ -117,6 +118,8 @@ void dae::SchootComponent::Update()
 			m_HasDestroyedBullet = true;
 		}
 	}
+
+
 }
 
 void dae::SchootComponent::SetScene(Scene* scene)

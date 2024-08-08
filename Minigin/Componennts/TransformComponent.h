@@ -2,7 +2,7 @@
 #define ENGINE2D_TRANSFORMCOMPONENT_H
 #include "BaseComponent.h"
 #include <glm/glm.hpp>
-
+#include <string>
 
 namespace dae
 {
@@ -27,12 +27,17 @@ namespace dae
 
 		void SwitchDirtyFlag(bool IsFlagged);
 
+		void SetLastMovementDirection(const std::string& direction);
+		const std::string GetLastMovementDirection() const;
+
 
 	private:
 
 		bool m_IsDirty;
 		glm::vec2 m_LocalPosition;
 		glm::vec2 m_WorldPosition;
+
+		std::string m_LastMovementDirection{};
 
 
 		void SetWorldPosition();

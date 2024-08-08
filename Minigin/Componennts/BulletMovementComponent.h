@@ -1,6 +1,9 @@
 #ifndef ENGINE2D_BULLETMOVEMENTCOMPONENT_H
 #define ENGINE2D_BULLETMOVEMENTCOMPONENT_H
 #include "Componennts/BaseComponent.h"
+#include "glm/glm.hpp"
+#include <string>
+
 
 namespace dae
 {
@@ -22,6 +25,9 @@ namespace dae
 		void Update() override;
 		void SetMaxDistance(float distance);
 
+		void SetDirection(const std::string& direction);
+
+
 	private:
 
 		float m_MoveSpeed{ 600 };
@@ -30,6 +36,8 @@ namespace dae
 		float m_DistanceTraveled{ 0 };
 
 		TransformComponent* m_pTransform{};
+
+		std::string m_Direction;
 	};
 
 }

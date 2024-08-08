@@ -305,7 +305,7 @@ namespace dae
 		highScoreText->GetComponent<dae::TextComponent>()->SetColor(color);
 
 		highScoreText->AddComponent<dae::HighScoreComponent>();
-		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, "airhead");
+		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, "duck");
 
 
 		highScoreText->GetComponent<dae::HighScoreComponent>()->LoadHighScores();
@@ -436,12 +436,12 @@ namespace dae
 			);
 
 			command = inputManager.AddControllerCommand<dae::MoveCommand>(
-				std::make_unique<dae::MoveCommand>(player, playerMoveDirectiony, originalSpeed),
+				std::make_unique<dae::MoveCommand>(player, -playerMoveDirectiony, originalSpeed),
 				dae::ControllerInput{ controller, dae::ControlerButton::DPAD_DOWN,dae::ButtonState::Pressed, scene.GetName() }
 			);
 
 			command = inputManager.AddControllerCommand<dae::MoveCommand>(
-				std::make_unique<dae::MoveCommand>(player, playerMoveDirectionx, -originalSpeed),
+				std::make_unique<dae::MoveCommand>(player, -playerMoveDirectionx, -originalSpeed),
 				dae::ControllerInput{ controller, dae::ControlerButton::DPAD_LEFT, dae::ButtonState::Pressed, scene.GetName() }
 			);
 
@@ -486,13 +486,13 @@ namespace dae
 			);
 
 			command = inputManager.AddKeyboardCommand<dae::MoveCommand>(
-				std::make_unique<dae::MoveCommand>(player, playerMoveDirectiony, originalSpeed),
+				std::make_unique<dae::MoveCommand>(player, -playerMoveDirectiony, originalSpeed),
 				dae::KeyboardInput{ SDL_SCANCODE_S, dae::ButtonState::Pressed, scene.GetName() }
 			);
 
 
 			command = inputManager.AddKeyboardCommand<dae::MoveCommand>(
-				std::make_unique<dae::MoveCommand>(player, playerMoveDirectionx, -originalSpeed),
+				std::make_unique<dae::MoveCommand>(player, -playerMoveDirectionx, -originalSpeed),
 				dae::KeyboardInput{ SDL_SCANCODE_A, dae::ButtonState::Pressed, scene.GetName() }
 			);
 
