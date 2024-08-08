@@ -63,6 +63,10 @@
 #include "HighScoreComponent.h"
 
 
+#include "PlayerNameCommand.h"
+#include "NameComponent.h"
+
+
 namespace dae
 {	
 	void GameLoader::LoadSound(SoundSystem* soundSystem, const SoundData& soundData)
@@ -309,6 +313,26 @@ namespace dae
 
 
 		highScoreText->GetComponent<dae::HighScoreComponent>()->LoadHighScores();
+
+
+
+		const auto player = std::make_shared<dae::GameObject>();
+		player->AddComponent<dae::NameComponent>();
+		scene.Add(player);
+		auto& inputManager = InputManager::GetInstance();
+		{
+			// Game commnads
+
+			// Skipping level
+			inputManager.AddKeyboardCommand<dae::PlayerNameCommand>(
+				std::make_unique<dae::PlayerNameCommand>(player.get()),
+				dae::KeyboardInput{ SDL_SCANCODE_DOWN, dae::ButtonState::Up, scene.GetName() });
+
+			// Skipping level
+			inputManager.AddKeyboardCommand<dae::PlayerNameEnterCommand>(
+				std::make_unique<dae::PlayerNameEnterCommand>(player.get()),
+				dae::KeyboardInput{ SDL_SCANCODE_UP, dae::ButtonState::Up, scene.GetName() });
+		}
 
 
 

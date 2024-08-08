@@ -8,6 +8,7 @@
 #include "Componennts/ScoreComponent.h"
 #include "GameObject.h"
 
+
 void dae::SceneManager::Update()
 {
 	m_pActiveScene->Update();

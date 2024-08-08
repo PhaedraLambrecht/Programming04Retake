@@ -216,6 +216,8 @@
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\Galaga\HighScoreComponent.h" />
+    <ClInclude Include="PlayerNameCommand.h" />
+    <ClInclude Include="NameComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
@@ -378,5 +380,7 @@
       <Filter>Componennts</Filter>
     </ClCompile>
     <ClCompile Include="..\Galaga\HighScoreComponent.cpp" />
+    <ClCompile Include="PlayerNameCommand.cpp" />
+    <ClCompile Include="NameComponent.cpp" />
   </ItemGroup>
 </Project>

@@ -259,6 +259,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="Input\Controller.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Minigin.h" />
+    <ClInclude Include="NameComponent.h" />
+    <ClInclude Include="PlayerNameCommand.h" />
     <ClInclude Include="Resources\resource.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -319,6 +321,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Input\Controller.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Minigin.cpp" />
+    <ClCompile Include="NameComponent.cpp" />
+    <ClCompile Include="PlayerNameCommand.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
