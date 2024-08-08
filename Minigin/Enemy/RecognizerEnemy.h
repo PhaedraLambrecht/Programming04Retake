@@ -65,6 +65,7 @@ namespace dae
 
 		void move(float deltaTime, int x, int y);
 		void HandleBlockedMovement(float deltaTime);
+		bool IsCollidingWithBlock(const glm::vec2& newPos);
 
 		bool IsBlockingLeft(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
 		bool IsBlockingRight(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;

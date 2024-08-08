@@ -1,7 +1,7 @@
 #ifndef ENGINE2D_SCENE_H
 #define ENGINE2D_SCENE_H
 #include "SceneManager.h"
-
+#include "glm/glm.hpp"
 namespace dae
 {
 	class GameObject;
@@ -36,6 +36,7 @@ namespace dae
 
 		void AddCollision(CollisionComponent* collision);
 		void RemoveCollision(CollisionComponent* collision);
+		CollisionComponent* GetCollisionAt(const glm::vec2& position);
 
 		bool IsActive();
 		void SetActive(bool isActive);

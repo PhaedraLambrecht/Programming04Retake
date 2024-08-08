@@ -83,7 +83,7 @@ namespace dae
 		backGroundImage->GetComponent<dae::TransformComponent>()->SetLocalPosition(g_WindowWidth / 2 - image->GetTextureDimensions().x / 2, g_WindowHeight / 2 - image->GetTextureDimensions().y / 2);
 
 		// Collision
-		SetUpBaseCollision(backGroundImage.get(), "world", scene);
+		SetUpBaseCollision(backGroundImage.get(), "World", scene);
 
 
 		scene.Add(backGroundImage);

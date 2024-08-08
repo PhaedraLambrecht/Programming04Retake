@@ -123,15 +123,82 @@ void dae::RecognizerEnemy::move(float deltaTime, int x, int y)
 
 void dae::RecognizerEnemy::HandleBlockedMovement(float deltaTime)
 {
+	glm::vec2 newPos;
 	if (m_MovementFlags.left && !m_MovementFlags.right)
-		move(deltaTime, -1, 0);
-	else if (m_MovementFlags.right && !m_MovementFlags.left)
-		move(deltaTime, 1, 0);
+	{
+		newPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition() + glm::vec2(-1, 0) * (deltaTime * m_EnemySpeed);
+	
+		if (IsCollidingWithBlock(newPos) == false)
+		{
+			move(deltaTime, -1, 0);
+		}
+	}
+	else if(m_MovementFlags.right && !m_MovementFlags.left)
+	{
+		newPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition() + glm::vec2(1, 0) * (deltaTime * m_EnemySpeed);
+
+		if (IsCollidingWithBlock(newPos) == false)
+		{
+			move(deltaTime, 1, 0);
+		}
+	}
 	else if (m_MovementFlags.up && !m_MovementFlags.down)
-		move(deltaTime, 0, -1);
+	{
+		newPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition() + glm::vec2(0, -1) * (deltaTime * m_EnemySpeed);
+
+		if (IsCollidingWithBlock(newPos) == false)
+		{
+			move(deltaTime, 0, -1);
+		}
+	}
 	else if (m_MovementFlags.down && !m_MovementFlags.up)
-		move(deltaTime, 0, 1);
+	{
+		newPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition() + glm::vec2(0, 1) * (deltaTime * m_EnemySpeed);
+
+		if (IsCollidingWithBlock(newPos) == false)
+		{
+			move(deltaTime, 0, 1);
+		}
+	}
+
 }
+
+
+bool dae::RecognizerEnemy::IsCollidingWithBlock(const glm::vec2& newPos)
+{
+	// Raycast to check for collisions with blocks
+	CollisionComponent* blockCollision = SceneManager::GetInstance().GetActiveScene().GetCollisionAt(newPos);
+
+	if (!blockCollision)
+	{
+		return false;
+	}
+
+
+	// Get the position and size of the current item
+	glm::vec2 itemPosition = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition();
+	glm::vec2 itemSize = GetOwner()->GetComponent<dae::CollisionComponent>()->GetBounds();
+
+	// Get the position and size of the block collision
+	glm::vec2 blockPosition = blockCollision->GetCollisionData().owningObject->GetComponent<TransformComponent>()->GetWorldPosition();
+	glm::vec2 blockSize = blockCollision->GetBounds();
+
+	// Check if the item and block are overlapping
+	if (itemPosition.x + itemSize.x > blockPosition.x &&
+		itemPosition.x < blockPosition.x + blockSize.x &&
+		itemPosition.y + itemSize.y > blockPosition.y &&
+		itemPosition.y < blockPosition.y + blockSize.y)
+	{
+		// The item and block are overlapping, return true
+		return true;
+	}
+	else
+	{
+		// The item and block are not overlapping, return false
+		return false;
+	}
+}
+
 
 void dae::RecognizerEnemy::ChangeDirection()
 {

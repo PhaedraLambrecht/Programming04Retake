@@ -103,6 +103,35 @@ void dae::Scene::RemoveCollision(CollisionComponent* collision)
 		m_pObjectCollisions.erase(it);
 }
 
+dae::CollisionComponent* dae::Scene::GetCollisionAt(const glm::vec2& position)
+{
+
+
+	for (const auto& colision : m_pObjectCollisions)
+	{
+		if (colision->GetCollisionData().ownerType != "World")
+		{
+			if (colision->GetCollisionData().ownerType != "Player")
+			{
+				// Check if the object's collision bounds contain the given position
+				glm::vec2 objPosition = colision->GetCollisionData().owningObject->GetComponent<TransformComponent>()->GetWorldPosition();
+				glm::vec2 objSize = colision->GetBounds();
+
+				if (position.x >= objPosition.x && position.x <= objPosition.x + objSize.x &&
+					position.y >= objPosition.y && position.y <= objPosition.y + objSize.y)
+				{
+					// Return the CollisionComponent if there's a collision
+					return colision;
+				}
+			}
+		}
+	}
+
+
+	// Return nullptr if no collision is found
+	return nullptr;
+}
+
 bool dae::Scene::IsActive()
 {
 	return m_isActive;

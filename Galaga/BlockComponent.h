@@ -5,6 +5,7 @@
 namespace dae
 {
 	class GameObject;
+	class CollisionComponent;
 
 	class BlockComponent : public BaseComponent
 	{
