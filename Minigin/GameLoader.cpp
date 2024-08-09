@@ -277,6 +277,7 @@ namespace dae
 		// Diamond component
 		{		
 			diamondWall->AddComponent<dae::DiamondBlockComponent>();
+			diamondWall->GetComponent<dae::DiamondBlockComponent>()->SetPlayer(player);
 		}
 
 

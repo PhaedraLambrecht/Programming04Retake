@@ -28,8 +28,8 @@ namespace dae
 		bool DoDamage(GameObject* player);
 
 		void Update() override;
-		void SetPlayer(std::vector<GameObject*> players);
 		void SetBackground(GameObject* background);
+
 
 	private:
 
@@ -39,7 +39,6 @@ namespace dae
 		float m_currentTime;
 		bool m_hasHatched;
 
-		std::vector<GameObject*> m_pPlayers;
 		GameObject* m_pBackground;
 
 		int m_Health;

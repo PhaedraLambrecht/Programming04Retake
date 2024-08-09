@@ -10,3 +10,8 @@ dae::DiamondBlockComponent::DiamondBlockComponent(GameObject* owner)
 
 }
 
+void dae::DiamondBlockComponent::Update()
+{
+	
+}
+

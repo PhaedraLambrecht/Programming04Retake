@@ -19,6 +19,9 @@ namespace dae
 		DiamondBlockComponent& operator=(const DiamondBlockComponent& other) = delete;
 		DiamondBlockComponent& operator=(DiamondBlockComponent&& other) = delete;
 
+
+		void Update() override;
+
 	};
 }
 

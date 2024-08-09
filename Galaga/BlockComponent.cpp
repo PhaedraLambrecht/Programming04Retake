@@ -42,3 +42,8 @@ void dae::BlockComponent::SetPlayer(std::vector<dae::GameObject*> player)
 {
 	m_player = player;
 }
+
+std::vector<dae::GameObject*> dae::BlockComponent::GetPlayer()
+{
+    return m_player;
+}

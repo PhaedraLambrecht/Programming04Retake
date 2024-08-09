@@ -33,18 +33,13 @@ void dae::EggBlockComponent::Update()
     {
 		m_hasHatched = true;
 
-		const auto enemy = CreateEnemyObject(GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition(), m_pPlayers, m_pBackground);
+		const auto enemy = CreateEnemyObject(GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition(), GetPlayer(), m_pBackground);
 		SceneManager::GetInstance().GetActiveScene().Add(enemy);
 		SceneManager::GetInstance().GetActiveScene().AddEnemy(enemy);
 
 
 		GetOwner()->MarkForDestruction();
     }
-}
-
-void dae::EggBlockComponent::SetPlayer(std::vector<dae::GameObject*> players)
-{
-	m_pPlayers = players;
 }
 
 void dae::EggBlockComponent::SetBackground(GameObject* background)

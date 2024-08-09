@@ -23,6 +23,7 @@ namespace dae
 
 		void Update() override;
 		void SetPlayer(std::vector<dae::GameObject*> player);
+		std::vector<dae::GameObject*> GetPlayer();
 
 	private:
 
