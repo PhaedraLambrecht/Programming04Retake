@@ -37,6 +37,13 @@ void dae::MoveCommand::Execute()
 
 		m_pActor->GetComponent<RotatorComponent>()->RotateToAngle(90.0f);
 		m_pTransform->SetLastMovementDirection("Right");
+
+
+		if (m_pTransform->IsDirectionBlocked(m_pTransform->GetLastMovementDirection()))
+		{
+			m_pTransform->ResetBlockedDirections();
+			return;
+		}
 	}
 	else if (m_Direction.x < 0)
 	{
@@ -45,6 +52,12 @@ void dae::MoveCommand::Execute()
 		m_pActor->GetComponent<RotatorComponent>()->RotateToAngle(-90.0f);
 		m_pTransform->SetLastMovementDirection("Left");
 
+
+		if (m_pTransform->IsDirectionBlocked(m_pTransform->GetLastMovementDirection()))
+		{
+			m_pTransform->ResetBlockedDirections();
+			return;
+		}
 	}	
 	else if (m_Direction.y > 0)
 	{
@@ -52,6 +65,13 @@ void dae::MoveCommand::Execute()
 
 		m_pActor->GetComponent<RotatorComponent>()->RotateToAngle(90.0f);
 		m_pTransform->SetLastMovementDirection("Up");
+
+
+		if (m_pTransform->IsDirectionBlocked(m_pTransform->GetLastMovementDirection()))
+		{
+			m_pTransform->ResetBlockedDirections();
+			return;
+		}
 	}
 	else if (m_Direction.y < 0)
 	{
@@ -59,7 +79,15 @@ void dae::MoveCommand::Execute()
 
 		m_pActor->GetComponent<RotatorComponent>()->RotateToAngle(-90.0f);
 		m_pTransform->SetLastMovementDirection("Down");
+
+
+		if (m_pTransform->IsDirectionBlocked(m_pTransform->GetLastMovementDirection()))
+		{
+			m_pTransform->ResetBlockedDirections();
+			return;
+		}
 	}
+
 
 
 	m_pTransform->SetLocalPosition(position.x, position.y);

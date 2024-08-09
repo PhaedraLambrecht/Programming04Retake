@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <string>
 
+#include <unordered_map>
+
 namespace dae
 {
 	class TransformComponent final : public BaseComponent
@@ -31,6 +33,12 @@ namespace dae
 		const std::string GetLastMovementDirection() const;
 
 
+
+		void BlockDirection(const std::string& direction);
+		bool IsDirectionBlocked(const std::string& direction) const;
+		void ResetBlockedDirections();
+
+
 	private:
 
 		bool m_IsDirty;
@@ -41,6 +49,11 @@ namespace dae
 
 
 		void SetWorldPosition();
+
+
+
+		std::unordered_map<std::string, bool> m_BlockedDirections;
+
 	};
 }
 

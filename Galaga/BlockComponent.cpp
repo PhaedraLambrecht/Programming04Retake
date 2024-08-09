@@ -31,7 +31,7 @@ void dae::BlockComponent::Update()
             playerY + playerHeight > thisY && playerY < thisY + thisHeight)
         {
 			std::cout << "stop moving in that direction" << std::endl;
-            // Stop the player from moving
+            player->GetComponent<TransformComponent>()->BlockDirection(player->GetComponent<TransformComponent>()->GetLastMovementDirection());
         }
     }
 

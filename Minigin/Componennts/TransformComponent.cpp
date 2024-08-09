@@ -57,6 +57,31 @@ namespace dae
 		return m_LastMovementDirection;
 	}
 
+
+
+	void TransformComponent::BlockDirection(const std::string& direction)
+	{
+		m_BlockedDirections[direction] = true;
+	}
+
+	bool TransformComponent::IsDirectionBlocked(const std::string& direction) const
+	{
+		auto it = m_BlockedDirections.find(direction);
+		if (it != m_BlockedDirections.end())
+		{
+			return it->second;
+		}
+		return false;
+	}
+
+	void TransformComponent::ResetBlockedDirections()
+	{
+		m_BlockedDirections.clear();
+	}
+
+
+
+
 	void TransformComponent::SetWorldPosition()
 	{
 		const auto pParent{ GetOwner()->GetParent()};

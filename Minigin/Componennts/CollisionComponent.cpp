@@ -106,6 +106,8 @@ bool dae::CollisionComponent::CheckOverlapp(CollisionComponent* pOther) const
 	bool overlapX = pos.x < otherBottomRight.x && bottomRight.x > otherPos.x;
 	bool overlapY = pos.y < otherBottomRight.y && bottomRight.y > otherPos.y;
 
+
+
 	// Return true if overlaps in both axes
 	return overlapX && overlapY;
 }
