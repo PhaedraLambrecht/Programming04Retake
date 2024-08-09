@@ -29,6 +29,7 @@ namespace dae
 	{
 		m_Text = text;
 
+
 		SetTexture();
 	}
 

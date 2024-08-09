@@ -292,7 +292,7 @@ namespace dae
 		const SDL_Color color{ 0, 255, 0 };
 		const auto font{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25) };
 
-
+	
 		auto& scene = dae::SceneManager::GetInstance().CreateScene(sceneName);
 		scene.SetActive(true);
 

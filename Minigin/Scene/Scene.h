@@ -48,7 +48,7 @@ namespace dae
 		bool m_EnemyLoaded = false;
 
 
-		std::string m_playerName;
+		std::string m_playerName{};
 	private: 
 	
 		explicit Scene(const std::string& name);

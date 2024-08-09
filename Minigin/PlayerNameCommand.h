@@ -8,17 +8,17 @@ namespace dae
 	class NameComponent;
 	class GameObject;
 
-	class PlayerNameCommand final : public BaseCommand
+	class PlayerNameDownCommand final : public BaseCommand
 	{
 	public:
 
-		PlayerNameCommand(GameObject* player);
-		~PlayerNameCommand() = default;
+		PlayerNameDownCommand(GameObject* player);
+		~PlayerNameDownCommand() = default;
 
-		PlayerNameCommand(const PlayerNameCommand& other) = delete;
-		PlayerNameCommand(PlayerNameCommand&& other) = delete;
-		PlayerNameCommand& operator=(const PlayerNameCommand& other) = delete;
-		PlayerNameCommand& operator=(PlayerNameCommand&& other) = delete;
+		PlayerNameDownCommand(const PlayerNameDownCommand& other) = delete;
+		PlayerNameDownCommand(PlayerNameDownCommand&& other) = delete;
+		PlayerNameDownCommand& operator=(const PlayerNameDownCommand& other) = delete;
+		PlayerNameDownCommand& operator=(PlayerNameDownCommand&& other) = delete;
 
 		void Execute() override;
 
@@ -27,6 +27,28 @@ namespace dae
 		NameComponent* m_pNameComponent;
 
 	};
+
+	class PlayerNameUpCommand final : public BaseCommand
+	{
+	public:
+
+		PlayerNameUpCommand(GameObject* player);
+		~PlayerNameUpCommand() = default;
+
+		PlayerNameUpCommand(const PlayerNameUpCommand& other) = delete;
+		PlayerNameUpCommand(PlayerNameUpCommand&& other) = delete;
+		PlayerNameUpCommand& operator=(const PlayerNameUpCommand& other) = delete;
+		PlayerNameUpCommand& operator=(PlayerNameUpCommand&& other) = delete;
+
+		void Execute() override;
+
+	private:
+
+		NameComponent* m_pNameComponent;
+
+	};
+
+
 
 	class PlayerNameEnterCommand final : public BaseCommand
 	{
@@ -47,25 +69,5 @@ namespace dae
 		NameComponent* m_pNameComponent;
 
 	};
-
-	class FinalPlayerNmaeCommand final : public BaseCommand
-	{
-	public:
-
-		FinalPlayerNmaeCommand(GameObject* player);
-		~FinalPlayerNmaeCommand() = default;
-
-		FinalPlayerNmaeCommand(const FinalPlayerNmaeCommand& other) = delete;
-		FinalPlayerNmaeCommand(FinalPlayerNmaeCommand&& other) = delete;
-		FinalPlayerNmaeCommand& operator=(const FinalPlayerNmaeCommand& other) = delete;
-		FinalPlayerNmaeCommand& operator=(FinalPlayerNmaeCommand&& other) = delete;
-
-		void Execute() override;
-
-	private:
-
-		NameComponent* m_pNameComponent;
-	};
-
 }
 

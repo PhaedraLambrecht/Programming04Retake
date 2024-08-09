@@ -1,7 +1,7 @@
 #include "StartSinglePlayerCommand.h"
 #include "StartSinglePlayerComponent.h"
-#include <iostream>
-
+#include "Scene/SceneManager.h"
+#include "Scene/Scene.h"
 
 dae::StartSinglePlayerCommand::StartSinglePlayerCommand()
 	:BaseCommand()
@@ -10,6 +10,9 @@ dae::StartSinglePlayerCommand::StartSinglePlayerCommand()
 
 void dae::StartSinglePlayerCommand::Execute()
 {
-	StartSinglePlayerComponent startSinglePlayerComponent{ };
-	startSinglePlayerComponent.LoadLevels();
+	if (!SceneManager::GetInstance().GetActiveScene().m_playerName.empty())
+	{
+		StartSinglePlayerComponent startSinglePlayerComponent{ };
+		startSinglePlayerComponent.LoadLevels();
+	}
 }

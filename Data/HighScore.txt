@@ -1,5 +1,5 @@
 2000 nox
-900 playtest
-700 ELO
-700 playtest2
-600 airhead
+700 playtest
+350 playtest2
+100 sup
+450 BED

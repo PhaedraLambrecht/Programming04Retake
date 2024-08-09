@@ -1,5 +1,7 @@
 #include "StartingMultiPlayerCommand.h"
 #include "StartMultiPlayerComponent.h"
+#include "Scene/SceneManager.h"
+#include "Scene/Scene.h"
 
 dae::StartingMultiPlayerCommand::StartingMultiPlayerCommand()
 	:BaseCommand()
@@ -8,7 +10,10 @@ dae::StartingMultiPlayerCommand::StartingMultiPlayerCommand()
 
 void dae::StartingMultiPlayerCommand::Execute()
 {
-	StartMultiPlayerComponent startMultiPlayerComponent{ };
-	startMultiPlayerComponent.LoadLevels();
+	if (!SceneManager::GetInstance().GetActiveScene().m_playerName.empty())
+	{
+		StartMultiPlayerComponent startMultiPlayerComponent{ };
+		startMultiPlayerComponent.LoadLevels();
+	}
 }
 

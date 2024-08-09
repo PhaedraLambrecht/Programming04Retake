@@ -5,6 +5,8 @@
 
 namespace dae
 {
+	class TextComponent;
+
 	class NameComponent final : public BaseComponent
 	{
 	public:
@@ -20,6 +22,7 @@ namespace dae
 
 		const std::string& GetName() const;
 
+
 		void AddLetterToName();
 		void CycleLetters(int direction); // direction: 1 for forward, -1 for backward
 
@@ -30,5 +33,9 @@ namespace dae
 		std::vector<char> m_letters;
 		int m_currentLetterIndex;
 
+
+
+
+		TextComponent* m_pTextComponent;
 	};
 }
