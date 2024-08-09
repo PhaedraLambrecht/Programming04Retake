@@ -119,7 +119,7 @@ void dae::StartSinglePlayerComponent::LoadSinglePlayerScene(const std::string& l
 
 			if (objectType == 1)
 			{
-				loader.LoadWall(scene, { x, i }, m_texturemaps.at(objectType), offset);
+				loader.LoadWall(scene, { x, i }, m_texturemaps.at(objectType), offset, players);
 			}
 			if (objectType == 2)
 			{

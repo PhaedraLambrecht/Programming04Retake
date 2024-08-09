@@ -1,6 +1,7 @@
 #ifndef ENGINE2D_BLOCKCOMPONENT_H
 #define ENGINE2D_BLOCKCOMPONENT_H
 #include "Componennts/BaseComponent.h"
+#include <vector>
 
 namespace dae
 {
@@ -21,6 +22,12 @@ namespace dae
 
 
 		void Update() override;
+		void SetPlayer(std::vector<dae::GameObject*> player);
+
+	private:
+
+		std::vector<dae::GameObject*> m_player;
+		CollisionComponent* m_CollisionComponent;
 	};
 }
 

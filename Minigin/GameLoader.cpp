@@ -208,12 +208,13 @@ namespace dae
 		return enemy;
 	}
 
-	void GameLoader::LoadWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset)
+	void GameLoader::LoadWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player)
 	{
 		const auto wall = std::make_shared<dae::GameObject>();
 
 		// Image
 		{
+			wall->AddComponent<dae::BlockComponent>()->SetPlayer(player);
 			wall->AddComponent<dae::ImageComponent>();
 			wall->AddComponent<dae::ImageRenderComponent>();
 			wall->GetComponent<dae::ImageComponent>()->SetTexture(texture);
@@ -225,6 +226,7 @@ namespace dae
 
 		// Collision
 		SetUpBaseCollision(wall.get(), "Wall", scene);
+
 
 		scene.Add(wall);
 	}
