@@ -88,7 +88,32 @@ void dae::BlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/,
 
 bool dae::BlockComponent::DoDamage(GameObject* /*player*/)
 {
-	glm::vec2 pos = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition() - 10.0f;
+    glm::vec2 pos{};
+
+	GameObject* playerObj =  SceneManager::GetInstance().GetActiveScene().GetPlayer();
+
+    if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Left")
+	{
+        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x - 10.0f;
+        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y;
+	}
+	else if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Right")
+	{
+        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x + 10.0f;
+        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y;
+	}
+	else if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Up")
+	{
+        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x;
+        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y - 10.0f;
+	}
+	else if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Down")
+	{
+        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x ;
+        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y + 10.0f;
+	}
+
+
 
  	GetOwner()->GetComponent<dae::TransformComponent>()->SetLocalPosition( pos.x, pos.y );
 

@@ -101,6 +101,7 @@ void dae::StartSinglePlayerComponent::LoadSinglePlayerScene(const std::string& l
 
 				//SetupPlayerControls(inputManager, player, scene);
 				players.push_back(player.get());
+				scene.AddPlayer(player.get());
 			}
 		}
 	}
