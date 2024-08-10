@@ -37,7 +37,6 @@ void dae::BlockComponent::Update()
         }
     }
 
-  
     for (const auto& enemy : SceneManager::GetInstance().GetActiveScene().GetEnemy())
     {
         float enemyX = enemy->GetComponent<dae::TransformComponent>()->GetWorldPosition().x;
@@ -54,10 +53,13 @@ void dae::BlockComponent::Update()
         if (enemyX + enemyWidth > thisX && enemyX < thisX + thisWidth &&
             enemyY + enemyHeight > thisY && enemyY < thisY + thisHeight)
         {
-            std::cout << "stop moving in that direction" << std::endl;
             enemy->GetComponent<TransformComponent>()->BlockDirection(enemy->GetComponent<TransformComponent>()->GetLastMovementDirection());
         }
     }
+
+
+
+
 
 }
 
@@ -69,4 +71,26 @@ void dae::BlockComponent::SetPlayer(std::vector<dae::GameObject*> player)
 std::vector<dae::GameObject*> dae::BlockComponent::GetPlayer()
 {
     return m_player;
+}
+
+void dae::BlockComponent::TestFunction()
+{
+	std::cout << "Test Function" << std::endl;
+}
+
+void dae::BlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/, const CollisionData& hitObject)
+{
+    if (hitObject.ownerType != "DiamondAttack")
+        return;
+
+    DoDamage(hitObject.owningObject);
+}
+
+bool dae::BlockComponent::DoDamage(GameObject* /*player*/)
+{
+	glm::vec2 pos = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition() - 10.0f;
+
+ 	GetOwner()->GetComponent<dae::TransformComponent>()->SetLocalPosition( pos.x, pos.y );
+
+    return true;
 }

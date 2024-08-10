@@ -227,6 +227,9 @@ namespace dae
 		// Collision
 		SetUpBaseCollision(wall.get(), "Wall", scene);
 
+		auto boundHitCallback = std::bind(&dae::BlockComponent::OnHitCallback, wall->GetComponent<dae::BlockComponent>(), std::placeholders::_1, std::placeholders::_2);
+		wall->GetComponent<dae::CollisionComponent>()->SetCallback(boundHitCallback);
+
 
 		scene.Add(wall);
 	}

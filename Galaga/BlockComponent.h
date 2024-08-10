@@ -1,6 +1,7 @@
 #ifndef ENGINE2D_BLOCKCOMPONENT_H
 #define ENGINE2D_BLOCKCOMPONENT_H
 #include "Componennts/BaseComponent.h"
+#include "Componennts/CollisionComponent.h"
 #include <vector>
 
 namespace dae
@@ -25,8 +26,11 @@ namespace dae
 		void SetPlayer(std::vector<dae::GameObject*> player);
 		std::vector<dae::GameObject*> GetPlayer();
 
-		void SetEnemy(std::vector<dae::GameObject*> enemy);
-		std::vector<dae::GameObject*> GetEnemy();
+		void TestFunction();
+
+		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject);
+		bool DoDamage(GameObject* player);
+
 
 	private:
 
