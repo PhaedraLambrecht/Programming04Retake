@@ -128,7 +128,7 @@ void dae::StartMultiPlayerComponent::LoadMultiPlayerScene(const std::string& lev
 			if (objectType == 2)
 			{
 				loader.LoadEggWall(scene, { x, i }, m_texturemaps.at(objectType - 1), offset, background.get(), players);
-			}
+			}	
 			if (objectType == 3)
 			{
 				const auto& enemy = loader.LoadEnemy(scene, { x, i }, m_texturemaps.at(objectType), players, background, offset);

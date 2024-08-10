@@ -97,7 +97,6 @@ void dae::StartSinglePlayerComponent::LoadSinglePlayerScene(const std::string& l
 
 			if (objectType == 5)
 			{
-
 				const auto& player = loader.LoadPlayer(scene, 0, controller, m_texturemaps.at(objectType), { x, i }, offset);
 
 				//SetupPlayerControls(inputManager, player, scene);
@@ -105,6 +104,7 @@ void dae::StartSinglePlayerComponent::LoadSinglePlayerScene(const std::string& l
 			}
 		}
 	}
+
 
 
 	for (int i{}; i < int(leveldata.size()); ++i)
@@ -124,7 +124,7 @@ void dae::StartSinglePlayerComponent::LoadSinglePlayerScene(const std::string& l
 			if (objectType == 2)
 			{
 				loader.LoadEggWall(scene, { x, i }, m_texturemaps.at(objectType - 1), offset, background.get(), players);
-			}
+			}	
 			if (objectType == 3)
 			{
 				const auto& enemy = loader.LoadEnemy(scene, { x, i }, m_texturemaps.at(objectType), players, background, offset);

@@ -25,9 +25,13 @@ namespace dae
 		void SetPlayer(std::vector<dae::GameObject*> player);
 		std::vector<dae::GameObject*> GetPlayer();
 
+		void SetEnemy(std::vector<dae::GameObject*> enemy);
+		std::vector<dae::GameObject*> GetEnemy();
+
 	private:
 
 		std::vector<dae::GameObject*> m_player;
+		std::vector<dae::GameObject*> m_enemy;
 		CollisionComponent* m_CollisionComponent;
 	};
 }

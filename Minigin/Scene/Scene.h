@@ -42,6 +42,7 @@ namespace dae
 		void SetActive(bool isActive);
 
 		void AddEnemy(std::shared_ptr<GameObject> enemy);
+		std::vector<GameObject*> GetEnemy();
 		void AddPlayer(GameObject* player);
 		GameObject* GetPlayer();
 		bool m_NoEnemies = false;

@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Scene.h"
 #include "GameObject.h"
 #include "Componennts/CollisionComponent.h"
 #include "Events/EventManager.h"
@@ -146,6 +147,17 @@ void dae::Scene::AddEnemy(std::shared_ptr<GameObject> enemy)
 {
 	m_pEnemies.emplace_back(std::move(enemy));
 	m_EnemyLoaded = true;
+}
+
+std::vector<GameObject*> dae::Scene::GetEnemy()
+{
+	std::vector<GameObject*> enemies;
+	for (const auto& enemy : m_pEnemies)
+	{
+		enemies.push_back(enemy.get());
+	}
+
+	return enemies;
 }
 
 void dae::Scene::AddPlayer(GameObject* player)

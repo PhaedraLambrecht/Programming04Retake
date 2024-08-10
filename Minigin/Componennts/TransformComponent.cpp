@@ -62,7 +62,7 @@ namespace dae
 	void TransformComponent::BlockDirection(const std::string& direction)
 	{
 		m_BlockedDirections[direction] = true;
-	}
+ 	}
 
 	bool TransformComponent::IsDirectionBlocked(const std::string& direction) const
 	{
