@@ -100,15 +100,18 @@ void dae::StartMultiPlayerComponent::LoadMultiPlayerScene(const std::string& lev
 
 				const auto& player = loader.LoadPlayer(scene, 0, controller1, m_texturemaps.at(objectType), { x, i }, offset);
 				players.push_back(player.get());
+				scene.AddPlayer(player.get());
 			}
 
 			if (objectType == 6)
 			{
 				const auto& player = loader.LoadPlayer(scene, 1, controller2, m_texturemaps.at(objectType), { x, i }, offset);
 				players.push_back(player.get());
+				scene.AddPlayer(player.get());
 			}
 		}
 	}
+
 
 
 	for (int i{}; i < int(leveldata.size()); ++i)
@@ -123,7 +126,8 @@ void dae::StartMultiPlayerComponent::LoadMultiPlayerScene(const std::string& lev
 
 			if (objectType == 1)
 			{
-				loader.LoadWall(scene, { x, i }, m_texturemaps.at(objectType), offset, players);
+				const auto& wall = loader.LoadWall(scene, { x, i }, m_texturemaps.at(objectType), offset, players);
+				scene.AddWalls(wall.get());
 			}
 			if (objectType == 2)
 			{
@@ -132,11 +136,12 @@ void dae::StartMultiPlayerComponent::LoadMultiPlayerScene(const std::string& lev
 			if (objectType == 3)
 			{
 				const auto& enemy = loader.LoadEnemy(scene, { x, i }, m_texturemaps.at(objectType), players, background, offset);
-				scene.AddEnemy(enemy);
+				scene.AddEnemy(enemy.get());
 			}
 			if (objectType == 4)
 			{
-				loader.LoadDiamondWall(scene, { x, i }, m_texturemaps.at(objectType), offset, players);
+				const auto& wall = loader.LoadDiamondWall(scene, { x, i }, m_texturemaps.at(objectType), offset, players);
+				scene.AddWalls(wall.get());
 			}
 
 		}

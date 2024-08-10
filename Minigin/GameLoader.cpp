@@ -208,9 +208,10 @@ namespace dae
 		return enemy;
 	}
 
-	void GameLoader::LoadWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player)
+	std::shared_ptr<GameObject> GameLoader::LoadWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player)
 	{
 		const auto wall = std::make_shared<dae::GameObject>();
+		scene.Add(wall);
 
 		// Image
 		{
@@ -230,13 +231,13 @@ namespace dae
 		auto boundHitCallback = std::bind(&dae::BlockComponent::OnHitCallback, wall->GetComponent<dae::BlockComponent>(), std::placeholders::_1, std::placeholders::_2);
 		wall->GetComponent<dae::CollisionComponent>()->SetCallback(boundHitCallback);
 
-
-		scene.Add(wall);
+		return wall;
 	}
 
-	void GameLoader::LoadEggWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, GameObject* background, std::vector<dae::GameObject*> player)
+	std::shared_ptr<GameObject> GameLoader::LoadEggWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, GameObject* background, std::vector<dae::GameObject*> player)
 	{
 		const auto eggWall = std::make_shared<dae::GameObject>();
+		scene.Add(eggWall);
 
 		// Image
 		eggWall->AddComponent<dae::ImageComponent>();
@@ -257,15 +258,13 @@ namespace dae
 		auto boundHitCallback = std::bind(&dae::EggBlockComponent::OnHitCallback, eggWall->GetComponent<dae::EggBlockComponent>(), std::placeholders::_1, std::placeholders::_2);
 		eggWall->GetComponent<dae::CollisionComponent>()->SetCallback(boundHitCallback);
 
-
-
-
-		scene.Add(eggWall);
+		return eggWall;
 	}
 
-	void GameLoader::LoadDiamondWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player)
+	std::shared_ptr<GameObject> GameLoader::LoadDiamondWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player)
 	{
 		const auto diamondWall = std::make_shared<dae::GameObject>();
+		scene.Add(diamondWall);
 
 		// Image
 		diamondWall->AddComponent<dae::ImageComponent>();
@@ -287,10 +286,7 @@ namespace dae
 		// Collision
 		SetUpBaseCollision(diamondWall.get(), "DiamondWall", scene);
 
-	
-
-
-		scene.Add(diamondWall);
+		return diamondWall;
 	}
 
 	void GameLoader::LoadHighScoreScene(const std::string& sceneName)

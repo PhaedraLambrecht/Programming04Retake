@@ -41,10 +41,16 @@ namespace dae
 		bool IsActive();
 		void SetActive(bool isActive);
 
-		void AddEnemy(std::shared_ptr<GameObject> enemy);
+		void AddEnemy(GameObject* enemy);
 		std::vector<GameObject*> GetEnemy();
+
 		void AddPlayer(GameObject* player);
-		GameObject* GetPlayer();
+		GameObject* GetPlayer(int id);
+		std::vector<GameObject*> GetPlayers();
+
+		void AddWalls(GameObject* walls);
+		std::vector<GameObject*> GetWalls();
+
 		bool m_NoEnemies = false;
 		bool m_EnemyLoaded = false;
 
@@ -72,8 +78,9 @@ namespace dae
 
 		const std::string m_destructionEventString;
 
-		std::vector<std::shared_ptr<GameObject>> m_pEnemies;
-		GameObject* m_pPlayer;
+		std::vector<GameObject*> m_pEnemies;
+		std::vector<GameObject*> m_pWalls;
+		std::vector<GameObject*> m_pPlayer;
 	};
 
 }

@@ -10,6 +10,7 @@
 
 dae::BlockComponent::BlockComponent(GameObject* owner)
 	:BaseComponent(owner)
+	,m_isMoving(false)
 {
 	m_CollisionComponent = owner->GetComponent<dae::CollisionComponent>();
 }
@@ -59,7 +60,41 @@ void dae::BlockComponent::Update()
 
 
 
+    if (m_isMoving)
+    {
+        glm::vec2 pos{ GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition() };
+        if (IsPositionInsideWall(pos))
+        {
+			m_isMoving = false;
+			return;
+        }
 
+        if (m_direction == "Left")
+        {
+            pos.x -= 1.0f;
+        }
+        else if (m_direction == "Right")
+        {
+            pos.x += 1.0f;
+        }
+        else if (m_direction == "Up")
+        {
+            pos.y -= 1.0f;
+        }
+        else if (m_direction == "Down")
+        {
+            pos.y += 1.0f;
+        }
+
+        // Check if the new position is inside a wall
+        if (IsPositionInsideWall(pos))
+        {
+            m_isMoving = false;
+            return;
+        }
+
+        GetOwner()->GetComponent<dae::TransformComponent>()->SetLocalPosition(pos.x, pos.y);
+    }
 
 }
 
@@ -73,11 +108,6 @@ std::vector<dae::GameObject*> dae::BlockComponent::GetPlayer()
     return m_player;
 }
 
-void dae::BlockComponent::TestFunction()
-{
-	std::cout << "Test Function" << std::endl;
-}
-
 void dae::BlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/, const CollisionData& hitObject)
 {
     if (hitObject.ownerType != "DiamondAttack")
@@ -86,36 +116,47 @@ void dae::BlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/,
     DoDamage(hitObject.owningObject);
 }
 
-bool dae::BlockComponent::DoDamage(GameObject* /*player*/)
+bool dae::BlockComponent::DoDamage(GameObject* player)
 {
-    glm::vec2 pos{};
+    // If it's not, move to the new position
+	m_isMoving = true;
+    
 
-	GameObject* playerObj =  SceneManager::GetInstance().GetActiveScene().GetPlayer();
+	m_direction = player->GetComponent<dae::TransformComponent>()->GetLastMovementDirection();
 
-    if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Left")
-	{
-        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x - 10.0f;
-        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y;
-	}
-	else if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Right")
-	{
-        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x + 10.0f;
-        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y;
-	}
-	else if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Up")
-	{
-        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x;
-        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y - 10.0f;
-	}
-	else if (playerObj->GetComponent<dae::TransformComponent>()->GetLastMovementDirection() == "Down")
-	{
-        pos.x = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().x ;
-        pos.y = GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition().y + 10.0f;
-	}
-
-
-
- 	GetOwner()->GetComponent<dae::TransformComponent>()->SetLocalPosition( pos.x, pos.y );
 
     return true;
+}
+
+
+bool dae::BlockComponent::IsPositionInsideWall(const glm::vec2& /*position*/)
+{
+    auto ownerTransform = GetOwner()->GetComponent<dae::TransformComponent>();
+    auto ownerCollision = GetOwner()->GetComponent<dae::CollisionComponent>();
+    float thisX = ownerTransform->GetWorldPosition().x;
+    float thisY = ownerTransform->GetWorldPosition().y;
+    float thisWidth = ownerCollision->GetBounds().x;
+    float thisHeight = ownerCollision->GetBounds().y;
+
+    for (const auto& wall : SceneManager::GetInstance().GetActiveScene().GetWalls())
+    {
+        if (wall == GetOwner() || wall == nullptr)
+            return false;
+
+        auto wallTransform = wall->GetComponent<dae::TransformComponent>();
+        auto wallCollision = wall->GetComponent<dae::CollisionComponent>();
+        float wallX = wallTransform->GetWorldPosition().x;
+        float wallY = wallTransform->GetWorldPosition().y;
+        float wallWidth = wallCollision->GetBounds().x;
+        float wallHeight = wallCollision->GetBounds().y;
+
+        if (wallX <= thisX + thisWidth && wallX + wallWidth >= thisX &&
+            wallY <= thisY + thisHeight && wallY + wallHeight >= thisY)
+        {
+            return true;
+        }
+    }
+
+    return false;
+
 }

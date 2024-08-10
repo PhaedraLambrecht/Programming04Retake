@@ -26,8 +26,8 @@ Scene::Scene(const std::string& name)
 
 Scene::~Scene()
 {
-	m_pObjects.clear();
 	m_pObjectCollisions.clear();
+	m_pObjects.clear();
 }
 
 void Scene::Add(std::shared_ptr<GameObject> object)
@@ -143,9 +143,9 @@ void dae::Scene::SetActive(bool isActive)
 	m_isActive = isActive;
 }
 
-void dae::Scene::AddEnemy(std::shared_ptr<GameObject> enemy)
+void dae::Scene::AddEnemy(GameObject* enemy)
 {
-	m_pEnemies.emplace_back(std::move(enemy));
+	m_pEnemies.push_back(enemy);
 	m_EnemyLoaded = true;
 }
 
@@ -154,7 +154,7 @@ std::vector<GameObject*> dae::Scene::GetEnemy()
 	std::vector<GameObject*> enemies;
 	for (const auto& enemy : m_pEnemies)
 	{
-		enemies.push_back(enemy.get());
+		enemies.push_back(enemy);
 	}
 
 	return enemies;
@@ -162,12 +162,42 @@ std::vector<GameObject*> dae::Scene::GetEnemy()
 
 void dae::Scene::AddPlayer(GameObject* player)
 {
-	m_pPlayer = player;
+	m_pPlayer.push_back(player);
 }
 
-GameObject* dae::Scene::GetPlayer()
+GameObject* dae::Scene::GetPlayer(int id)
 {
-	return m_pPlayer;
+	return m_pPlayer[id];
+}
+
+std::vector<GameObject*> dae::Scene::GetPlayers()
+{
+	std::vector<GameObject*> players;
+	for (const auto& player : m_pPlayer)
+	{
+		players.push_back(player);
+	}
+
+	return players;
+}
+
+void dae::Scene::AddWalls(GameObject* walls)
+{
+	m_pWalls.push_back(walls);
+}
+
+std::vector<GameObject*> dae::Scene::GetWalls()
+{
+	std::vector<GameObject*> walls;
+	for (const auto& wal : m_pWalls)
+	{
+		if (wal != nullptr)
+		{
+			walls.push_back(wal);
+		}
+	}
+
+	return walls;
 }
 
 const std::string& dae::Scene::GetName() const
@@ -219,7 +249,7 @@ void dae::Scene::RemoveDestroyedObjects()
 		(
 			m_pEnemies.begin(),
 			m_pEnemies.end(),
-			[&](std::shared_ptr<GameObject>& object)
+			[&](GameObject* object)
 			{
 				return object->IsReadyForDestruction();
 			})
@@ -227,7 +257,7 @@ void dae::Scene::RemoveDestroyedObjects()
 	);
 
 
-	if (m_pEnemies.empty() && m_EnemyLoaded) 
+	if (m_pEnemies.empty() && m_EnemyLoaded)
 	{
 		m_NoEnemies = true;
 	}

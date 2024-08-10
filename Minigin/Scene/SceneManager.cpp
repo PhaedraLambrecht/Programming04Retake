@@ -23,7 +23,7 @@ void dae::SceneManager::Update()
 		}
 		else
 		{
-			SkipLevelCommand skipLevelCommand = SkipLevelCommand(m_pActiveScene->GetPlayer());
+			SkipLevelCommand skipLevelCommand = SkipLevelCommand(m_pActiveScene->GetPlayer(0));
 			skipLevelCommand.Execute();
 		}
 

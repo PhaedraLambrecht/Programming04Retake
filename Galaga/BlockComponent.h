@@ -26,7 +26,6 @@ namespace dae
 		void SetPlayer(std::vector<dae::GameObject*> player);
 		std::vector<dae::GameObject*> GetPlayer();
 
-		void TestFunction();
 
 		void OnHitCallback(const CollisionData& collisionOwner, const CollisionData& hitObject);
 		bool DoDamage(GameObject* player);
@@ -37,6 +36,11 @@ namespace dae
 		std::vector<dae::GameObject*> m_player;
 		std::vector<dae::GameObject*> m_enemy;
 		CollisionComponent* m_CollisionComponent;
+
+
+		bool m_isMoving;
+		std::string m_direction;
+		bool IsPositionInsideWall(const glm::vec2& position);
 	};
 }
 

@@ -118,6 +118,7 @@ void dae::HitComponennt::CreateBullet(glm::vec2 position)
 
 
 	bullet->GetComponent<TransformComponent>()->SetLocalPosition(position.x, position.y);
+	bullet->GetComponent<TransformComponent>()->SetLastMovementDirection(m_pPlayerTransform->GetLastMovementDirection());
 	bullet->AddComponent<ImageComponent>()->SetTexture("Bullet.png");
 	bullet->AddComponent<BulletMovementComponent>();
 	bullet->GetComponent<BulletMovementComponent>()->SetMaxDistance(0.5f);

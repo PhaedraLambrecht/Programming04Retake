@@ -24,14 +24,17 @@ namespace dae
 
 		void LoadSound(SoundSystem* soundSystem, const SoundData& soundData);
 	
+		// World
 		std::shared_ptr<GameObject> LoadLevelBorder(Scene& scene);
+		
+		// Player and enemy
 		std::shared_ptr<GameObject> LoadPlayer(Scene& scene, int playerIndex, unsigned int conntroller, const std::string texture, const glm::vec2 position, const glm::vec2 offset);
 		std::shared_ptr<GameObject> LoadEnemy(dae::Scene& scene, const glm::vec2& position, const std::string& texture, std::vector<dae::GameObject*> players, const std::shared_ptr<dae::GameObject>& backGroundImage, const glm::vec2& offset);
 
-
-		void LoadWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player);
-		void LoadEggWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, GameObject* background, std::vector<dae::GameObject*> player);
-		void LoadDiamondWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player);
+		// Walls
+		std::shared_ptr<GameObject> LoadWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player);
+		std::shared_ptr<GameObject> LoadEggWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, GameObject* background, std::vector<dae::GameObject*> player);
+		std::shared_ptr<GameObject> LoadDiamondWall(Scene& scene, const glm::vec2 position, const std::string& texture, const glm::vec2 offset, std::vector<dae::GameObject*> player);
 
 		void LoadHighScoreScene(const std::string& sceneName);
 
