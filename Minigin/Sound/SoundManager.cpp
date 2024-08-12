@@ -4,14 +4,11 @@
 
 
 dae::SoundManager::SoundManager()
+	:m_DataPath{}
 {
 	m_SoundSystem = std::make_unique<NullSoundSystem>();
 }
 
-dae::SoundManager::~SoundManager()
-{
-	std::cout << "SoundManager\n";
-}
 
 void dae::SoundManager::Init(const std::string& dataPath)
 {

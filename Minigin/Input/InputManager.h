@@ -24,7 +24,7 @@ namespace dae
 
 	struct ControllerInput
 	{
-		unsigned int controllerIndex{0};
+		unsigned int controllerIndex{ 0 };
 		ControlerButton controllerKey{};
 		ButtonState buttonsState{};
 		std::string sceneName{};
@@ -37,18 +37,18 @@ namespace dae
 		// Tie according to cppreference : Creates a tuple of lvalue references to its arguments.
 		// An lvalue is an expression that yields an object reference, such as a variable name =)
 		return std::tie(lhs.controllerIndex, lhs.controllerKey, lhs.buttonsState, lhs.sceneName) ==
-			   std::tie(rhs.controllerIndex, rhs.controllerKey, rhs.buttonsState, rhs.sceneName);
+			std::tie(rhs.controllerIndex, rhs.controllerKey, rhs.buttonsState, rhs.sceneName);
 	}
 
 	// Define comparison operator for ControllerInput
 	inline bool operator<(const ControllerInput& lhs, const ControllerInput& rhs)
 	{
 		return std::tie(lhs.controllerIndex, lhs.controllerKey, lhs.buttonsState, lhs.sceneName) <
-			   std::tie(rhs.controllerIndex, rhs.controllerKey, rhs.buttonsState, rhs.sceneName);
+			std::tie(rhs.controllerIndex, rhs.controllerKey, rhs.buttonsState, rhs.sceneName);
 	}
 
 
-		
+
 	struct KeyboardInput
 	{
 		SDL_Scancode keyboardScancode{};
@@ -60,14 +60,14 @@ namespace dae
 	{
 		// Compare all members of the structs for equality using std::tie
 		return std::tie(lhs.keyboardScancode, lhs.buttonsState, lhs.sceneName) ==
-			   std::tie(rhs.keyboardScancode, rhs.buttonsState, rhs.sceneName);
+			std::tie(rhs.keyboardScancode, rhs.buttonsState, rhs.sceneName);
 	}
 
 	// Define comparison operator for KeyboardInput
-	inline bool operator<(const KeyboardInput& lhs, const KeyboardInput& rhs) 
+	inline bool operator<(const KeyboardInput& lhs, const KeyboardInput& rhs)
 	{
 		return std::tie(lhs.keyboardScancode, lhs.buttonsState, lhs.sceneName) <
-			   std::tie(rhs.keyboardScancode, rhs.buttonsState, rhs.sceneName);
+			std::tie(rhs.keyboardScancode, rhs.buttonsState, rhs.sceneName);
 	}
 }
 
@@ -88,8 +88,8 @@ namespace std
 			hash_combine(hashValue, input.controllerIndex);
 			hash_combine(hashValue, static_cast<int>(input.controllerKey));
 			hash_combine(hashValue, static_cast<int>(input.buttonsState));
-			
-			
+
+
 			return hashValue;
 		}
 
@@ -111,20 +111,20 @@ namespace std
 	{
 		std::size_t operator()(const dae::KeyboardInput& input) const
 		{
-				std::size_t hashValue = 0;
-				// Combine hash values of keyboardScancode and buttonsState
-				hash_combine(hashValue, input.keyboardScancode);
-				hash_combine(hashValue, static_cast<int>(input.buttonsState));
-				
-				
-				return hashValue;
+			std::size_t hashValue = 0;
+			// Combine hash values of keyboardScancode and buttonsState
+			hash_combine(hashValue, input.keyboardScancode);
+			hash_combine(hashValue, static_cast<int>(input.buttonsState));
+
+
+			return hashValue;
 		}
 
 
 	private:
 		// Helper function to combine hash values using XOR and shift operations
 		template<typename T>
-		void hash_combine(std::size_t& hashValue, const T& value) const 
+		void hash_combine(std::size_t& hashValue, const T& value) const
 		{
 			hashValue ^= std::hash<T>{}(value)+0x9e3779b9 + (hashValue << 6) + (hashValue >> 2);
 		}
@@ -156,14 +156,14 @@ namespace dae
 
 
 	private:
-		
+
 
 		//keep track of all buttons with commands 
 		using ControllerCommandsMap = std::map<ControllerInput, std::unique_ptr<BaseCommand>>;
 		using KeyboardCommandsMap = std::map<KeyboardInput, std::unique_ptr<BaseCommand>>;
 
 
-		
+
 		void HandleConrollerInputs();
 		void HandleKeyboardInputs();
 
@@ -193,10 +193,10 @@ namespace dae
 		}
 
 		// Get the raw pointer from command
-		T* commandPtr = command.get(); 
+		T* commandPtr = command.get();
 		m_ControllerCommands[input] = std::move(command);
-		
-		
+
+
 		return commandPtr;
 	}
 
@@ -209,10 +209,9 @@ namespace dae
 		T* toReturn = command.get();
 		m_KeyboardCommands[input] = std::move(command);
 
-		
+
 		return toReturn;
 	}
 
 }
-
 #endif // ENGINE2D_INPUTMANAGER_H

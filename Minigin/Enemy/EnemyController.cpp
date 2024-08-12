@@ -15,10 +15,6 @@ dae::EnemyController::EnemyController(GameObject* owner)
 	assert(m_pEnemyController && "An EnemyController must have a BaseEnemyComponent to control");
 }
 
-dae::EnemyController::~EnemyController()
-{
-	std::cout << "EnemyController \n";
-}
 
 void dae::EnemyController::Update()
 {

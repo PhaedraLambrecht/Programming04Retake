@@ -2,6 +2,7 @@
 #define ENGINE2D_GAMEEVENTS_H
 #include <Events/Event.h>
 
+
 namespace dae
 {
 	struct PointEvent : public  Event

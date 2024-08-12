@@ -20,7 +20,10 @@ namespace dae
 		PlayerNameDownCommand& operator=(const PlayerNameDownCommand& other) = delete;
 		PlayerNameDownCommand& operator=(PlayerNameDownCommand&& other) = delete;
 
+
+
 		void Execute() override;
+
 
 	private:
 
@@ -40,7 +43,10 @@ namespace dae
 		PlayerNameUpCommand& operator=(const PlayerNameUpCommand& other) = delete;
 		PlayerNameUpCommand& operator=(PlayerNameUpCommand&& other) = delete;
 
+
+
 		void Execute() override;
+
 
 	private:
 
@@ -62,7 +68,10 @@ namespace dae
 		PlayerNameEnterCommand& operator=(const PlayerNameEnterCommand& other) = delete;
 		PlayerNameEnterCommand& operator=(PlayerNameEnterCommand&& other) = delete;
 
+
+
 		void Execute() override;
+
 
 	private:
 

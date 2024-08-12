@@ -228,6 +228,7 @@ float dae::SDLSoundSystem::SDLMixerImpl::GetMasterVolume() const
 
 dae::SDLSoundSystem::SDLSoundSystem()
 	:SoundSystem()
+	, m_savedVolume{}
 {
 }
 

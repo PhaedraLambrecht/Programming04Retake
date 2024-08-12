@@ -3,8 +3,6 @@
 #include "NameComponent.h"
 
 
-
-
 dae::PlayerNameDownCommand::PlayerNameDownCommand(GameObject* player)
 	:BaseCommand()
 {

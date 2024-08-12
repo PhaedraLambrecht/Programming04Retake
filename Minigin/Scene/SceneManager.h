@@ -37,7 +37,7 @@ namespace dae
 	private:
 
 		friend class Singleton<SceneManager>;
-		SceneManager() = default;
+		~SceneManager() = default;
 
 
 		std::shared_ptr<Scene> m_pActiveScene;

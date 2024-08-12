@@ -2,6 +2,7 @@
 #define ENGINE2D_RECOGNIZERENEMY_H
 #include "BaseEnemyComponent.h"
 
+
 namespace dae
 {
 	class RecognizerEnemy final : public BaseEnemyComponent
@@ -9,12 +10,13 @@ namespace dae
 	public:
 
 		explicit RecognizerEnemy(GameObject* gameObject);
-		~RecognizerEnemy() override;
+		~RecognizerEnemy() override = default;
 
 		RecognizerEnemy(const RecognizerEnemy& other) = delete;
 		RecognizerEnemy(RecognizerEnemy&& other) = delete;
 		RecognizerEnemy& operator=(const RecognizerEnemy& other) = delete;
 		RecognizerEnemy& operator=(RecognizerEnemy&& other) = delete;
+
 
 
 		void Initialize(float x, float y, float w, float h, std::vector<GameObject*> pPlayers);
@@ -60,7 +62,6 @@ namespace dae
 
 		void AddPointsAndNotifyDeath();
 
-
 		void ChangeDirection();
 
 		void move(float deltaTime, int x, int y);
@@ -71,7 +72,6 @@ namespace dae
 		bool IsBlockingRight(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
 		bool IsBlockingUp(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
 		bool IsBlockingDown(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
-	
 	};
 
 }

@@ -2,6 +2,7 @@
 #define ENGINE2D_ENEMYCONTROLLER_H
 #include "Componennts/BaseComponent.h"
 
+
 namespace dae
 {
 	class BaseEnemyComponent;
@@ -11,12 +12,14 @@ namespace dae
 	public:
 
 		EnemyController(GameObject* owner);
-		~EnemyController() override;
+		~EnemyController() override = default;
 
 		EnemyController(const EnemyController& other) = delete;
 		EnemyController(EnemyController&& other) = delete;
 		EnemyController& operator=(const EnemyController& other) = delete;
 		EnemyController& operator=(EnemyController&& other) = delete;
+
+
 
 		void Update() override;
 

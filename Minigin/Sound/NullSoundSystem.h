@@ -2,6 +2,7 @@
 #define ENGINE2D_NULLSOUNDSYSTEM_H
 #include "SoundSystem.h"
 
+
 namespace dae
 {
 	class NullSoundSystem final : public SoundSystem
@@ -18,11 +19,11 @@ namespace dae
 		NullSoundSystem& operator=(NullSoundSystem&& other) = delete;
 
 
+
 		void Init(const std::string&) override {};
 		virtual void Quit() override {};
 
 		virtual void NotifySound(SoundData) {};
-
 
 
 		void SetMasterVolume(float /*volume*/) override {};

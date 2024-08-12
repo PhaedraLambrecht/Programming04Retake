@@ -3,11 +3,13 @@
 #include <string>
 #include <functional>
 
+
 namespace dae
 {
 	class Minigin
 	{
 	public:
+
 		explicit Minigin(const std::string& dataPath, int windowWidth = 640, int windowHeight = 480);
 		~Minigin();
 		void Run(const std::function<void()>& load);

@@ -37,6 +37,7 @@ namespace dae
 		SoundSystem& operator=(SoundSystem&& other) = delete;
 
 
+
 		virtual void Init(const std::string& m_DataPath) = 0;
 		virtual void Quit() = 0;
 		virtual void NotifySound(SoundData soundData) = 0;

@@ -2,6 +2,7 @@
 #define ENGINE2D_CONTROLLER_H
 #include <memory>
 
+
 namespace dae
 {
 	enum ControlerButton
@@ -56,5 +57,4 @@ namespace dae
 
 	};
 }
-
 #endif // !ENGINE2D_CONTROLLER_H

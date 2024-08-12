@@ -28,12 +28,13 @@ namespace dae
 		friend class Singleton<EventManager>;
 		~EventManager() = default;
 
+
 		bool DequeueEvent(Event*& e);
 
 		const unsigned int m_QueueSize{ 20 };
 		std::vector<std::unique_ptr<Event>> m_Queue{ m_QueueSize };
-		int m_FrontIndex;
-		int m_QueuedCount;
+		int m_FrontIndex{};
+		int m_QueuedCount{};
 
 		std::unordered_map<Event, std::vector<std::function<void(const Event* e)>>> m_Observers;
 	};

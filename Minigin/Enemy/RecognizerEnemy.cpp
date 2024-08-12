@@ -23,10 +23,6 @@ dae::RecognizerEnemy::RecognizerEnemy(GameObject* gameObject)
 	EventManager::GetInstance().QueueEvent(std::move(event));
 }
 
-dae::RecognizerEnemy::~RecognizerEnemy()
-{
-	std::cout << "RecognizerEnemy \n";
-}
 
 void dae::RecognizerEnemy::Initialize(float x, float y, float w, float h, std::vector<GameObject*> pPlayers)
 {

@@ -21,6 +21,7 @@
 #include <iostream>
 
 
+
 void PrintSDLVersion()
 {
 	SDL_version version{};
@@ -41,8 +42,8 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 
 	SDL_TTF_VERSION(&version)
-	printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
+		printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
+			version.major, version.minor, version.patch);
 
 	version = *TTF_Linked_Version();
 	printf("We are linking against SDL_ttf version %u.%u.%u.\n",

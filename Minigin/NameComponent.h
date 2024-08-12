@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+
 namespace dae
 {
 	class TextComponent;
@@ -20,6 +21,7 @@ namespace dae
 		NameComponent& operator=(NameComponent&& other) = delete;
 
 
+
 		const std::string& GetName() const;
 
 
@@ -32,9 +34,6 @@ namespace dae
 		std::string m_name;
 		std::vector<char> m_letters;
 		int m_currentLetterIndex;
-
-
-
 
 		TextComponent* m_pTextComponent;
 	};

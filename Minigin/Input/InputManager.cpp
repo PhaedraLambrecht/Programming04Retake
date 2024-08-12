@@ -6,6 +6,7 @@
 #include <Scene/Scene.h>
 
 
+
 dae::InputManager::~InputManager()
 {
 	std::cout << "InputManager" << '\n';
@@ -21,7 +22,7 @@ dae::InputManager::~InputManager()
 
 bool dae::InputManager::ProcessInput()
 {
-	if (!ReadKeyBoardInput()) 
+	if (!ReadKeyBoardInput())
 		return false;
 
 
@@ -87,22 +88,22 @@ void dae::InputManager::HandleConrollerInputs()
 		{
 		case ButtonState::Up:
 
-			if (m_Controllers[index]->IsButtonUp( static_cast<unsigned int>(button) ))
+			if (m_Controllers[index]->IsButtonUp(static_cast<unsigned int>(button)))
 				command->Execute();
-			
+
 			break;
 		case ButtonState::Down:
-			
-			if (m_Controllers[index]->IsButtonDown( static_cast<unsigned int>(button) ))
+
+			if (m_Controllers[index]->IsButtonDown(static_cast<unsigned int>(button)))
 				command->Execute();
-			
+
 			break;
 		case ButtonState::Pressed:
-			
-			if (m_Controllers[index]->IsButtonPressed(static_cast<unsigned int>(button) ))
+
+			if (m_Controllers[index]->IsButtonPressed(static_cast<unsigned int>(button)))
 				command->Execute();
-		
-			
+
+
 			break;
 		}
 
@@ -127,19 +128,19 @@ void dae::InputManager::HandleKeyboardInputs()
 
 			if (m_PreviousState[scancode] && !m_CurrentState[scancode])
 				command->Execute();
-			
+
 			break;
 		case ButtonState::Down:
-			
+
 			if (!m_PreviousState[scancode] && m_CurrentState[scancode])
 				command->Execute();
-			
+
 			break;
 		case ButtonState::Pressed:
-			
+
 			if (m_PreviousState[scancode] && m_CurrentState[scancode])
 				command->Execute();
-			
+
 			break;
 		}
 
@@ -151,6 +152,6 @@ void dae::InputManager::HandleKeyboardInputs()
 unsigned int dae::InputManager::AddController()
 {
 	unsigned int index = static_cast<unsigned int>(m_Controllers.size());
-	m_Controllers.emplace_back( new Controller(index) );
+	m_Controllers.emplace_back(new Controller(index));
 	return index;
 }

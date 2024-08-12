@@ -28,11 +28,11 @@ namespace dae
 		friend class Singleton<SoundManager>;
 		
 		std::string m_DataPath;
-		std::unique_ptr<SoundSystem> m_SoundSystem{ nullptr };
+		std::unique_ptr<SoundSystem> m_SoundSystem;
 
 
 		SoundManager();
-		~SoundManager() override;
+		~SoundManager() override = default;
 
 		// Copy and move
 		SoundManager(const SoundManager& other) = delete;
