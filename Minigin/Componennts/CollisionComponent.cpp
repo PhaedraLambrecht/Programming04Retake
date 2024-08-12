@@ -48,8 +48,23 @@ void dae::CollisionComponent::SetCallback(std::function<void(const CollisionData
 	m_OnHitCallback = callbackFunc;
 }
 
+void dae::CollisionComponent::SetActive(bool isActive)
+{
+	m_IsActive = isActive; 
+}
+
+bool dae::CollisionComponent::IsActive()
+{
+	return m_IsActive;
+};
+
 void dae::CollisionComponent::SetScene(Scene* scene)
 {
+	if (scene == nullptr)
+	{
+		throw std::invalid_argument("Scene cannot be nullptr");
+	}
+
 	m_pScene = scene;
 }
 
@@ -70,8 +85,19 @@ void dae::CollisionComponent::IsOverlappingOtherCollision(const std::vector<Coll
 
 void dae::CollisionComponent::SetBounds(float width, float height)
 {
+	if (width <= 0 || height <= 0)
+	{
+		width = 1;
+		height = 1;
+	}
+
 	m_width = width;
 	m_height = height;
+}
+
+glm::vec2 dae::CollisionComponent::GetBounds()
+{
+	return glm::vec2(m_width, m_height);
 }
 
 void dae::CollisionComponent::Render() const

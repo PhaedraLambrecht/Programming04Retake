@@ -59,7 +59,7 @@ void dae::NameComponent::AddLetterToName()
 
         if (m_name.size() == 3)
         {
-            SceneManager::GetInstance().GetActiveScene().m_playerName = GetName();
+            SceneManager::GetInstance().GetActiveScene().SetPlayerName(GetName());
         }
 
     }

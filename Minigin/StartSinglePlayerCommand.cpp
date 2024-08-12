@@ -10,7 +10,7 @@ dae::StartSinglePlayerCommand::StartSinglePlayerCommand()
 
 void dae::StartSinglePlayerCommand::Execute()
 {
-	if (!SceneManager::GetInstance().GetActiveScene().m_playerName.empty())
+	if (!SceneManager::GetInstance().GetActiveScene().GetPlayerName().empty())
 	{
 		StartSinglePlayerComponent startSinglePlayerComponent{ };
 		startSinglePlayerComponent.LoadLevels();

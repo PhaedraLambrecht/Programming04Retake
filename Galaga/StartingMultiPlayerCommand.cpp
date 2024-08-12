@@ -10,7 +10,7 @@ dae::StartingMultiPlayerCommand::StartingMultiPlayerCommand()
 
 void dae::StartingMultiPlayerCommand::Execute()
 {
-	if (!SceneManager::GetInstance().GetActiveScene().m_playerName.empty())
+	if (!SceneManager::GetInstance().GetActiveScene().GetPlayerName().empty())
 	{
 		StartMultiPlayerComponent startMultiPlayerComponent{ };
 		startMultiPlayerComponent.LoadLevels();

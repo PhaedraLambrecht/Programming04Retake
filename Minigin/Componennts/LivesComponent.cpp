@@ -49,6 +49,12 @@ dae::LivesComponent::LivesComponent(GameObject* owner)
 
 void dae::LivesComponent::SetPlayerIndex(unsigned playerIndex)
 {
+	if (playerIndex < 0 || playerIndex > 3)
+	{
+		std::cout << "Player index out of bounds\n";
+		return;
+	}
+
 	m_playerIndex = playerIndex;
 }
 

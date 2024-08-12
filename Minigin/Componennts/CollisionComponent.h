@@ -39,18 +39,15 @@ namespace dae
 
 		void SetCallback(std::function<void(const CollisionData& owner, const CollisionData& hitObject)> callbackFunc);
 
-		void SetActive(bool isActive) { m_IsActive = isActive; };
-		bool IsActive() { return m_IsActive; };
+		void SetActive(bool isActive);
+		bool IsActive();
 
 
 
 		void SetScene(Scene* scene);
 		void IsOverlappingOtherCollision(const std::vector<CollisionComponent*>& collisionsToCheck) const;
 		void SetBounds(float width, float height);
-		glm::vec2 GetBounds()
-		{
-			return glm::vec2(m_width, m_height);
-		}
+		glm::vec2 GetBounds();
 
 		void Render() const override;
 

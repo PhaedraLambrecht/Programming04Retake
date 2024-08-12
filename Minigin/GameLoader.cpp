@@ -311,7 +311,7 @@ namespace dae
 		highScoreText->GetComponent<dae::TextComponent>()->SetColor(color);
 
 		highScoreText->AddComponent<dae::HighScoreComponent>();
-		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, SceneManager::GetInstance().GetSceneByName("StartScreen").m_playerName);
+		highScoreText->GetComponent<dae::HighScoreComponent>()->AddScore(SceneManager::GetInstance().m_Score, SceneManager::GetInstance().GetSceneByName("StartScreen").GetPlayerName());
 		highScoreText->GetComponent<dae::HighScoreComponent>()->LoadHighScores();
 
 

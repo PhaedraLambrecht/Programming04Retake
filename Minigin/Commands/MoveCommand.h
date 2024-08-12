@@ -32,8 +32,8 @@ namespace dae
 		TransformComponent* m_pTransform;
 		GameObject* m_pActor;
 
-		glm::vec2 m_Direction{};
-		float m_MoveSpeed{};
+		glm::vec2 m_Direction;
+		float m_MoveSpeed;
 	};
 }
 

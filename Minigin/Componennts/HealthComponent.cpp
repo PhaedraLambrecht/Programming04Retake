@@ -31,6 +31,11 @@ void dae::HealthComponent::Damaged(int damage)
 
 void dae::HealthComponent::SetHealth(int health = 1)
 {
+	if (health < 0)
+	{
+		health = 0;
+	}
+
 	m_Health = health;
 }
 
@@ -42,6 +47,11 @@ int dae::HealthComponent::GeTHealth() const
 
 void dae::HealthComponent::SetPlayerIndex(unsigned playerIndex)
 {
+	if (playerIndex < 0)
+	{
+		playerIndex = 0;
+	}
+
 	m_PlayerIndex = playerIndex;
 }
 

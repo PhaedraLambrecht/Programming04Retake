@@ -22,6 +22,11 @@ namespace dae
 
 	void TextComponent::SetText(std::string& text)
 	{
+		if (text == m_Text)
+		{
+			return;
+		}
+
 		m_Text = text;
 
 

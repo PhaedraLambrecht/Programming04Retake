@@ -13,7 +13,7 @@ void dae::SceneManager::Update()
 {
 	m_pActiveScene->Update();
 
-	if (m_pActiveScene->m_NoEnemies && m_pActiveScene->m_EnemyLoaded)
+	if (m_pActiveScene->IsEnemiesEmpty() && m_pActiveScene->EnemyLoaded())
 	{
 		if (m_pActiveScene == m_pScenes.back())
 		{

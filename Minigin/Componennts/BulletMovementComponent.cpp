@@ -58,10 +58,22 @@ void dae::BulletMovementComponent::Update()
 
 void dae::BulletMovementComponent::SetMaxDistance(float distance)
 {
+	if (distance <= 0)
+	{
+		distance = 1.0f;
+	}
+
+
 	m_MaxDistance = distance;
 }
 
 void dae::BulletMovementComponent::SetDirection(const std::string& direction)
 {
+	if (direction != "Left" && direction != "Right" && direction != "Up" && direction != "Down")
+	{
+		std::cout << "Invalid direction for bullet movement component" << std::endl;
+		return;
+	}
+
 	m_Direction = direction;
 }

@@ -160,6 +160,26 @@ std::vector<GameObject*> dae::Scene::GetEnemy()
 	return enemies;
 }
 
+bool dae::Scene::EnemyLoaded()
+{
+	return m_EnemyLoaded;
+}
+
+void dae::Scene::SetEnemyLoaded(bool loaded)
+{
+	m_EnemyLoaded = loaded;
+}
+
+bool dae::Scene::IsEnemiesEmpty()
+{
+	return m_NoEnemies;
+}
+
+void dae::Scene::SetIsEnemiesEmpty(bool noEnemies)
+{
+	m_NoEnemies = noEnemies;
+}
+
 void dae::Scene::AddPlayer(GameObject* player)
 {
 	m_pPlayer.push_back(player);
@@ -179,6 +199,16 @@ std::vector<GameObject*> dae::Scene::GetPlayers()
 	}
 
 	return players;
+}
+
+void dae::Scene::SetPlayerName(const std::string& name)
+{
+	m_playerName = name;
+}
+
+std::string dae::Scene::GetPlayerName()
+{
+	return m_playerName;
 }
 
 void dae::Scene::AddWalls(GameObject* walls)

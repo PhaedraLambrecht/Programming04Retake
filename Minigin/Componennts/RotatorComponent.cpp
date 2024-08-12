@@ -97,11 +97,19 @@ namespace dae
 
 	void RotatorComponent::SetRotationpeed(float speed)
 	{
+		if (speed < 0)
+		{
+			speed = 0;
+		}
 		m_RotationSpeed = speed;
 	}
 
 	void RotatorComponent::setRadius(float radius)
 	{
+		if (radius < 0)
+		{
+			radius = 0;
+		}
 		m_Radius = radius;
 	}
 	

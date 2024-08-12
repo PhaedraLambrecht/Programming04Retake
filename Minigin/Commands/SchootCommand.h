@@ -27,7 +27,7 @@ namespace dae
 
 	private:
 
-		SchootComponent* m_pSchootComponent{ nullptr };
+		SchootComponent* m_pSchootComponent;
 	};
 }
 

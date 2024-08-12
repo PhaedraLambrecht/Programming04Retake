@@ -41,8 +41,19 @@ dae::ScoreComponent::ScoreComponent(GameObject* owner)
 
 void dae::ScoreComponent::SetPlayerIndex(unsigned playerIndex)
 {
+	if (playerIndex < 0)
+	{
+		throw std::runtime_error("Player index cannot be negative");
+	}
+	
 	m_playerIndex = playerIndex;
 }
+
+int dae::ScoreComponent::GetPointsEarned() const
+{
+	return m_pointsEarned;
+}
+
 
 void dae::ScoreComponent::UpdateText()
 {

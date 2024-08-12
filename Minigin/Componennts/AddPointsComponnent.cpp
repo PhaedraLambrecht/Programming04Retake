@@ -12,6 +12,12 @@ dae::AddPointsComponnent::AddPointsComponnent(GameObject* owner)
 
 void dae::AddPointsComponnent::SetPlayerIndex(unsigned int playerIndex)
 {
+	if (playerIndex < 0)
+	{
+		std::cout << "Player index can't be negative" << std::endl;
+		return;
+	}
+
 	m_PlayerIndex = playerIndex;
 }
 

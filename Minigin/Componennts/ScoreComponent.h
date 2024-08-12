@@ -25,7 +25,7 @@ namespace dae
 
 
 		void SetPlayerIndex(unsigned playerIndex);
-		int GetPointsEarned() const { return m_pointsEarned; };
+		int GetPointsEarned() const;
 
 
 	private:
