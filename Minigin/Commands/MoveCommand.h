@@ -2,25 +2,25 @@
 #define ENGINE2D_MOVECOMMAND_H
 #include "Command.h"
 #include <glm/glm.hpp>
+#include <string>
+
 
 namespace dae
 {
 	class TransformComponent;
 	class GameObject;
 
-
 	class MoveCommand final : public BaseCommand
 	{
 	public:
 
 		MoveCommand(GameObject* actor, glm::vec2 sirection, float moveSpeed);
-		~MoveCommand() override;
+		~MoveCommand() override = default;
 
 		MoveCommand(const MoveCommand& other) = delete;
 		MoveCommand(MoveCommand&& other) = delete;
 		MoveCommand& operator=(const MoveCommand& other) = delete;
 		MoveCommand& operator=(MoveCommand&& other) = delete;
-
 
 
 
@@ -34,8 +34,6 @@ namespace dae
 
 		glm::vec2 m_Direction{};
 		float m_MoveSpeed{};
-
-		
 	};
 }
 

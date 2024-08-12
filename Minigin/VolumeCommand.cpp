@@ -6,43 +6,40 @@
 
 void dae::DecreaseVolumeCommand::Execute()
 {
-	// get the current volume
-	float volume = SoundManager::GetInstance().GetSoundSystem()->GetMasterVolume();
-
-	// do - 0.1f to the volume
-	if (volume > 0.0f)
-	{
-		volume -= 0.1f;
-	}
-	else
-	{
-		volume = 0.0f;
-	}
-
-
-	std::cout << "Volume: " << volume << std::endl;
-	// set the new volume
-	SoundManager::GetInstance().GetSoundSystem()->SetMasterVolume(volume);
+	adjust_volume(-0.1f);
 }
 
 void dae::IncreaseVolumeCommand::Execute()
 {
-	// get the current volume
+	adjust_volume(0.1f);
+}
+
+void dae::adjust_volume(float delta)
+{
 	float volume = SoundManager::GetInstance().GetSoundSystem()->GetMasterVolume();
 
-	// do + 0.1f to the volume
-	if (volume < 1.0f)
+	if (volume > 0.0f && delta < 0.0f)
 	{
-		volume += 0.1f;
+		volume = std::max(0.0f, volume + delta);
+	}
+	else if (volume < 1.0f && delta > 0.0f)
+	{
+		volume = std::min(1.0f, volume + delta);
+	}
+
+	SoundManager::GetInstance().GetSoundSystem()->SetMasterVolume(volume);
+}
+
+void dae::MuteVolumeCommand::Execute()
+{
+	float volume = SoundManager::GetInstance().GetSoundSystem()->GetMasterVolume();
+
+	if (volume > 0.0f)
+	{
+		SoundManager::GetInstance().GetSoundSystem()->IsSoundMuterd(true);
 	}
 	else
 	{
-		volume = 1.0f;
+		SoundManager::GetInstance().GetSoundSystem()->IsSoundMuterd(false);
 	}
-
-	std::cout << "Volume: " << volume << std::endl;
-
-	// set the new volume
-	SoundManager::GetInstance().GetSoundSystem()->SetMasterVolume(volume);
-
 }

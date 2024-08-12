@@ -121,9 +121,6 @@
     <ClInclude Include="Componennts\AddPointsComponnent.h">
       <Filter>Componennts</Filter>
     </ClInclude>
-    <ClInclude Include="Componennts\AttackComponent.h">
-      <Filter>Componennts</Filter>
-    </ClInclude>
     <ClInclude Include="Componennts\BaseComponent.h">
       <Filter>Componennts</Filter>
     </ClInclude>
@@ -179,9 +176,6 @@
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="Base\Texture2D.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Base\Transform.h">
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="GameEvents.h" />
@@ -283,9 +277,6 @@
     <ClCompile Include="Componennts\AddPointsComponnent.cpp">
       <Filter>Componennts</Filter>
     </ClCompile>
-    <ClCompile Include="Componennts\AttackComponent.cpp">
-      <Filter>Componennts</Filter>
-    </ClCompile>
     <ClCompile Include="Componennts\BaseComponent.cpp">
       <Filter>Componennts</Filter>
     </ClCompile>
@@ -341,9 +332,6 @@
       <Filter>Base</Filter>
     </ClCompile>
     <ClCompile Include="Base\Texture2D.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Base\Transform.cpp">
       <Filter>Base</Filter>
     </ClCompile>
     <ClCompile Include="Sound\SDLSoundSystem.cpp">

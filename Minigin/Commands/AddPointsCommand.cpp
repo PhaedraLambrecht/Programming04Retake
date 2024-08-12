@@ -17,11 +17,6 @@ dae::AddPointsCommand::AddPointsCommand(GameObject* actor)
 	}
 }
 
-dae::AddPointsCommand::~AddPointsCommand()
-{
-	std::cout << "AddPointsCommand\n";
-}
-
 void dae::AddPointsCommand::Execute()
 {
 	m_pAddPointsComponnent->AddPoints();

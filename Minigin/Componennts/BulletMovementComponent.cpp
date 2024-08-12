@@ -8,6 +8,10 @@
 
 dae::BulletMovementComponent::BulletMovementComponent(GameObject* Owner)
 	:BaseComponent(Owner)
+	, m_MoveSpeed{ 600 }
+	, m_MaxDistance{ 300 }
+	, m_DistanceTraveled{ 0 }
+	, m_Direction{}
 {
 	if (GetOwner()->HasComponent<TransformComponent>())
 	{
@@ -17,11 +21,6 @@ dae::BulletMovementComponent::BulletMovementComponent(GameObject* Owner)
 	{
 		m_pTransform = nullptr;
 	}
-}
-
-dae::BulletMovementComponent::~BulletMovementComponent()
-{
-	std::cout << "BulletMovementComponent\n";
 }
 
 void dae::BulletMovementComponent::Update()

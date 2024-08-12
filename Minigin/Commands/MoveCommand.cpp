@@ -20,12 +20,6 @@ dae::MoveCommand::MoveCommand(GameObject* actor, glm::vec2 direction, float move
 	}
 }
 
-dae::MoveCommand::~MoveCommand()
-{
-	std::cout << "MoveCommand\n";
-}
-
-
 void dae::MoveCommand::Execute()
 {
 	glm::vec2 position{};

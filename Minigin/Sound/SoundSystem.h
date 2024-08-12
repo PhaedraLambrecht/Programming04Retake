@@ -43,6 +43,8 @@ namespace dae
 
 		virtual void SetMasterVolume(float volume) = 0;
 		virtual float GetMasterVolume() const = 0;
+
+		virtual void IsSoundMuterd(bool isMuted) = 0;
 	};
 }
 

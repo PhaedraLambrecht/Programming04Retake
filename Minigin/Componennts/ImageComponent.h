@@ -15,7 +15,7 @@ namespace dae
 	public:
 
 		ImageComponent(GameObject* Owner);
-		~ImageComponent() override;
+		~ImageComponent() override = default;
 
 		// Copy and move
 		ImageComponent(const ImageComponent& other) = delete;

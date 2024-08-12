@@ -18,7 +18,7 @@ namespace dae
 	public:
 
 		TextComponent(GameObject* Owner);
-		~TextComponent() override;
+		~TextComponent() override = default;
 
 		// Copy and move
 		TextComponent(const TextComponent& other) = delete;
@@ -38,7 +38,6 @@ namespace dae
 	private:
 
 		void SetTexture();
-
 
 		std::string m_Text;
 		SDL_Color m_Color;

@@ -75,7 +75,6 @@ void dae::LivesComponent::Death(const Event* e)
 	{
 		std::cout << "Dead\n";
 
-		//TODO: Implement a gameOver scene and then switch back to the main menu
 		SceneManager::GetInstance().SwitchScene(SceneManager::GetInstance().GetActiveScene().GetName());
 
 		return;

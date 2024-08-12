@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <iostream>
 
+
 dae::ScoreComponent::ScoreComponent(GameObject* owner)
 	:BaseComponent(owner)
 	,m_rewardAmount{50}
@@ -36,9 +37,6 @@ dae::ScoreComponent::ScoreComponent(GameObject* owner)
 
 	PlayerEvent event{ "EnemyDeath", m_playerIndex };
 	EventManager::GetInstance().RegisterObserver(event, boundsGainScore);
-
-	//PlayerEvent event2{ "DiamondAttack", m_playerIndex };
-	//EventManager::GetInstance().RegisterObserver(event2, boundsGainScore);
 }
 
 void dae::ScoreComponent::SetPlayerIndex(unsigned playerIndex)

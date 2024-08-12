@@ -14,7 +14,7 @@ namespace dae
 	public:
 
 		RotatorComponent(GameObject* Owner);
-		~RotatorComponent() override;
+		~RotatorComponent() override = default;
 
 		// Copy and move
 		RotatorComponent(const RotatorComponent& other) = delete;

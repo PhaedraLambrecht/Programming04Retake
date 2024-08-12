@@ -31,7 +31,7 @@ namespace dae
 		void Update() override;
 		void SetScene(Scene* scene);
 		void SetPlayerIndex(int index);
-	
+
 
 	private:
 
@@ -50,7 +50,7 @@ namespace dae
 
 		int m_playerIndex;
 
-	
+
 		void CreateBullet(glm::vec2 position);
 		void BulletHitCallback(const dae::CollisionData& collisionOwner, const dae::CollisionData& hitObject);
 	};

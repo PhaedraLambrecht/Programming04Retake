@@ -13,12 +13,13 @@ namespace dae
 	public:
 
 		AddPointsCommand(GameObject* actor);
-		~AddPointsCommand() override;
+		~AddPointsCommand() override = default;
 
 		AddPointsCommand(const AddPointsCommand& other) = delete;
 		AddPointsCommand(AddPointsCommand&& other) = delete;
 		AddPointsCommand& operator=(const AddPointsCommand& other) = delete;
 		AddPointsCommand& operator=(AddPointsCommand&& other) = delete;
+
 
 
 		void Execute() override;

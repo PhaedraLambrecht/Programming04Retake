@@ -15,7 +15,7 @@ namespace dae
 
 	TransformComponent::~TransformComponent()
 	{
-		std::cout << "TransformComponent\n";
+
 	}
 
 

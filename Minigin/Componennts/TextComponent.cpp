@@ -19,11 +19,6 @@ namespace dae
 	{
 	}
 
-	TextComponent::~TextComponent()
-	{
-		std::cout << "TextComponent\n";
-	}
-
 
 	void TextComponent::SetText(std::string& text)
 	{

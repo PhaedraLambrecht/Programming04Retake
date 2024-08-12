@@ -10,12 +10,6 @@ dae::AddPointsComponnent::AddPointsComponnent(GameObject* owner)
 {
 }
 
-dae::AddPointsComponnent::~AddPointsComponnent()
-{
-	std::cout << "AddPointsComponnent\n";
-}
-
-
 void dae::AddPointsComponnent::SetPlayerIndex(unsigned int playerIndex)
 {
 	m_PlayerIndex = playerIndex;

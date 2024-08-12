@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "Renderer.h"
-#include "scene/SceneManager.h"
 #include "Texture2D.h"
+#include "scene/SceneManager.h"
 #include <imgui.h>
 #include <backends/imgui_impl_sdl2.h>
 #include <backends/imgui_impl_opengl2.h>
@@ -31,7 +31,6 @@ void dae::Renderer::Init(SDL_Window* window)
 	}
 
 
-
 	// Innitializing the ImGui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -51,10 +50,7 @@ void dae::Renderer::Render() const
 	ImGui_ImplSDL2_NewFrame(m_window);
 	ImGui::NewFrame();
 
-
 	SceneManager::GetInstance().Render();
-
-
 
 
 	//3) Swap the buffer so it is shown
@@ -70,6 +66,7 @@ void dae::Renderer::Destroy()
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+
 
 	if (m_renderer != nullptr)
 	{
@@ -108,9 +105,7 @@ void dae::Renderer::RenderRect(float x, float y, float width, float height, SDL_
 
 
 	SDL_SetRenderDrawColor(GetSDLRenderer(), color.r, color.g, color.b, color.a);
-
-	// Render filled rectangle
-	SDL_RenderFillRect(GetSDLRenderer(), &dstRect);
+	SDL_RenderFillRect(GetSDLRenderer(), &dstRect);// Render filled rectangle
 }
 
 void dae::Renderer::RenderRectEdges(float x, float y, float width, float height, SDL_Color color) const
@@ -124,20 +119,17 @@ void dae::Renderer::RenderRectEdges(float x, float y, float width, float height,
 	glm::vec2 bottomRight{ x + width, y + height };
 
 
-	// Render top edge
-	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topLeft.x), static_cast<int>(topLeft.y), static_cast<int>(topRight.x), static_cast<int>(topRight.y));
-
-	// Render bottom edge
-	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(bottomLeft.x), static_cast<int>(bottomLeft.y), static_cast<int>(bottomRight.x), static_cast<int>(bottomRight.y));
-
-	// Render left edge
-	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topLeft.x), static_cast<int>(topLeft.y), static_cast<int>(bottomLeft.x), static_cast<int>(bottomLeft.y));
-
-	// Render right edge
-	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topRight.x), static_cast<int>(topRight.y), static_cast<int>(bottomRight.x), static_cast<int>(bottomRight.y));
+	
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topLeft.x), static_cast<int>(topLeft.y), static_cast<int>(topRight.x), static_cast<int>(topRight.y));// Render top edge
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(bottomLeft.x), static_cast<int>(bottomLeft.y), static_cast<int>(bottomRight.x), static_cast<int>(bottomRight.y));	// Render bottom edge
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topLeft.x), static_cast<int>(topLeft.y), static_cast<int>(bottomLeft.x), static_cast<int>(bottomLeft.y));	// Render left edge
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(topRight.x), static_cast<int>(topRight.y), static_cast<int>(bottomRight.x), static_cast<int>(bottomRight.y));	// Render right edge
 }
 
-SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }
+SDL_Renderer* dae::Renderer::GetSDLRenderer() const 
+{
+	return m_renderer; 
+}
 
 SDL_Window* dae::Renderer::GetWindow() const
 {

@@ -22,11 +22,6 @@ namespace dae
 		}
 	}
 
-	FPSComponent::~FPSComponent()
-	{
-		std::cout << "FPSComponent\n";
-	}
-
 
 	void FPSComponent::Update()
 	{

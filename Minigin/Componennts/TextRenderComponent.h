@@ -13,7 +13,7 @@ namespace dae
 	public:
 
 		TextRenderComponent(GameObject* Owner);
-		~TextRenderComponent() override;
+		~TextRenderComponent() override = default;
 
 		// Copy and move
 		TextRenderComponent(const TextRenderComponent& other) = delete;

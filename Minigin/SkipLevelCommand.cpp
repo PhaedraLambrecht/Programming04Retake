@@ -1,31 +1,28 @@
-#include "SkipLevelCommand.h"
+#include "SkipLevelCommand.h" 
 #include "Scene/SceneManager.h"
 #include "Scene/Scene.h"
 #include "GameObject.h"
 #include "Componennts/HealthComponent.h"
-#include <iostream>
+#include <string>
 
 
-dae::SkipLevelCommand::SkipLevelCommand(GameObject* player)
-	: BaseCommand()
-	, m_pPlayer(player)
+dae::SkipLevelCommand::SkipLevelCommand(GameObject* player) 
+    : BaseCommand()
+    , m_pPlayer(player)
 {
 }
 
-dae::SkipLevelCommand::~SkipLevelCommand()
+
+void dae::SkipLevelCommand::Execute() 
 {
+    SwitchtoNextScene();
 }
 
-void dae::SkipLevelCommand::Execute()
-{ 
-	SwitchtoNextScene();
-}
-
-void dae::SkipLevelCommand::SwitchtoNextScene()
-{   
-    // Get the active scene's name
+void dae::SkipLevelCommand::SwitchtoNextScene() 
+{
+	// Get the active scene's name 
     const std::string activeSceneName = dae::SceneManager::GetInstance().GetActiveScene().GetName();
-
+   
     // Find the current scene in the list of scenes
     auto& scenes = SceneManager::GetInstance().m_pScenes;
     auto it = std::find_if(scenes.begin(), scenes.end(),

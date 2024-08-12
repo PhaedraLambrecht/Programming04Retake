@@ -1,7 +1,7 @@
 #include "DamageCommand.h"
 #include "GameObject.h"
 #include "Componennts/HealthComponent.h"
-#include <iostream>
+
 
 dae::DamageCommand::DamageCommand(GameObject* actor, int damage)
 	:BaseCommand()
@@ -15,11 +15,6 @@ dae::DamageCommand::DamageCommand(GameObject* actor, int damage)
 	{
 		m_pHealthComponnent = actor->AddComponent<HealthComponent>();
 	}
-}
-
-dae::DamageCommand::~DamageCommand()
-{
-	std::cout << "DamageCommand\n";
 }
 
 void dae::DamageCommand::Execute()

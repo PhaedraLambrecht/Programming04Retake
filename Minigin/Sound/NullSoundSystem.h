@@ -27,6 +27,8 @@ namespace dae
 
 		void SetMasterVolume(float /*volume*/) override {};
 		float GetMasterVolume() const override { return 0.0f; };
+
+		void IsSoundMuterd(bool /*isMuted*/) override {};
 	};
 }
 

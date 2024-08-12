@@ -47,7 +47,7 @@ void dae::HighScoreComponent::LoadHighScores()
 	});
 
 	std::string highScoreText;
-	for (int i = 0; i < m_highScores.size(); ++i)
+	for (int i = 0; i < static_cast<int>(m_highScores.size()); ++i)
     {
 		highScoreText += std::to_string(i + 1) + ": " + m_highScores[i].name + " " + std::to_string(m_highScores[i].score) + '\n';
     }

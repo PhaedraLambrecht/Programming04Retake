@@ -133,15 +133,12 @@ bool dae::BlockComponent::IsPositionInsideWall(const glm::vec2& /*position*/)
 {
     auto ownerTransform = GetOwner()->GetComponent<dae::TransformComponent>();
     auto ownerCollision = GetOwner()->GetComponent<dae::CollisionComponent>();
-    float thisX = ownerTransform->GetWorldPosition().x;
-    float thisY = ownerTransform->GetWorldPosition().y;
-    float thisWidth = ownerCollision->GetBounds().x;
-    float thisHeight = ownerCollision->GetBounds().y;
+
 
     for (const auto& wall : SceneManager::GetInstance().GetActiveScene().GetWalls())
     {
-        if (wall == GetOwner() || wall == nullptr)
-            return false;
+        if (wall == GetOwner())
+            continue;
 
         auto wallTransform = wall->GetComponent<dae::TransformComponent>();
         auto wallCollision = wall->GetComponent<dae::CollisionComponent>();
@@ -150,13 +147,21 @@ bool dae::BlockComponent::IsPositionInsideWall(const glm::vec2& /*position*/)
         float wallWidth = wallCollision->GetBounds().x;
         float wallHeight = wallCollision->GetBounds().y;
 
-        if (wallX <= thisX + thisWidth && wallX + wallWidth >= thisX &&
-            wallY <= thisY + thisHeight && wallY + wallHeight >= thisY)
+        float thisX =  ownerTransform->GetWorldPosition().x;
+        float thisY = ownerTransform->GetWorldPosition().y;
+        float thisWidth = ownerCollision->GetBounds().x;
+        float thisHeight = ownerCollision->GetBounds().y;
+
+        if (thisX + thisWidth < wallX || thisX > wallX + wallWidth ||
+            thisY + thisHeight < wallY || thisY > wallY + wallHeight)
         {
-            return true;
+            // No collision
+        }
+        else
+        {
+            return true; // Collision detected
         }
     }
 
-    return false;
-
+    return false; // No collision detected
 }

@@ -1,7 +1,6 @@
 #include "SchootCommand.h"
 #include "GameObject.h"
 #include "Componennts/SchootComponent.h"
-#include <iostream>
 
 
 dae::SchootCommand::SchootCommand(GameObject* actor, int playerIndex)
@@ -11,10 +10,6 @@ dae::SchootCommand::SchootCommand(GameObject* actor, int playerIndex)
 	m_pSchootComponent->SetPlayerIndex(playerIndex);
 }
 
-dae::SchootCommand::~SchootCommand()
-{
-	std::cout << "SchootCommand\n";
-}
 
 void dae::SchootCommand::Execute()
 {

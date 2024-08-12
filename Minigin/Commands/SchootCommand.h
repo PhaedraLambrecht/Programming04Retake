@@ -2,6 +2,7 @@
 #define ENGINE2D_SCHOOTCOMMAND_H
 #include "commands/Command.h"
 
+
 namespace dae
 {
 	class SchootComponent;
@@ -12,7 +13,7 @@ namespace dae
 	public:
 
 		SchootCommand(GameObject* actor, int playerIndex);
-		~SchootCommand() override;
+		~SchootCommand() override = default;
 
 		SchootCommand(const SchootCommand& other) = delete;
 		SchootCommand(SchootCommand&& other) = delete;
@@ -20,7 +21,9 @@ namespace dae
 		SchootCommand& operator=(SchootCommand&& other) = delete;
 
 
+
 		void Execute() override;
+
 
 	private:
 

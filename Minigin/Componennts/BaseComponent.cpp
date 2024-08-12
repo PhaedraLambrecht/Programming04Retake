@@ -10,12 +10,6 @@ namespace dae
 	{
 	}
 
-	BaseComponent::~BaseComponent()
-	{
-		std::cout << "BaseComponent\n";
-	}
-
-
 	GameObject* BaseComponent::GetOwner() const
 	{
 		return m_pOwner;

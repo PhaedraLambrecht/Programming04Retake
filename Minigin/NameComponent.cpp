@@ -43,7 +43,7 @@ void dae::NameComponent::AddLetterToName()
 {
     bool isFull = m_name.size() < 3;
     bool isLettersEmpty = m_letters.empty();
-    bool isCurrentLetterIndexValid = m_currentLetterIndex >= 0 && m_currentLetterIndex < m_letters.size();
+    bool isCurrentLetterIndexValid = m_currentLetterIndex >= 0 && m_currentLetterIndex < static_cast<int>(m_letters.size());
 
 
     if (isFull && !isLettersEmpty && isCurrentLetterIndexValid)
@@ -52,7 +52,7 @@ void dae::NameComponent::AddLetterToName()
         ++m_currentLetterIndex; // Move to the next letter
 
 
-        if (m_currentLetterIndex >= m_letters.size())
+        if (m_currentLetterIndex >= static_cast<int>(m_letters.size()))
         {
             m_currentLetterIndex = 0;
         }

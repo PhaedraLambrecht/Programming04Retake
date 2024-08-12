@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cassert>
 
+
 dae::CollisionComponent::CollisionComponent(GameObject* Owner)
 	:BaseComponent(Owner)
 	, m_width{}

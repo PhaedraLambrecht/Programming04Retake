@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 
-		virtual ~BaseComponent();
+		virtual ~BaseComponent() = default;
 
 		// Copy and move
 		BaseComponent(const BaseComponent& other) = delete;

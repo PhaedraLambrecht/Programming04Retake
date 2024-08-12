@@ -28,6 +28,7 @@ namespace dae
 		SchootComponent& operator=(SchootComponent&& other) = delete;
 
 
+
 		void Attack();
 		void Update() override;
 

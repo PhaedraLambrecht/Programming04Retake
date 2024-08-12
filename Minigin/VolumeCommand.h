@@ -1,5 +1,7 @@
-#pragma once
+#ifndef ENGINE2D_VOLUME_COMMAND_H
+#define ENGINE2D_VOLUME_COMMAND_H
 #include "Commands/Command.h"
+
 
 namespace dae
 {
@@ -14,6 +16,7 @@ namespace dae
 		DecreaseVolumeCommand(DecreaseVolumeCommand&& other) = delete;
 		DecreaseVolumeCommand& operator=(const DecreaseVolumeCommand& other) = delete;
 		DecreaseVolumeCommand& operator=(DecreaseVolumeCommand&& other) = delete;
+
 
 
 		virtual void Execute() override;
@@ -33,9 +36,31 @@ namespace dae
 		IncreaseVolumeCommand& operator=(IncreaseVolumeCommand&& other) = delete;
 
 
+
 		virtual void Execute() override;
 	};
 
+
+	class MuteVolumeCommand final : public BaseCommand
+	{
+	public:
+
+		MuteVolumeCommand() = default;
+		virtual ~MuteVolumeCommand() = default;
+
+		MuteVolumeCommand(const MuteVolumeCommand& other) = delete;
+		MuteVolumeCommand(MuteVolumeCommand&& other) = delete;
+		MuteVolumeCommand& operator=(const MuteVolumeCommand& other) = delete;
+		MuteVolumeCommand& operator=(MuteVolumeCommand&& other) = delete;
+
+
+
+		virtual void Execute() override;
+	};
+
+
+
+	void adjust_volume(float delta);
 }
 
-
+#endif //ENGINE2D_VOLUME_COMMAND_H

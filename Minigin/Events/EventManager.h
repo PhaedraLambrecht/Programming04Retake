@@ -26,7 +26,7 @@ namespace dae
 	private:
 
 		friend class Singleton<EventManager>;
-		EventManager() = default;
+		~EventManager() = default;
 
 		bool DequeueEvent(Event*& e);
 

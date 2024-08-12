@@ -2,7 +2,9 @@
 #include <SDL_ttf.h>
 #include "Font.h"
 
-TTF_Font* dae::Font::GetFont() const {
+
+TTF_Font* dae::Font::GetFont() const 
+{
 	return m_font;
 }
 

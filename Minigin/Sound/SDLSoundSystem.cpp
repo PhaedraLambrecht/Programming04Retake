@@ -1,9 +1,10 @@
 #include "SDLSoundSystem.h"
+#include "SDL_mixer.h"
+#include "SDL.h"
 #include <stdexcept>
 #include <unordered_map>
+#include <string>
 
-#include "SDL.h"
-#include "SDL_mixer.h"
 
 #define MIX_CHANNEL_GROUP_MUSIC 0
 #define MIX_CHANNEL_GROUP_EFFECTS 1
@@ -275,6 +276,19 @@ void dae::SDLSoundSystem::SetMasterVolume(float volume)
 float dae::SDLSoundSystem::GetMasterVolume() const
 {
 	return m_pImpl->GetMasterVolume();
+}
+
+void dae::SDLSoundSystem::IsSoundMuterd(bool isMuted)
+{
+	if (isMuted)
+	{
+		m_savedVolume = GetMasterVolume();
+		m_pImpl->SetMasterVolume(0.0f);
+	}
+	else
+	{
+		m_pImpl->SetMasterVolume(m_savedVolume);
+	}
 }
 
 void dae::SDLSoundSystem::PlaySound(const SoundData& soundData)

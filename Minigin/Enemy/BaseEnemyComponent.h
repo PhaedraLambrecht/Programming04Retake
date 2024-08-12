@@ -15,7 +15,7 @@ namespace dae
 	public:
 
 		BaseEnemyComponent(GameObject* owner);
-		virtual ~BaseEnemyComponent();
+		virtual ~BaseEnemyComponent() = default;
 
 		BaseEnemyComponent(const BaseEnemyComponent& other) = delete;
 		BaseEnemyComponent(BaseEnemyComponent&& other) = delete;
@@ -34,16 +34,16 @@ namespace dae
 
 	private:
 
-		int m_Health{ 3 };
-		float m_EnemySpeed{ 40.f };
-		float m_ShootCannonCooldown{ 0.f };
-		glm::vec2 position{};
-		float m_Width{};
-		float m_Height{};
-		bool m_BlockMoveLeft{ false };
-		bool m_BlockMoveRight{ false };
-		bool m_BlockMoveUp{ false };
-		bool m_BlockMoveDown{ false };
+		int m_Health;
+		float m_EnemySpeed;
+		float m_ShootCannonCooldown;
+		glm::vec2 position;
+		float m_Width;
+		float m_Height;
+		bool m_BlockMoveLeft;
+		bool m_BlockMoveRight;
+		bool m_BlockMoveUp;
+		bool m_BlockMoveDown;
 		std::shared_ptr<ImageComponent> m_enemyHorizontalSprite;
 		std::shared_ptr<ImageComponent> m_enemyVerticalSprite;
 		std::shared_ptr<GameObject> m_PlayerTank;

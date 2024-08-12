@@ -1,7 +1,6 @@
 #ifndef ENGINE2D_SDLSOUNDSYSTEM_H
 #define ENGINE2D_SDLSOUNDSYSTEM_H
 #include "SoundSystem.h"
-#include <iostream>
 #include <memory>
 #include <thread>
 #include <queue>
@@ -22,6 +21,8 @@ namespace dae
 		SDLSoundSystem& operator=(const SDLSoundSystem& other) = delete;
 		SDLSoundSystem& operator=(SDLSoundSystem&& other) = delete;
 
+
+
 		void Init(const std::string& dataPath) override;
 		void Quit() override;
 		virtual void NotifySound(SoundData soundData);
@@ -29,11 +30,14 @@ namespace dae
 		void SetMasterVolume(float volume) override;
 		float GetMasterVolume() const override;
 
+		void IsSoundMuterd(bool isMuted) override;
+
 
 	private:
 
 
 		float m_masterVolume{ 1.0f };// 0.0f - 1.0f
+		float m_savedVolume;// 0.0f - 1.0f
 
 		std::string m_dataPath;
 

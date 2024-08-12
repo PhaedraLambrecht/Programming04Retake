@@ -31,12 +31,6 @@ namespace dae
 		}
 	}
 
-	ImageRenderComponent::~ImageRenderComponent()
-	{
-		std::cout << "ImageRenderComponent\n";
-	}
-
-
 	void ImageRenderComponent::Render() const
 	{
 		if (!m_pImage)

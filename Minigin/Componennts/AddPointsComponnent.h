@@ -10,13 +10,12 @@ namespace dae
 	public:
 
 		AddPointsComponnent(GameObject* owner);
-		~AddPointsComponnent();
+		~AddPointsComponnent() = default;
 
 		AddPointsComponnent(const AddPointsComponnent& other) = delete;
 		AddPointsComponnent(AddPointsComponnent&& other) = delete;
 		AddPointsComponnent& operator=(const AddPointsComponnent& other) = delete;
 		AddPointsComponnent& operator=(AddPointsComponnent&& other) = delete;
-
 
 
 

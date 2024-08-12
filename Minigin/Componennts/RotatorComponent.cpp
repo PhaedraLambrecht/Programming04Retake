@@ -26,11 +26,6 @@ namespace dae
 
 	}
 
-	RotatorComponent::~RotatorComponent()
-	{
-		std::cout << "RotatorComponent\n";
-	}
-
 
 	void RotatorComponent::RotateToAngle(float targetAngle)
 	{

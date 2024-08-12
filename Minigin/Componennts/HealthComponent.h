@@ -2,6 +2,7 @@
 #define ENGINE2D_HEALTHCOMPONENT_H
 #include "BaseComponent.h"
 
+
 namespace dae
 {
 	class HealthComponent final : public BaseComponent
@@ -9,7 +10,7 @@ namespace dae
 	public:
 
 		HealthComponent(GameObject* owner);
-		~HealthComponent();
+		~HealthComponent() = default;
 		
 		HealthComponent(const HealthComponent& other) = delete;
 		HealthComponent(HealthComponent&& other) = delete;
@@ -29,7 +30,6 @@ namespace dae
 
 		void Death();
 	
-
 		int m_Health;
 		unsigned m_PlayerIndex;
 	};

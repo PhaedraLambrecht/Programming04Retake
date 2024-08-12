@@ -13,7 +13,7 @@ namespace dae
 	public:
 
 		ImageRenderComponent(GameObject* Owner);
-		~ImageRenderComponent() override;
+		~ImageRenderComponent() override = default;
 
 		ImageRenderComponent(const ImageRenderComponent& other) = delete;
 		ImageRenderComponent(ImageRenderComponent&& other) = delete;

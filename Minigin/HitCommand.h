@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE2D_HITCOMMAND_H
+#define ENGINE2D_HITCOMMAND_H
 #include "commands/Command.h"
 
 
@@ -12,7 +13,7 @@ namespace dae
 	public:
 
 		HitCommand(GameObject* actor, int playerIndex);
-		~HitCommand() override;
+		~HitCommand() override = default;
 
 		HitCommand(const HitCommand& other) = delete;
 		HitCommand(HitCommand&& other) = delete;
@@ -20,12 +21,14 @@ namespace dae
 		HitCommand& operator=(HitCommand&& other) = delete;
 
 
+
 		void Execute() override;
+
 
 	private:
 
-		HitComponennt* m_pSchootComponent{ nullptr };
+		HitComponennt* m_pSchootComponent;
 	};
 }
 
-
+#endif // !ENGINE2D_HITCOMMAND_H

@@ -13,7 +13,7 @@ namespace dae
 	public:
 
 		DamageCommand(GameObject* actor, int damage);
-		~DamageCommand() override;
+		~DamageCommand() override = default;
 
 		DamageCommand(const DamageCommand& other) = delete;
 		DamageCommand(DamageCommand&& other) = delete;
@@ -22,12 +22,10 @@ namespace dae
 
 
 
-
 		void Execute() override;
 
 
 	private:
-
 
 		HealthComponent* m_pHealthComponnent;
 		int m_Damage;

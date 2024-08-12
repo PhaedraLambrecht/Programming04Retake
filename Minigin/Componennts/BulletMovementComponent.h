@@ -14,7 +14,7 @@ namespace dae
 	public:
 
 		BulletMovementComponent(GameObject* Owner);
-		~BulletMovementComponent() override;
+		~BulletMovementComponent() override = default;
 
 		// Copy and move
 		BulletMovementComponent(const BulletMovementComponent& other) = delete;
@@ -30,12 +30,12 @@ namespace dae
 
 	private:
 
-		float m_MoveSpeed{ 600 };
+		float m_MoveSpeed;
 
-		float m_MaxDistance{ 300 };
-		float m_DistanceTraveled{ 0 };
+		float m_MaxDistance;
+		float m_DistanceTraveled;
 
-		TransformComponent* m_pTransform{};
+		TransformComponent* m_pTransform;
 
 		std::string m_Direction;
 	};

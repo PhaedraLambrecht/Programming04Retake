@@ -1,8 +1,8 @@
 #include "HealthComponent.h"
 #include "Events/EventManager.h"
+#include "GameLoader.h"
 #include <iostream>
 
-#include "GameLoader.h"
 
 dae::HealthComponent::HealthComponent(GameObject* owner)
 	:BaseComponent(owner)
@@ -10,12 +10,6 @@ dae::HealthComponent::HealthComponent(GameObject* owner)
 {
 	 SetHealth(0);
 }
-
-dae::HealthComponent::~HealthComponent()
-{
-	std::cout << "HealthComponent\n";
-}
-
 
 void dae::HealthComponent::Damaged(int damage)
 {

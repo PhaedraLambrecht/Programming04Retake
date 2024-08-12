@@ -13,11 +13,6 @@ namespace dae
 	}
 
 
-	ImageComponent::~ImageComponent()
-	{
-		std::cout << "ImageComponent\n";
-	}
-
 	void ImageComponent::SetTexture(const std::string& fileName)
 	{
 		m_pTexture = ResourceManager::GetInstance().LoadTexture(fileName);

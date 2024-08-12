@@ -2,16 +2,14 @@
 #define ENGINE2D_FONT_H
 #include <string>
 
+
 struct _TTF_Font;
 namespace dae
 {
-	/**
-	 * Simple RAII wrapper for a _TTF_Font
-	 */
 	class Font final
 	{
 	public:
-		_TTF_Font* GetFont() const;
+
 		explicit Font(const std::string& fullPath, unsigned int size);
 		~Font();
 
@@ -19,7 +17,14 @@ namespace dae
 		Font(Font &&) = delete;
 		Font & operator= (const Font &) = delete;
 		Font & operator= (const Font &&) = delete;
+
+
+
+		_TTF_Font* GetFont() const;
+
+
 	private:
+
 		_TTF_Font* m_font;
 	};
 }

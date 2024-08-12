@@ -1,17 +1,22 @@
 #include "HitCommand.h"
 #include "GameObject.h"
 #include "HitComponennt.h"
-#include <iostream>
+
 
 dae::HitCommand::HitCommand(GameObject* actor, int playerIndex)
+	:BaseCommand()
 {
-	m_pSchootComponent = actor->GetComponent<dae::HitComponennt>();
-	m_pSchootComponent->SetPlayerIndex(playerIndex);
-}
+	if (actor->HasComponent<HitComponennt>())
+	{
+		m_pSchootComponent = actor->GetComponent<HitComponennt>();
+	}
+	else
+	{
+		m_pSchootComponent = nullptr;
+	}
 
-dae::HitCommand::~HitCommand()
-{
-	std::cout << "SchootCommand\n";
+	
+	m_pSchootComponent->SetPlayerIndex(playerIndex);
 }
 
 void dae::HitCommand::Execute()

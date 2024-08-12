@@ -9,7 +9,6 @@ namespace dae
 	class GameObject;
 	class TextComponent;
 
-
 	class LivesComponent final : public BaseComponent
 	{
 	public:
@@ -24,9 +23,9 @@ namespace dae
 
 
 
-
 		void SetPlayerIndex(unsigned playerIndex);
 		void SetLives(GameObject* Player);
+
 
 	private:
 
