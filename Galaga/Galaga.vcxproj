@@ -174,6 +174,7 @@
     <ClCompile Include="EggBlockComponent.cpp" />
     <ClCompile Include="LoadLevelFromFile.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="RecognizerEnemy.cpp" />
     <ClCompile Include="StartingMultiPlayerCommand.cpp" />
     <ClCompile Include="StartMultiPlayerComponent.cpp" />
   </ItemGroup>
@@ -195,6 +196,7 @@
     <ClInclude Include="DiamondBlockComponent.h" />
     <ClInclude Include="EggBlockComponent.h" />
     <ClInclude Include="LoadLevelFromFile.h" />
+    <ClInclude Include="RecognizerEnemy.h" />
     <ClInclude Include="StartingMultiPlayerCommand.h" />
     <ClInclude Include="StartMultiPlayerComponent.h" />
   </ItemGroup>

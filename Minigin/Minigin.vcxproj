@@ -245,7 +245,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="Componennts\TransformComponent.h" />
     <ClInclude Include="Enemy\BaseEnemyComponent.h" />
     <ClInclude Include="Enemy\EnemyController.h" />
-    <ClInclude Include="Enemy\RecognizerEnemy.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\EventManager.h" />
     <ClInclude Include="GameEvents.h" />
@@ -306,7 +305,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Componennts\TransformComponent.cpp" />
     <ClCompile Include="Enemy\BaseEnemyComponent.cpp" />
     <ClCompile Include="Enemy\EnemyController.cpp" />
-    <ClCompile Include="Enemy\RecognizerEnemy.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />

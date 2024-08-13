@@ -57,6 +57,7 @@
     <ClCompile Include="StartMultiPlayerComponent.cpp">
       <Filter>Componnents</Filter>
     </ClCompile>
+    <ClCompile Include="RecognizerEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -112,5 +113,6 @@
     <ClInclude Include="StartMultiPlayerComponent.h">
       <Filter>Componnents</Filter>
     </ClInclude>
+    <ClInclude Include="RecognizerEnemy.h" />
   </ItemGroup>
 </Project>

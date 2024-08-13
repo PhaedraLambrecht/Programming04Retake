@@ -45,7 +45,7 @@
 
 // Enemy components includes
 #include "Enemy/BaseEnemyComponent.h"
-#include "Enemy/RecognizerEnemy.h"
+#include "RecognizerEnemy.h"
 #include "Enemy/EnemyController.h"
 
 // Rotator component includes

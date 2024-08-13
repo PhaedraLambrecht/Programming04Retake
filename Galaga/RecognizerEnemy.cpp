@@ -1,24 +1,26 @@
-#include "Enemy/RecognizerEnemy.h"
+#include "RecognizerEnemy.h"
 #include "GameObject.h"
 #include "GameTime.h"
 #include "Events/EventManager.h"
 #include "Commands/AddPointsCommand.h"
 #include "Componennts/ImageComponent.h"
 #include "Componennts/HealthComponent.h"
+#include "Commands/DamageCommand.h"
+#include "BlockComponent.h"
+#include "Scene/SceneManager.h"
+#include "Scene/Scene.h"
 #include <iostream>
 #include <algorithm>
-
-#include "Commands/DamageCommand.h"
 
 
 dae::RecognizerEnemy::RecognizerEnemy(GameObject* gameObject)
 	: BaseEnemyComponent(gameObject)
-	, m_Health{3}
+	, m_Health{ 3 }
 	, m_EnemySpeed{ 25.f }
 	, m_ChangeDirectionInterval{ 2.f }
 	, m_TimeSinceLastChange{ 0.f }
 {
-	currentState =  new MovingState(GetOwner());
+	currentState = new MovingState(GetOwner());
 
 	std::unique_ptr<Event> event = std::make_unique<Event>();
 	event->eventType = "EnemySpawned";
@@ -57,7 +59,7 @@ void dae::RecognizerEnemy::Update()
 		glm::vec2 playerSize = player->GetComponent<ImageComponent>()->GetTextureDimensions();
 		glm::vec2 enemySize = GetOwner()->GetComponent<ImageComponent>()->GetTextureDimensions();
 
-	
+
 		// Detect overlap
 		if (enemyPos.x < playerPos.x + playerSize.x &&
 			enemyPos.x + enemySize.x > playerPos.x &&
@@ -76,6 +78,9 @@ void dae::RecognizerEnemy::Update()
 
 	m_AttackCooldown -= GameTime::GetInstance().GetDeltaTime();
 	currentState->Update();
+
+
+	OverlappingWall();
 }
 
 bool dae::RecognizerEnemy::DoDamage()
@@ -168,6 +173,29 @@ void dae::RecognizerEnemy::IsBlocking(const glm::vec2& enemyPos, const glm::vec2
 	}
 }
 
+void dae::RecognizerEnemy::OverlappingWall()
+{
+	std::vector<GameObject*> blocks = SceneManager::GetInstance().GetActiveScene().GetWalls();
+	for (auto& block : blocks)
+	{
+		if (block->GetComponent<dae::BlockComponent>()->GetIsMoving())
+		{
+			glm::vec2 blockPos = block->GetComponent<TransformComponent>()->GetWorldPosition();
+			glm::vec2 blockSize = block->GetComponent<ImageComponent>()->GetTextureDimensions();
+			glm::vec2 enemyPos = GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+			glm::vec2 enemySize = GetOwner()->GetComponent<ImageComponent>()->GetTextureDimensions();
+
+			if (enemyPos.x < blockPos.x + blockSize.x &&
+				enemyPos.x + enemySize.x > blockPos.x &&
+				enemyPos.y < blockPos.y + blockSize.y &&
+				enemyPos.y + enemySize.y > blockPos.y)
+			{
+				DoDamage(); // kill the enemy
+			}
+		}
+	}
+}
+
 
 void dae::RecognizerEnemy::OnDeath(const Event* e)
 {
@@ -175,7 +203,7 @@ void dae::RecognizerEnemy::OnDeath(const Event* e)
 		return;
 }
 
-void dae::RecognizerEnemy::SetWindowDimensions(float xPos, float yPos,  float width, float height)
+void dae::RecognizerEnemy::SetWindowDimensions(float xPos, float yPos, float width, float height)
 {
 	m_xPos = xPos;
 	m_yPos = yPos;
@@ -235,8 +263,8 @@ void dae::MovingState::Update()
 	RecognizerEnemy* enemy = m_enemy->GetComponent<RecognizerEnemy>();
 	float deltaTime = GameTime::GetInstance().GetDeltaTime();
 	enemy->SetTimeSinceLastChange(enemy->GetTimeSinceLastChange() + deltaTime);
-	
-	
+
+
 	if (enemy->GetTimeSinceLastChange() >= enemy->GetDirectionInterval())
 	{
 		ChangeDirection();
@@ -267,7 +295,7 @@ void dae::MovingState::HandleBlockedMovement(float deltaTime)
 	bool blockedDirection{ false };
 	if (enemy->m_MovementFlags.left && !enemy->m_MovementFlags.right)
 	{
-		
+
 		m_enemy->GetComponent<TransformComponent>()->SetLastMovementDirection("Left");
 
 		blockedDirection = !m_enemy->GetComponent<TransformComponent>()->IsDirectionBlocked(m_enemy->GetComponent<TransformComponent>()->GetLastMovementDirection());

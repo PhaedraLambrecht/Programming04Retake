@@ -5,7 +5,7 @@
 #include "Componennts/ImageComponent.h"
 #include "Componennts/ImageRenderComponent.h"
 #include "Componennts/HealthComponent.h"
-#include "Enemy/RecognizerEnemy.h"
+#include "RecognizerEnemy.h"
 #include "Enemy/EnemyController.h"
 #include "Componennts/CollisionComponent.h"
 #include "Scene/SceneManager.h"

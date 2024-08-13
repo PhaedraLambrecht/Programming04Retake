@@ -63,7 +63,6 @@ namespace dae
 		std::string GetPlayerName();
 
 
-
 		void AddWalls(GameObject* walls);
 		std::vector<GameObject*> GetWalls();
 
