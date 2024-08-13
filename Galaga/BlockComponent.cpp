@@ -1,106 +1,51 @@
 #include "BlockComponent.h"
 #include "GameObject.h"
 #include "Componennts/CollisionComponent.h"
-
-#include <iostream>
-
-
 #include "Scene/SceneManager.h"
 #include "Scene/Scene.h"
+#include <iostream>
+
 
 dae::BlockComponent::BlockComponent(GameObject* owner)
 	:BaseComponent(owner)
 	,m_isMoving(false)
+	, m_direction("None")
+	, m_currentState(nullptr)
 {
 	m_CollisionComponent = owner->GetComponent<dae::CollisionComponent>();
 }
 
+dae::BlockComponent::~BlockComponent()
+{
+	delete m_currentState;
+	m_currentState = nullptr;
+}
+
 void dae::BlockComponent::Update()
 {
-    // Check for overlap with the player
-    for (const auto& player : m_player)
-    {
-        float playerX = player->GetComponent<dae::TransformComponent>()->GetWorldPosition().x;
-        float playerY = player->GetComponent<dae::TransformComponent>()->GetWorldPosition().y;
-        float playerWidth = player->GetComponent<dae::CollisionComponent>()->GetBounds().x;
-        float playerHeight = player->GetComponent<dae::CollisionComponent>()->GetBounds().y;
-
-
-        float thisX = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition().x;
-        float thisY = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition().y;
-        float thisWidth = GetOwner()->GetComponent<dae::CollisionComponent>()->GetBounds().x;
-        float thisHeight = GetOwner()->GetComponent<dae::CollisionComponent>()->GetBounds().y;
-
-        if (playerX + playerWidth > thisX && playerX < thisX + thisWidth &&
-            playerY + playerHeight > thisY && playerY < thisY + thisHeight)
-        {
-            player->GetComponent<TransformComponent>()->BlockDirection(player->GetComponent<TransformComponent>()->GetLastMovementDirection());
-        }
-    }
-
-    for (const auto& enemy : SceneManager::GetInstance().GetActiveScene().GetEnemy())
-    {
-        float enemyX = enemy->GetComponent<dae::TransformComponent>()->GetWorldPosition().x;
-        float enemyY = enemy->GetComponent<dae::TransformComponent>()->GetWorldPosition().y;
-        float enemyWidth = enemy->GetComponent<dae::CollisionComponent>()->GetBounds().x;
-        float enemyHeight = enemy->GetComponent<dae::CollisionComponent>()->GetBounds().y;
-
-
-        float thisX = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition().x;
-        float thisY = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition().y;
-        float thisWidth = GetOwner()->GetComponent<dae::CollisionComponent>()->GetBounds().x;
-        float thisHeight = GetOwner()->GetComponent<dae::CollisionComponent>()->GetBounds().y;
-
-        if (enemyX + enemyWidth > thisX && enemyX < thisX + thisWidth &&
-            enemyY + enemyHeight > thisY && enemyY < thisY + thisHeight)
-        {
-            enemy->GetComponent<TransformComponent>()->BlockDirection(enemy->GetComponent<TransformComponent>()->GetLastMovementDirection());
-        }
-    }
-
+    // Check collision to block movement
+    CheckCollision(m_player);
+    CheckCollision(SceneManager::GetInstance().GetActiveScene().GetEnemy());
 
 
     if (m_isMoving)
     {
-        glm::vec2 pos{ GetOwner()->GetComponent<dae::TransformComponent>()->GetLocalPosition() };
-        if (IsPositionInsideWall(pos))
-        {
-			m_isMoving = false;
-			return;
-        }
-
-        if (m_direction == "Left")
-        {
-            pos.x -= 1.0f;
-        }
-        else if (m_direction == "Right")
-        {
-            pos.x += 1.0f;
-        }
-        else if (m_direction == "Up")
-        {
-            pos.y -= 1.0f;
-        }
-        else if (m_direction == "Down")
-        {
-            pos.y += 1.0f;
-        }
-
-        // Check if the new position is inside a wall
-        if (IsPositionInsideWall(pos))
-        {
-            m_isMoving = false;
-            return;
-        }
-
-        GetOwner()->GetComponent<dae::TransformComponent>()->SetLocalPosition(pos.x, pos.y);
+		m_currentState->Update(GetOwner());
     }
-
 }
 
 void dae::BlockComponent::SetPlayer(std::vector<dae::GameObject*> player)
 {
-	m_player = player;
+	std::vector<dae::GameObject*> tempPlayer;
+	for (auto& p : player)
+    {
+        if (p != nullptr)
+        {
+			tempPlayer.push_back(p);
+		}
+	}
+
+    m_player = tempPlayer;
 }
 
 std::vector<dae::GameObject*> dae::BlockComponent::GetPlayer()
@@ -118,16 +63,15 @@ void dae::BlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/,
 
 bool dae::BlockComponent::DoDamage(GameObject* player)
 {
-    // If it's not, move to the new position
 	m_isMoving = true;
-    
+    m_direction = player->GetComponent<dae::TransformComponent>()->GetLastMovementDirection();
 
-	m_direction = player->GetComponent<dae::TransformComponent>()->GetLastMovementDirection();
+    delete m_currentState;
+	m_currentState = new MovingState();
 
 
     return true;
 }
-
 
 bool dae::BlockComponent::IsPositionInsideWall(const glm::vec2& /*position*/)
 {
@@ -164,4 +108,115 @@ bool dae::BlockComponent::IsPositionInsideWall(const glm::vec2& /*position*/)
     }
 
     return false; // No collision detected
+}
+
+bool dae::BlockComponent::GetIsMoving() const
+{
+    return m_isMoving;
+}
+
+void dae::BlockComponent::SetIsMoving(bool isMoving)
+{
+    m_isMoving = isMoving;
+}
+
+std::string dae::BlockComponent::GetDirection() const
+{
+    return m_direction;
+}
+
+void dae::BlockComponent::SetDirection(const std::string& direction)
+{
+    if (m_direction == "None")
+    {
+        return;
+    }
+
+    m_direction = direction;
+}
+
+dae::BlockState* dae::BlockComponent::GetCurrentState() const
+{
+	if (m_currentState == nullptr)
+    {
+		return new IdleState();
+	}
+
+    return m_currentState;
+}
+
+void dae::BlockComponent::SetCurrentState(BlockState* state)
+{
+    if (m_currentState != nullptr)
+    {
+        delete m_currentState;
+    }
+
+    m_currentState = state;
+}
+
+void dae::BlockComponent::CheckCollision(std::vector<GameObject*> otherObject)
+{
+    for (const auto& object : otherObject)
+    {
+        float enemyX = object->GetComponent<dae::TransformComponent>()->GetWorldPosition().x;
+        float enemyY = object->GetComponent<dae::TransformComponent>()->GetWorldPosition().y;
+        float enemyWidth = object->GetComponent<dae::CollisionComponent>()->GetBounds().x;
+        float enemyHeight = object->GetComponent<dae::CollisionComponent>()->GetBounds().y;
+
+
+        float thisX = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition().x;
+        float thisY = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition().y;
+        float thisWidth = GetOwner()->GetComponent<dae::CollisionComponent>()->GetBounds().x;
+        float thisHeight = GetOwner()->GetComponent<dae::CollisionComponent>()->GetBounds().y;
+
+        if (enemyX + enemyWidth > thisX && enemyX < thisX + thisWidth &&
+            enemyY + enemyHeight > thisY && enemyY < thisY + thisHeight)
+        {
+            object->GetComponent<TransformComponent>()->BlockDirection(object->GetComponent<TransformComponent>()->GetLastMovementDirection());
+        }
+    }
+}
+
+
+
+
+void dae::MovingState::Update(GameObject* block)
+{
+    glm::vec2 pos{ block->GetComponent<dae::TransformComponent>()->GetLocalPosition() };
+	const auto blockComponent = block->GetComponent<BlockComponent>();
+    if (blockComponent->IsPositionInsideWall(pos))
+    {
+		blockComponent->SetIsMoving(false);
+		blockComponent->SetCurrentState(new IdleState());
+        return;
+    }
+
+
+    if (blockComponent->GetDirection() == "Left")
+    {
+        pos.x -= 1.0f;
+    }
+    else if (blockComponent->GetDirection() == "Right")
+    {
+        pos.x += 1.0f;
+    }
+    else if (blockComponent->GetDirection() == "Up")
+    {
+        pos.y -= 1.0f;
+    }
+    else if (blockComponent->GetDirection() == "Down")
+    {
+        pos.y += 1.0f;
+    }
+
+    // Check if the new position is inside a wall
+    if (blockComponent->IsPositionInsideWall(pos))
+    {
+        blockComponent->SetIsMoving(false);
+        blockComponent->SetCurrentState(new IdleState());
+        return;
+    }
+
+    block->GetComponent<dae::TransformComponent>()->SetLocalPosition(pos.x, pos.y);
 }
