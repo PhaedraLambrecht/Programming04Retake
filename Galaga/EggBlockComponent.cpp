@@ -12,6 +12,7 @@
 #include "Scene/Scene.h"
 #include "events/Event.h"
 #include "Commands/AddPointsCommand.h"
+#include "Resources/ResourceManager.h"
 
 #include <iostream>
 
@@ -21,13 +22,46 @@ dae::EggBlockComponent::EggBlockComponent(GameObject* owner)
 	, m_currentTime{ 0.0f }
 	, m_hasHatched{ false }
 	, m_Health{ 1 }
+	, m_isFlashing{ false }
+	, m_flashTimer{ 0.0f }
+	, m_texture1{ "" }
+	, m_texture2{ "" }
+	, m_pBackground{ nullptr }
 {
 	// Random time between 10 and 20 seconds
 	m_hatchingTime = float(rand() % 20 + 10);
+
+
+	// Make the blocks flash
+	StartFlashing();
 }
 
 void dae::EggBlockComponent::Update()
 {
+	if (m_isFlashing)
+	{
+		m_flashTimer += GameTime::GetInstance().GetDeltaTime();
+		if (m_flashTimer >= 2.0f)
+		{
+			StopFlashing();
+		}
+		else
+		{
+			// Flash between textures
+			if (fmod(m_flashTimer, 0.5f) < 0.25f) // Flash every 0.5 seconds
+			{
+				// original
+				GetOwner()->GetComponent<ImageComponent>()->SetTexture(m_texture1);
+			}
+			else
+			{
+				// flash
+				GetOwner()->GetComponent<ImageComponent>()->SetTexture(m_texture2);
+			}
+		}
+	}
+
+
     m_currentTime += GameTime::GetInstance().GetDeltaTime();
     if (m_currentTime >= m_hatchingTime && !m_hasHatched)
     {
@@ -108,6 +142,20 @@ void dae::EggBlockComponent::NotifyOnDeath()
 	GetOwner()->MarkForDestruction();
 }
 
+void dae::EggBlockComponent::StartFlashing()
+{
+	m_isFlashing = true;
+	m_flashTimer = 0.0f;
+
+	m_texture1 = "iceBlock.png";
+	m_texture2 = "iceBlockGreen.png";		
+}
+
+void dae::EggBlockComponent::StopFlashing()
+{
+	m_isFlashing = false;
+	GetOwner()->GetComponent<ImageComponent>()->SetTexture(m_texture1);
+}
 
 void dae::EggBlockComponent::OnHitCallback(const CollisionData& /*collisionOwner*/, const CollisionData& hitObject)
 {

@@ -4,10 +4,12 @@
 #include "Componennts/CollisionComponent.h"
 #include "glm/glm.hpp"
 #include <vector>
+#include <string>
 
 namespace dae
 {
 	class GameObject;
+	class Texture2D;
 
 	class EggBlockComponent final : public BlockComponent
 	{
@@ -45,6 +47,17 @@ namespace dae
 
 		void AddPointsToPlayers(GameObject* player);
 		void NotifyOnDeath();
+
+
+		// Flashing
+		bool m_isFlashing;
+		float m_flashTimer;
+		std::string m_texture2;
+		std::string m_texture1;
+
+
+		void StartFlashing();
+		void StopFlashing();
 	};
 }
 
