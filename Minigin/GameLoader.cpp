@@ -286,6 +286,9 @@ namespace dae
 		// Collision
 		SetUpBaseCollision(diamondWall.get(), "DiamondWall", scene);
 
+		auto boundHitCallback = std::bind(&dae::DiamondBlockComponent::OnHitCallback, diamondWall->GetComponent<dae::DiamondBlockComponent>(), std::placeholders::_1, std::placeholders::_2);
+		diamondWall->GetComponent<dae::CollisionComponent>()->SetCallback(boundHitCallback);
+
 		return diamondWall;
 	}
 
@@ -401,14 +404,16 @@ namespace dae
 	{
 		auto& inputManager = InputManager::GetInstance();
 
+		// Game commnads
 		{
-			// Game commnads
-
 			// Skipping level
 			inputManager.AddKeyboardCommand<dae::SkipLevelCommand>(
 				std::make_unique<dae::SkipLevelCommand>(player),
 				dae::KeyboardInput{ SDL_SCANCODE_F1, dae::ButtonState::Up, scene.GetName() });
+		}
 
+		// Sound commands
+		{
 			// Increase volume
 			inputManager.AddKeyboardCommand<dae::IncreaseVolumeCommand>(
 				std::make_unique<dae::IncreaseVolumeCommand>(),
@@ -418,6 +423,11 @@ namespace dae
 			inputManager.AddKeyboardCommand<dae::DecreaseVolumeCommand>(
 				std::make_unique<dae::DecreaseVolumeCommand>(),
 				dae::KeyboardInput{ SDL_SCANCODE_F6, dae::ButtonState::Up, scene.GetName() });
+
+			// Mute/Unmute volume
+			inputManager.AddKeyboardCommand<dae::MuteVolumeCommand>(
+				std::make_unique<dae::MuteVolumeCommand>(),
+				dae::KeyboardInput{ SDL_SCANCODE_F5, dae::ButtonState::Up, scene.GetName() });
 		}
 	}
 

@@ -41,6 +41,19 @@ void dae::SkipLevelCommand::SwitchtoNextScene()
             it = scenes.begin();
         }
 
+
+        // Check if the next scene is "StartScreen" and skip it if so
+        if ((*it)->GetName() == "StartScreen")
+        {
+            ++it; // Move to the next scene
+            if (it == scenes.end())
+            {
+                // If we reach the end again, wrap around to the first scene
+                it = scenes.begin();
+            }
+        }
+
+
         // Switch to the new scene
         SceneManager::GetInstance().SwitchScene((*it)->GetName());
     }
