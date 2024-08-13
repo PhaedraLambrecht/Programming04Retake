@@ -67,7 +67,7 @@ bool dae::BlockComponent::DoDamage(GameObject* player)
     m_direction = player->GetComponent<dae::TransformComponent>()->GetLastMovementDirection();
 
     delete m_currentState;
-	m_currentState = new MovingState();
+	m_currentState = new BlockMovingState();
 
 
     return true;
@@ -181,7 +181,7 @@ void dae::BlockComponent::CheckCollision(std::vector<GameObject*> otherObject)
 
 
 
-void dae::MovingState::Update(GameObject* block)
+void dae::BlockMovingState::Update(GameObject* block)
 {
     glm::vec2 pos{ block->GetComponent<dae::TransformComponent>()->GetLocalPosition() };
 	const auto blockComponent = block->GetComponent<BlockComponent>();

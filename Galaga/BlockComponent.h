@@ -84,11 +84,11 @@ namespace dae
 		void OnHitCallback(BlockComponent* /*block*/, const CollisionData& /*collisionOwner*/, const CollisionData& /*hitObject*/) override {};
 	};
 
-	class MovingState : public BlockState
+	class BlockMovingState : public BlockState
 	{
 	public:
 		
-		~MovingState() override = default;
+		~BlockMovingState() override = default;
 
 		void Update(GameObject* block) override;
 		void OnHitCallback(BlockComponent* /*block*/, const CollisionData& /*collisionOwner*/, const CollisionData& /*hitObject*/) override {};

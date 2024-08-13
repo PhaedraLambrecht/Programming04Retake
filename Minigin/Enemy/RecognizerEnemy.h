@@ -5,12 +5,23 @@
 
 namespace dae
 {
+	class State;
+
+
 	class RecognizerEnemy final : public BaseEnemyComponent
 	{
+		struct MovementFlags
+		{
+			bool left;
+			bool right;
+			bool up;
+			bool down;
+		};
+	
 	public:
 
 		explicit RecognizerEnemy(GameObject* gameObject);
-		~RecognizerEnemy() override = default;
+		~RecognizerEnemy() override;
 
 		RecognizerEnemy(const RecognizerEnemy& other) = delete;
 		RecognizerEnemy(RecognizerEnemy&& other) = delete;
@@ -28,7 +39,23 @@ namespace dae
 		void SetWindowDimensions(float xPos, float yPos, float width, float height);
 
 
+		// For State
+		float GetTimeSinceLastChange() const;
+		void SetTimeSinceLastChange(float time);
+		float GetDirectionInterval() const;
+		float GetEnemySpeed() const;
+		float GetXPos() const;
+		float GetYPos() const;
+
+		MovementFlags m_MovementFlags;
+
+		float m_windowWidth, m_windowHeight;
+
+
 	private:
+
+		State* currentState;
+
 
 		struct PositionSize
 		{
@@ -36,13 +63,7 @@ namespace dae
 			float width;
 			float height;
 		} m_PositionSize;
-		struct MovementFlags
-		{
-			bool left;
-			bool right;
-			bool up;
-			bool down;
-		} m_MovementFlags;
+
 
 		int m_Health;
 		float m_EnemySpeed;
@@ -55,23 +76,44 @@ namespace dae
 		float m_AttackCooldown;
 		const float m_DamageInterval{ 5.0f };
 
-		float m_windowWidth, m_windowHeight;
 		float m_xPos, m_yPos;
 
 
 
 		void AddPointsAndNotifyDeath();
+	
+		void IsBlocking(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds);
+	};
 
-		void ChangeDirection();
+
+
+	class State
+	{
+	public:
+
+		State(GameObject* enemy);
+		virtual ~State();
+
+		virtual void Update() = 0;
+	
+
+		GameObject* m_enemy;
+	};
+
+	class MovingState : public State 
+	{
+	public:
+
+		MovingState(GameObject* enemy)
+			:State(enemy)
+		{};
+		void Update() override;
+
+	private:
 
 		void move(float deltaTime, int x, int y);
 		void HandleBlockedMovement(float deltaTime);
-	
-
-		bool IsBlockingLeft(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
-		bool IsBlockingRight(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
-		bool IsBlockingUp(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
-		bool IsBlockingDown(const glm::vec2& enemyPos, const glm::vec2& collisionPos, const glm::vec2& collisionBounds) const;
+		void ChangeDirection();
 	};
 
 }
