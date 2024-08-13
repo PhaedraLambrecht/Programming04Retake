@@ -28,8 +28,6 @@ dae::CollisionComponent::~CollisionComponent()
 	assert(m_pScene && "m_pScene must be set in collision Component");
 	m_pScene->RemoveCollision(this);
 
-
-	std::cout << "CollisionComponent\n";
 }
 
 

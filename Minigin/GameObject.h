@@ -17,7 +17,7 @@ namespace dae
 	public:
 
 		GameObject(int depthvalue = 0);
-		~GameObject();
+		~GameObject() = default;
 
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;

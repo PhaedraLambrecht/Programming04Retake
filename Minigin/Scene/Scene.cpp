@@ -4,7 +4,7 @@
 #include "Componennts/CollisionComponent.h"
 #include "Events/EventManager.h"
 #include <algorithm>
-
+#include <iostream>
 
 using namespace dae;
 
@@ -26,8 +26,11 @@ Scene::Scene(const std::string& name)
 
 Scene::~Scene()
 {
+	std::cout << "Scene Destructor" << std::endl;
 	m_pObjectCollisions.clear();
 	m_pObjects.clear();
+
+	std::cout << "Scene Destructor Done" << std::endl;
 }
 
 void Scene::Add(std::shared_ptr<GameObject> object)
@@ -38,12 +41,15 @@ void Scene::Add(std::shared_ptr<GameObject> object)
 
 void Scene::Remove(std::shared_ptr<GameObject> object)
 {
+	std::cout << "Remove Object" << std::endl;
 	m_pObjects.erase(std::remove(m_pObjects.begin(), m_pObjects.end(), object), m_pObjects.end());
 }
 
 void Scene::RemoveAll()
 {
+	std::cout << "Remove All Objects" << std::endl;
 	m_pObjects.clear();
+	std::cout << "Remove All Objects Done" << std::endl;
 }
 
 

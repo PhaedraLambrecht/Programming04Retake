@@ -98,14 +98,14 @@ void dae::StartMultiPlayerComponent::LoadMultiPlayerScene(const std::string& lev
 			if (objectType == 5)
 			{
 
-				const auto& player = loader.LoadPlayer(scene, 0, controller1, m_texturemaps.at(objectType), { x, i }, offset);
+				const auto& player = loader.LoadPlayer(scene, 0, controller2, m_texturemaps.at(objectType), { x, i }, offset);
 				players.push_back(player.get());
 				scene.AddPlayer(player.get());
 			}
 
 			if (objectType == 6)
 			{
-				const auto& player = loader.LoadPlayer(scene, 1, controller2, m_texturemaps.at(objectType), { x, i }, offset);
+				const auto& player = loader.LoadPlayer(scene, 1, controller1, m_texturemaps.at(objectType), { x, i }, offset);
 				players.push_back(player.get());
 				scene.AddPlayer(player.get());
 			}

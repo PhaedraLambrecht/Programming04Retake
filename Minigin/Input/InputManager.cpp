@@ -9,9 +9,6 @@
 
 dae::InputManager::~InputManager()
 {
-	std::cout << "InputManager" << '\n';
-
-
 	for (auto& controller : m_Controllers)
 	{
 		delete controller;

@@ -72,7 +72,6 @@ namespace dae
 
     dae::Controller::~Controller()
     {
-        std::cout << "Controller" << '\n';
     }
 
 

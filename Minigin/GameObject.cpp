@@ -16,10 +16,6 @@ namespace dae
 		m_pTransform = AddComponent<TransformComponent>();
 	}
 
-	GameObject::~GameObject()
-	{
-		std::cout << "\n------ GameObject ------\n";
-	}
 
 
 	void GameObject::Update()
